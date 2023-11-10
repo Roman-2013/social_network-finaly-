@@ -1,12 +1,17 @@
 import React from 'react';
 import s from './Post.module.css'
 
-export const Post = () => {
+type Post={
+    message:string
+    like:number
+}
+
+export const Post:React.FC<Post> = ({like,message}) => {
     return (
         <div className={s.item}>
             <img src="https://img.freepik.com/premium-photo/anime-male-avatar_950633-917.jpg" alt=""/>
-            Post 1
-            <div>Like</div>
+            {message}
+            <div>{`${like} Like`}</div>
         </div>
     );
 };
