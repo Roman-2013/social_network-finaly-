@@ -2,6 +2,7 @@ import React from 'react';
 import s from './App.module.css';
 import {Header} from './components/Header/Header';
 import {NavBar} from './components/Navbar/NavBar';
+import {Message} from './components/Dialogs/Message';
 import {Profile} from './components/Profile/Profile';
 
 export const App = () => {
@@ -9,7 +10,10 @@ export const App = () => {
         <div className={s.appWrapper}>
             <Header/>
             <NavBar/>
-            <Profile/>
+            <div className={s.appWrapperContent}>
+                <Profile/>
+            </div>
+            {/*<Profile/>*/}
         </div>
     );
 }

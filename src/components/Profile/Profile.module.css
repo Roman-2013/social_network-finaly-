@@ -1,7 +1,4 @@
-.content{
-  grid-area: c;
-  background-color: darkseagreen;
-}
-img{
+
+.blockPicture img{
   width: 100%;
 }
