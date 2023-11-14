@@ -1,34 +1,24 @@
 import React from 'react';
 import s from './Dialogs.module.css'
-import {DialogItem} from './DialogItem';
-import {Message} from './Message';
+import {DialogItem} from './DialogItem/DialogItem';
+import {Message} from './Message/Message';
+import {AppPropsType} from '../../App';
 
-export const Dialogs = () => {
-
-    const dialogsData = [
-        {name: 'Dima', id: 1},
-        {name: 'Roma', id: 2},
-        {name: 'Ilya', id: 3},
-    ]
-    const messagesData = [
-        {id: 1, message: 'Hi'},
-        {id: 1, message: 'Hello'},
-        {id: 1, message: 'You are coll man'},
-    ]
+export const Dialogs:React.FC<AppPropsType> = ({dialogsData,messagesData}) => {
 
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                {dialogsData.map(el => {
+                {dialogsData?.map(el => {
                     return <DialogItem
                         key={el.id}
                         name={el.name}
-                        id={el.id.toString()}
+                        id={el.id}
                     />
                 })}
             </div>
             <div className={s.messages}>
-                {messagesData.map(el => {
+                {messagesData?.map(el => {
                     return <Message
                         key={el.id}
                         message={el.message}
