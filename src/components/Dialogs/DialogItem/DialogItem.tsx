@@ -8,8 +8,11 @@ export type DialogsItemPropsType={
 }
 export const DialogItem: React.FC<DialogsItemPropsType> = ({id,name}) => {
     return (
-        <div>
-            <NavLink to={`message/${id}`}> <div className={s.dialog}>{name}</div></NavLink>
+        <div className={s.container}>
+            <img className={s.avatar} src="https://i.imgur.com/BIZHbJz.jpg" alt=""/>
+           <span>
+           <NavLink to={`message/${id}`}> <div className={s.dialog}>{name}</div></NavLink>
+           </span>
         </div>
     );
 };

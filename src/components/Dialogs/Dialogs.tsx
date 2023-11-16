@@ -22,6 +22,7 @@ export const Dialogs:React.FC<AppPropsType> = ({dialogsData,messagesData}) => {
                     return <Message
                         key={el.id}
                         message={el.message}
+                        id={el.id}
                     />
                 })}
             </div>

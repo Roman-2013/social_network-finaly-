@@ -1,14 +1,41 @@
-.nav{
-  padding: 15px;
-  grid-area: n;
-  background-color: brown;
+.nav {
+    padding: 15px;
+    grid-area: n;
+    background-color: brown;
 }
 
 .item {
-  color:white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
-.active{
-  color:gold;
+.active {
+    color: gold;
+}
+
+.friendsContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.friends {
+    margin: 0 auto ;
+
+
+}
+
+.friends img {
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+}
+
+.imgAndName {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name {
+    margin-top: 5px;
 }
