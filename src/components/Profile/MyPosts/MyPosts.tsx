@@ -1,18 +1,25 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {AppPropsType} from '../../../App';
 
 export const MyPosts:React.FC<AppPropsType> = ({postData}) => {
-    console.log(postData)
+
+    let newPostElement=useRef<HTMLTextAreaElement>(null)
+
+
+const addPost=()=>{
+        alert(newPostElement.current?.value)
+}
+
     return (
         <div className={s.postsBlock}>
             <h3>My post</h3>
             <div>
-                <textarea></textarea>
+                <textarea ref={newPostElement}></textarea>
             </div>
             <div>
-                <button>Add post</button>
+                <button onClick={addPost}>Add post</button>
             </div>
 
             {postData?.map(el=>{

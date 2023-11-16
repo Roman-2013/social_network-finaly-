@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
 import {AppPropsType} from '../../App';
 
 export const Dialogs:React.FC<AppPropsType> = ({dialogsData,messagesData}) => {
+const [message,setMessage]=useState('')
+
+    const sendMessage=()=>{
+        alert(message)
+    }
 
     return (
         <div className={s.dialogs}>
@@ -25,7 +30,12 @@ export const Dialogs:React.FC<AppPropsType> = ({dialogsData,messagesData}) => {
                         id={el.id}
                     />
                 })}
+                <div>
+                    <textarea onChange={(e)=>setMessage(e.currentTarget.value)} ></textarea>
+                    <button onClick={sendMessage}>Send message</button>
+                </div>
             </div>
+
         </div>
     );
 };
