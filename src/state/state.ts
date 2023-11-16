@@ -3,8 +3,8 @@ export const state = {
         postData: [
             {id: 1, message: 'Hi, how are you', likesCount: 15},
             {id: 2, message: 'It\'s my first post', likesCount: 20},
-            {id: 2, message: 'COOL', likesCount: 21},
-            {id: 2, message: 'LUCKY MAN', likesCount: 50},
+            {id: 3, message: 'COOL', likesCount: 21},
+            {id: 4, message: 'LUCKY MAN', likesCount: 50},
         ],
     },
     dialogsPage: {
@@ -29,6 +29,8 @@ export const state = {
             {id: 3, name: 'Zhenya', img: 'https://static1.tgstat.ru/channels/_0/1e/1e4f42daa1c6ae0a03ce8419b805eaa2.jpg'},
         ]
     }
+}
 
-
+export const addPost=(postMessage:string|undefined)=>{
+    state.profilePage.postData.push({id: 5, message: postMessage?postMessage:'', likesCount: 0})
 }

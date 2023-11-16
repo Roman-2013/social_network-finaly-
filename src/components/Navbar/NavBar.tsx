@@ -1,15 +1,16 @@
 import React from 'react';
 import s from './NavBar.module.css'
 import {NavLink} from 'react-router-dom';
-import {AppPropsType} from '../../App';
+
+
 
 export type NavBarPropsPage = {
-    id: number
-    name: string
-    img: string
+    friendsData:Array<{ id: number, name: string , img: string }>
 }
 
-export const NavBar: React.FC<AppPropsType> = ({friendsData}) => {
+
+
+export const NavBar: React.FC<NavBarPropsPage> = ({friendsData}) => {
     return (
         <nav className={s.nav}>
             <div><NavLink className={({isActive}) => isActive ? s.active : s.item} to={'/profile'}>Profile</NavLink>

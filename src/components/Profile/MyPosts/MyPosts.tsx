@@ -1,15 +1,17 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
-import {AppPropsType} from '../../../App';
+import {ProfilePropsType} from '../Profile';
 
-export const MyPosts:React.FC<AppPropsType> = ({postData}) => {
+export const MyPosts:React.FC<ProfilePropsType> = ({postData,addPost}) => {
 
     let newPostElement=useRef<HTMLTextAreaElement>(null)
 
 
-const addPost=()=>{
-        alert(newPostElement.current?.value)
+const addPostHandler=()=>{
+        if(addPost){
+            addPost(newPostElement.current?.value)
+        }
 }
 
     return (
@@ -19,7 +21,7 @@ const addPost=()=>{
                 <textarea ref={newPostElement}></textarea>
             </div>
             <div>
-                <button onClick={addPost}>Add post</button>
+                <button onClick={addPostHandler}>Add post</button>
             </div>
 
             {postData?.map(el=>{

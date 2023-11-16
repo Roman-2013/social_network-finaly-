@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
 import s from './Dialogs.module.css'
-import {DialogItem} from './DialogItem/DialogItem';
-import {Message} from './Message/Message';
-import {AppPropsType} from '../../App';
+import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
+import {Message, MessagePropsType} from './Message/Message';
 
-export const Dialogs:React.FC<AppPropsType> = ({dialogsData,messagesData}) => {
+export type DialogsPropsType={
+    messagesData?: MessagePropsType[]
+    dialogsData?: DialogsItemPropsType[]
+}
+
+export const Dialogs:React.FC<DialogsPropsType> = ({dialogsData,messagesData}) => {
 const [message,setMessage]=useState('')
 
     const sendMessage=()=>{

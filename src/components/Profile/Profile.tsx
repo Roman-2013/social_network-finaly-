@@ -1,15 +1,18 @@
 import React from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
-import s from './Profile.module.css'
 import {PostPropsType} from './MyPosts/Posts/Post';
-import { AppPropsType } from '../../App';
 
-export const Profile:React.FC<AppPropsType> = ({postData}) => {
+export type ProfilePropsType={
+    addPost?:(postMessage:string|undefined)=>void
+    postData?: PostPropsType[]
+}
+
+export const Profile:React.FC<ProfilePropsType> = ({postData,addPost}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts postData={postData}/>
+            <MyPosts addPost={addPost} postData={postData}/>
         </div>
     );
 };
