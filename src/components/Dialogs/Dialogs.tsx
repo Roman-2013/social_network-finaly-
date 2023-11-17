@@ -3,16 +3,28 @@ import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
 
-export type DialogsPropsType={
+export type DialogsPropsType = {
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
+    messageText: string
+    updateNewMessageText: (newMessage: string) => void
+    addMessage: () => void
 }
 
-export const Dialogs:React.FC<DialogsPropsType> = ({dialogsData,messagesData}) => {
-const [message,setMessage]=useState('')
+export const Dialogs: React.FC<DialogsPropsType> = ({
+                                                        addMessage,
+                                                        updateNewMessageText,
+                                                        messageText,
+                                                        dialogsData,
+                                                        messagesData
+                                                    }) => {
+    const [message, setMessage] = useState('')
 
-    const sendMessage=()=>{
-        alert(message)
+    const sendMessage = () => {
+        addMessage()
+    }
+    const onChangeMessageHandler = (newMessage:string) => {
+        updateNewMessageText(newMessage)
     }
 
     return (
@@ -35,7 +47,9 @@ const [message,setMessage]=useState('')
                     />
                 })}
                 <div>
-                    <textarea onChange={(e)=>setMessage(e.currentTarget.value)} ></textarea>
+                    <textarea
+                        value={messageText}
+                        onChange={(e)=>onChangeMessageHandler(e.currentTarget.value)}></textarea>
                     <button onClick={sendMessage}>Send message</button>
                 </div>
             </div>

@@ -23,7 +23,8 @@ export const state = {
             {id: 4, message: 'You are coll man'},
             {id: 5, message: 'You are coll man'},
             {id: 6, message: 'You are coll man'},
-        ]
+        ],
+        messageText:'romkkk'
     },
     siteBar: {
         friendsData: [
@@ -42,5 +43,15 @@ export const addPost=()=>{
 
 export const updateNewPostText=(newPost:string)=>{
     state.profilePage.newPostText=newPost
+    rerenderEntireTree(state)
+}
+
+export const updateNewMessageText=(newMessage:string)=>{
+    state.dialogsPage.messageText=newMessage
+    rerenderEntireTree(state)
+}
+export const addMessage=()=>{
+    state.dialogsPage.messagesData.push({id: Math.ceil(Math.random()*2), message: state.dialogsPage.messageText,})
+    updateNewMessageText('')
     rerenderEntireTree(state)
 }

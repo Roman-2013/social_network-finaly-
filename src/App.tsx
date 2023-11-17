@@ -11,13 +11,15 @@ export type StatePropsType = {
     state: StateType
     addPost:()=>void
     updateNewPostText:(newPost:string)=>void
+    updateNewMessageText:(newMessage:string)=>void
+    addMessage:()=>void
 }
 
 
-export const App: React.FC<StatePropsType> = ({updateNewPostText,state,addPost}) => {
+export const App: React.FC<StatePropsType> = ({updateNewMessageText,addMessage,updateNewPostText,state,addPost}) => {
     const {profilePage, dialogsPage, siteBar} = state
     const {postData,newPostText} = profilePage
-    const {dialogsData, messagesData} = dialogsPage
+    const {dialogsData, messagesData,messageText} = dialogsPage
     const {friendsData} = siteBar
 
     return (
@@ -30,6 +32,9 @@ export const App: React.FC<StatePropsType> = ({updateNewPostText,state,addPost})
                     <Route path={'/message/*'} element={<Dialogs
                         messagesData={messagesData}
                         dialogsData={dialogsData}
+                        messageText={messageText}
+                        updateNewMessageText={updateNewMessageText}
+                        addMessage={addMessage}
                     />}/>
                     <Route path={'/profile/*'} element={<Profile updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} postData={postData}/>}/>
 
