@@ -3,16 +3,17 @@ import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {ProfilePropsType} from '../Profile';
 
-export const MyPosts:React.FC<ProfilePropsType> = ({postData,addPost}) => {
+export const MyPosts: React.FC<ProfilePropsType> = ({postData, addPost}) => {
 
-    let newPostElement=useRef<HTMLTextAreaElement>(null)
+    let newPostElement = useRef<HTMLTextAreaElement>(null)
 
 
-const addPostHandler=()=>{
-        if(addPost){
-            addPost(newPostElement.current?.value)
+    const addPostHandler = () => {
+        if (addPost && newPostElement.current) {
+            addPost(newPostElement.current.value)
+            newPostElement.current.value=''
         }
-}
+    }
 
     return (
         <div className={s.postsBlock}>
@@ -24,8 +25,8 @@ const addPostHandler=()=>{
                 <button onClick={addPostHandler}>Add post</button>
             </div>
 
-            {postData?.map(el=>{
-                return   <Post key={el.id}   likesCount={el.likesCount} message={el.message}/>
+            {postData?.map(el => {
+                return <Post key={el.id} likesCount={el.likesCount} message={el.message}/>
             })}
 
         </div>

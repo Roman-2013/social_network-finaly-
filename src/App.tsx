@@ -1,22 +1,15 @@
 import React from 'react';
 import s from './App.module.css';
 import {Header} from './components/Header/Header';
-import {NavBar, NavBarPropsPage} from './components/Navbar/NavBar';
+import {NavBar} from './components/Navbar/NavBar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {Profile} from './components/Profile/Profile';
 import {Route, Routes} from 'react-router-dom';
-import {PostPropsType} from './components/Profile/MyPosts/Posts/Post';
-import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
-import {MessagePropsType} from './components/Dialogs/Message/Message';
+import {StateType} from './render';
 
-type StatePropsType = {
-    state: StateLocalType
+export type StatePropsType = {
+    state: StateType
     addPost:(postMessage:string|undefined)=>void
-}
-type StateLocalType = {
-    profilePage: { postData: PostPropsType[] }
-    dialogsPage: { dialogsData: DialogsItemPropsType[], messagesData: MessagePropsType[] }
-    siteBar: NavBarPropsPage
 }
 
 
