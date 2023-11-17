@@ -9,13 +9,14 @@ import {StateType} from './render';
 
 export type StatePropsType = {
     state: StateType
-    addPost:(postMessage:string|undefined)=>void
+    addPost:()=>void
+    updateNewPostText:(newPost:string)=>void
 }
 
 
-export const App: React.FC<StatePropsType> = ({state,addPost}) => {
+export const App: React.FC<StatePropsType> = ({updateNewPostText,state,addPost}) => {
     const {profilePage, dialogsPage, siteBar} = state
-    const {postData} = profilePage
+    const {postData,newPostText} = profilePage
     const {dialogsData, messagesData} = dialogsPage
     const {friendsData} = siteBar
 
@@ -25,12 +26,12 @@ export const App: React.FC<StatePropsType> = ({state,addPost}) => {
             <NavBar friendsData={friendsData}/>
             <div className={s.appWrapperContent}>
                 <Routes>
-                    <Route path={'/'} element={<Profile addPost={addPost} postData={postData}/>}/>
+                    <Route path={'/'} element={<Profile updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} postData={postData}/>}/>
                     <Route path={'/message/*'} element={<Dialogs
                         messagesData={messagesData}
                         dialogsData={dialogsData}
                     />}/>
-                    <Route path={'/profile/*'} element={<Profile addPost={addPost} postData={postData}/>}/>
+                    <Route path={'/profile/*'} element={<Profile updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} postData={postData}/>}/>
 
                 </Routes>
 

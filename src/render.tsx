@@ -6,18 +6,19 @@ import {PostPropsType} from './components/Profile/MyPosts/Posts/Post';
 import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from './components/Dialogs/Message/Message';
 import {NavBarPropsPage} from './components/Navbar/NavBar';
+import {addPost, updateNewPostText} from './state/state';
 
 
 export type StateType = {
-    profilePage: { postData: PostPropsType[] }
+    profilePage: { postData: PostPropsType[], newPostText:string }
     dialogsPage: { dialogsData: DialogsItemPropsType[], messagesData: MessagePropsType[] }
     siteBar: NavBarPropsPage
 }
 
-export const rerenderEntireTree = (state: StateType, addPost: (postMessage: string | undefined) => void) => {
+export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App addPost={addPost} state={state}/>
+            <App updateNewPostText={updateNewPostText} addPost={addPost} state={state}/>
         </BrowserRouter>
         ,
         document.getElementById('root')

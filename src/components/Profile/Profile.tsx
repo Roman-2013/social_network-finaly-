@@ -4,15 +4,17 @@ import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 import {PostPropsType} from './MyPosts/Posts/Post';
 
 export type ProfilePropsType={
-    addPost?:(postMessage:string|undefined)=>void
-    postData?: PostPropsType[]
+    addPost:()=>void
+    postData: PostPropsType[]
+    newPostText:string
+    updateNewPostText:(newPost:string)=>void
 }
 
-export const Profile:React.FC<ProfilePropsType> = ({postData,addPost}) => {
+export const Profile:React.FC<ProfilePropsType> = ({updateNewPostText,newPostText,postData,addPost}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts addPost={addPost} postData={postData}/>
+            <MyPosts updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} postData={postData}/>
         </div>
     );
 };

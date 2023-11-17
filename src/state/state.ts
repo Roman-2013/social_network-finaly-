@@ -8,6 +8,7 @@ export const state = {
             {id: 3, message: 'COOL', likesCount: 21},
             {id: 4, message: 'LUCKY MAN', likesCount: 50},
         ],
+        newPostText:''
     },
     dialogsPage: {
         dialogsData: [
@@ -33,7 +34,13 @@ export const state = {
     }
 }
 
-export const addPost=(postMessage:string|undefined)=>{
-    state.profilePage.postData.push({id: 5, message: postMessage?postMessage:'', likesCount: 0})
-    rerenderEntireTree(state,addPost)
+export const addPost=()=>{
+    state.profilePage.postData.push({id: 5, message: state.profilePage.newPostText, likesCount: 0})
+    updateNewPostText('')
+    rerenderEntireTree(state)
+}
+
+export const updateNewPostText=(newPost:string)=>{
+    state.profilePage.newPostText=newPost
+    rerenderEntireTree(state)
 }

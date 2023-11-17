@@ -1,5 +1,5 @@
 import {rerenderEntireTree} from './render';
-import {addPost, state} from './state/state';
+import {state} from './state/state';
 
 
-rerenderEntireTree(state,addPost)
+rerenderEntireTree(state)

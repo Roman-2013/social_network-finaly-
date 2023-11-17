@@ -4,8 +4,8 @@ import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
 
 export type DialogsPropsType={
-    messagesData?: MessagePropsType[]
-    dialogsData?: DialogsItemPropsType[]
+    messagesData: MessagePropsType[]
+    dialogsData: DialogsItemPropsType[]
 }
 
 export const Dialogs:React.FC<DialogsPropsType> = ({dialogsData,messagesData}) => {
@@ -18,7 +18,7 @@ const [message,setMessage]=useState('')
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                {dialogsData?.map(el => {
+                {dialogsData.map(el => {
                     return <DialogItem
                         key={el.id}
                         name={el.name}
@@ -27,7 +27,7 @@ const [message,setMessage]=useState('')
                 })}
             </div>
             <div className={s.messages}>
-                {messagesData?.map(el => {
+                {messagesData.map(el => {
                     return <Message
                         key={el.id}
                         message={el.message}
