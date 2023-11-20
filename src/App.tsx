@@ -5,7 +5,7 @@ import {NavBar} from './components/Navbar/NavBar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {Profile} from './components/Profile/Profile';
 import {Route, Routes} from 'react-router-dom';
-import {StateType} from './render';
+import {StateType} from './index';
 
 export type StatePropsType = {
     state: StateType

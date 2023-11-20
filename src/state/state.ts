@@ -1,4 +1,8 @@
-import {rerenderEntireTree} from '../render';
+import {StateType} from '../index';
+
+let rerenderEntireTree=(state: StateType)=>{
+    console.log('state changed')
+}
 
 export const state = {
     profilePage: {
@@ -54,4 +58,8 @@ export const addMessage=()=>{
     state.dialogsPage.messagesData.push({id: Math.ceil(Math.random()*2), message: state.dialogsPage.messageText,})
     updateNewMessageText('')
     rerenderEntireTree(state)
+}
+
+export const subscribe=(observer:(state: StateType)=>void)=>{
+    rerenderEntireTree=observer
 }
