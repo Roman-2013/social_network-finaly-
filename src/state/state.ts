@@ -1,13 +1,8 @@
 import {StateType} from '../index';
+import {AnyAction} from 'redux';
 
-// let rerenderEntireTree=(state: StateType)=>{
-//     console.log('state changed')
-// }
-
-
-
-export const store={
-     _state : {
+export const store = {
+    _state: {
         profilePage: {
             postData: [
                 {id: 1, message: 'Hi, how are you', likesCount: 15},
@@ -15,7 +10,7 @@ export const store={
                 {id: 3, message: 'COOL', likesCount: 21},
                 {id: 4, message: 'LUCKY MAN', likesCount: 50},
             ],
-            newPostText:''
+            newPostText: ''
         },
         dialogsPage: {
             dialogsData: [
@@ -31,41 +26,51 @@ export const store={
                 {id: 5, message: 'You are coll man'},
                 {id: 6, message: 'You are coll man'},
             ],
-            messageText:'romkkk'
+            messageText: 'romkkk'
         },
         siteBar: {
             friendsData: [
                 {id: 1, name: 'Roma', img: 'https://cs14.pikabu.ru/post_img/big/2021/05/02/1/1619910483128421699.jpg'},
-                {id: 2, name: 'Olya', img: 'https://avatars.dzeninfra.ru/get-zen_doc/3443049/pub_5f459a20399c585d21b14752_5f459b5fefe0fa6c7c8257c6/scale_1200'},
-                {id: 3, name: 'Zhenya', img: 'https://static1.tgstat.ru/channels/_0/1e/1e4f42daa1c6ae0a03ce8419b805eaa2.jpg'},
+                {
+                    id: 2,
+                    name: 'Olya',
+                    img: 'https://avatars.dzeninfra.ru/get-zen_doc/3443049/pub_5f459a20399c585d21b14752_5f459b5fefe0fa6c7c8257c6/scale_1200'
+                },
+                {
+                    id: 3,
+                    name: 'Zhenya',
+                    img: 'https://static1.tgstat.ru/channels/_0/1e/1e4f42daa1c6ae0a03ce8419b805eaa2.jpg'
+                },
             ]
         }
     },
-    _callSubscriber (state: StateType){
+    _callSubscriber(state: StateType) {
         console.log('state changed')
     },
-    addPost(){
-        this._state.profilePage.postData.push({id: 5, message: this._state.profilePage.newPostText, likesCount: 0})
-        this.updateNewPostText('')
-        this._callSubscriber(this._state)
+    subscribe(observer: (state: StateType) => void) {
+        this._callSubscriber = observer
     },
-     updateNewPostText(newPost:string){
-         this._state.profilePage.newPostText=newPost
-         this._callSubscriber(this._state)
+    getState() {
+        return this._state
     },
-     updateNewMessageText(newMessage:string){
-         this._state.dialogsPage.messageText=newMessage
-         this._callSubscriber(this._state)
-    },
-     addMessage(){
-        this._state.dialogsPage.messagesData.push({id: Math.ceil(Math.random()*2), message: this._state.dialogsPage.messageText,})
-        this.updateNewMessageText('')
-         this._callSubscriber(this._state)
-    },
-     subscribe(observer:(state: StateType)=>void){
-         this._callSubscriber=observer
-    },
-    getState(){
-         return this._state
+    dispatch(action: AnyAction) {
+        if (action.type === 'ADD-POST') {
+            this._state.profilePage.postData.push({id: 5, message: this._state.profilePage.newPostText, likesCount: 0})
+            this.dispatch({type: 'UPDATE-NEW-POST-TEXT', newPost: ''})
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newPost
+            this._callSubscriber(this._state)
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogsPage.messageText = action.newMessage
+            this._callSubscriber(this._state)
+        } else if (action.type === 'ADD-MESSAGE') {
+            this._state.dialogsPage.messagesData.push({
+                id: Math.ceil(Math.random() * 2),
+                message: this._state.dialogsPage.messageText,
+            })
+            this.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT',newMessage:''})
+            this._callSubscriber(this._state)
+        }
     }
 }

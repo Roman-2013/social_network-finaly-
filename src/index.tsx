@@ -1,4 +1,4 @@
-import { store } from './state/state';
+import {store} from './state/state';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './App';
@@ -10,8 +10,8 @@ import {NavBarPropsPage} from './components/Navbar/NavBar';
 
 
 export type StateType = {
-    profilePage: { postData: PostPropsType[], newPostText:string }
-    dialogsPage: { dialogsData: DialogsItemPropsType[], messagesData: MessagePropsType[],messageText:string }
+    profilePage: { postData: PostPropsType[], newPostText: string }
+    dialogsPage: { dialogsData: DialogsItemPropsType[], messagesData: MessagePropsType[], messageText: string }
     siteBar: NavBarPropsPage
 }
 
@@ -19,18 +19,13 @@ export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App
-                updateNewPostText={store.updateNewPostText.bind(store)}
-                addPost={store.addPost.bind(store)}
+                dispatch={store.dispatch.bind(store)}
                 state={state}
-                updateNewMessageText={store.updateNewMessageText.bind(store)}
-                addMessage={store.addMessage.bind(store)}
             />
-        </BrowserRouter>
-        ,
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }
-
 
 
 rerenderEntireTree(store.getState())

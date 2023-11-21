@@ -3,19 +3,19 @@ import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {ProfilePropsType} from '../Profile';
 
-export const MyPosts: React.FC<ProfilePropsType> = ({updateNewPostText,newPostText,postData, addPost}) => {
+export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
 
     const addPostHandler = () => {
-            addPost()
+        dispatch({type:'ADD-POST'})
 
     }
 
     const onChangeHandler=()=>{
         if(newPostElement.current){
-            updateNewPostText(newPostElement.current.value)
+            dispatch({type:'UPDATE-NEW-POST-TEXT',newPost:newPostElement.current.value})
         }
     }
 

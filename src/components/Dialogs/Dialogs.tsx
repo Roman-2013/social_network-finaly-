@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
+import {AnyAction} from 'redux';
 
 export type DialogsPropsType = {
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
     messageText: string
-    updateNewMessageText: (newMessage: string) => void
-    addMessage: () => void
+    dispatch:(action:AnyAction)=>void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = ({
-                                                        addMessage,
-                                                        updateNewMessageText,
+                                                        dispatch,
                                                         messageText,
                                                         dialogsData,
                                                         messagesData
@@ -21,10 +20,10 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
     const [message, setMessage] = useState('')
 
     const sendMessage = () => {
-        addMessage()
+        dispatch({type:'ADD-MESSAGE'})
     }
     const onChangeMessageHandler = (newMessage:string) => {
-        updateNewMessageText(newMessage)
+        dispatch({type:'UPDATE-NEW-MESSAGE-TEXT',newMessage})
     }
 
     return (

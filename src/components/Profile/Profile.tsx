@@ -2,19 +2,19 @@ import React from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 import {PostPropsType} from './MyPosts/Posts/Post';
+import {AnyAction} from 'redux';
 
 export type ProfilePropsType={
-    addPost:()=>void
     postData: PostPropsType[]
     newPostText:string
-    updateNewPostText:(newPost:string)=>void
+    dispatch:(action:AnyAction)=>void
 }
 
-export const Profile:React.FC<ProfilePropsType> = ({updateNewPostText,newPostText,postData,addPost}) => {
+export const Profile:React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} postData={postData}/>
+            <MyPosts dispatch={dispatch}  newPostText={newPostText}  postData={postData}/>
         </div>
     );
 };
