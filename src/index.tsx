@@ -1,4 +1,4 @@
-import {state, subscribe} from './state/state';
+import { store } from './state/state';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './App';
@@ -7,7 +7,6 @@ import {PostPropsType} from './components/Profile/MyPosts/Posts/Post';
 import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from './components/Dialogs/Message/Message';
 import {NavBarPropsPage} from './components/Navbar/NavBar';
-import {addMessage, addPost, updateNewMessageText, updateNewPostText} from './state/state';
 
 
 export type StateType = {
@@ -20,11 +19,11 @@ export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App
-                updateNewPostText={updateNewPostText}
-                addPost={addPost}
+                updateNewPostText={store.updateNewPostText.bind(store)}
+                addPost={store.addPost.bind(store)}
                 state={state}
-                updateNewMessageText={updateNewMessageText}
-                addMessage={addMessage}
+                updateNewMessageText={store.updateNewMessageText.bind(store)}
+                addMessage={store.addMessage.bind(store)}
             />
         </BrowserRouter>
         ,
@@ -34,6 +33,6 @@ export const rerenderEntireTree = (state: StateType) => {
 
 
 
-rerenderEntireTree(state)
+rerenderEntireTree(store.getState())
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
