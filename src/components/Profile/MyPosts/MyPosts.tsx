@@ -2,6 +2,9 @@ import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {ProfilePropsType} from '../Profile';
+import {addPostAC, updateNewPostTextAC} from '../../../state/state';
+
+
 
 export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {
 
@@ -9,13 +12,13 @@ export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postDa
 
 
     const addPostHandler = () => {
-        dispatch({type:'ADD-POST'})
+        dispatch(addPostAC())
 
     }
 
     const onChangeHandler=()=>{
         if(newPostElement.current){
-            dispatch({type:'UPDATE-NEW-POST-TEXT',newPost:newPostElement.current.value})
+            dispatch(updateNewPostTextAC(newPostElement.current.value))
         }
     }
 

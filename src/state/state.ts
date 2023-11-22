@@ -53,7 +53,7 @@ export const store = {
     getState() {
         return this._state
     },
-    dispatch(action: AnyAction) {
+    dispatch(action: ActionType) {
         if (action.type === 'ADD-POST') {
             this._state.profilePage.postData.push({id: 5, message: this._state.profilePage.newPostText, likesCount: 0})
             this.dispatch({type: 'UPDATE-NEW-POST-TEXT', newPost: ''})
@@ -69,8 +69,37 @@ export const store = {
                 id: Math.ceil(Math.random() * 2),
                 message: this._state.dialogsPage.messageText,
             })
-            this.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT',newMessage:''})
+            this.dispatch(updateNewMessageTextAC(''))
             this._callSubscriber(this._state)
         }
     }
+}
+
+type ActionType =
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof addMessageAC> |
+    ReturnType<typeof updateNewMessageTextAC>
+
+
+export let addPostAC = () => {
+    return {
+        type: 'ADD-POST'
+    } as const
+}
+export let updateNewPostTextAC = (newPost: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT', newPost
+    }as const
+}
+export const addMessageAC = () => {
+    return {
+        type: 'ADD-MESSAGE'
+    } as const
+}
+
+export const updateNewMessageTextAC = (newMessage: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-TEXT', newMessage
+    } as const
 }
