@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
-import {AnyAction} from 'redux';
-import {addMessageAC, updateNewMessageTextAC} from '../../state/state';
+import {addMessageAC, updateNewMessageTextAC} from '../../state/dialogsReducer';
+import {ActionType} from '../../state/state';
 
 export type DialogsPropsType = {
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
     messageText: string
-    dispatch:(action:AnyAction )=>void
+    dispatch:(action:ActionType )=>void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = ({
@@ -18,10 +18,10 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
                                                         dialogsData,
                                                         messagesData
                                                     }) => {
-    const [message, setMessage] = useState('')
 
     const sendMessage = () => {
         dispatch(addMessageAC())
+        dispatch(updateNewMessageTextAC(''))
     }
     const onChangeMessageHandler = (newMessage:string) => {
         dispatch(updateNewMessageTextAC(newMessage))
@@ -50,7 +50,9 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
                     <textarea
                         value={messageText}
                         onChange={(e)=>onChangeMessageHandler(e.currentTarget.value)}></textarea>
-                    <button onClick={sendMessage}>Send message</button>
+                    <div>
+                        <button onClick={sendMessage}>Send message</button>
+                    </div>
                 </div>
             </div>
 

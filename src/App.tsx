@@ -6,11 +6,11 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {Profile} from './components/Profile/Profile';
 import {Route, Routes} from 'react-router-dom';
 import {StateType} from './index';
-import {AnyAction} from 'redux';
+import {ActionType} from './state/state';
 
 export type StatePropsType = {
     state: StateType
-    dispatch:(action:AnyAction)=>void
+    dispatch:(action:ActionType)=>void
 }
 
 

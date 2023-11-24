@@ -1,5 +1,6 @@
-import {StateType} from '../index';
-import {AnyAction} from 'redux';
+import {StateType} from 'index';
+import {addMessageAC, DialogsReducer, updateNewMessageTextAC} from './dialogsReducer';
+import {ProfileReducer, updateNewPostTextAC} from './profileReducer';
 
 export const store = {
     _state: {
@@ -26,7 +27,7 @@ export const store = {
                 {id: 5, message: 'You are coll man'},
                 {id: 6, message: 'You are coll man'},
             ],
-            messageText: 'romkkk'
+            messageText: ''
         },
         siteBar: {
             friendsData: [
@@ -54,52 +55,23 @@ export const store = {
         return this._state
     },
     dispatch(action: ActionType) {
-        if (action.type === 'ADD-POST') {
-            this._state.profilePage.postData.push({id: 5, message: this._state.profilePage.newPostText, likesCount: 0})
-            this.dispatch({type: 'UPDATE-NEW-POST-TEXT', newPost: ''})
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newPost
-            this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-            this._state.dialogsPage.messageText = action.newMessage
-            this._callSubscriber(this._state)
-        } else if (action.type === 'ADD-MESSAGE') {
-            this._state.dialogsPage.messagesData.push({
-                id: Math.ceil(Math.random() * 2),
-                message: this._state.dialogsPage.messageText,
-            })
-            this.dispatch(updateNewMessageTextAC(''))
-            this._callSubscriber(this._state)
-        }
+        debugger
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber(this._state)
     }
 }
 
-type ActionType =
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateNewPostTextAC> |
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC>
 
-
-export let addPostAC = () => {
+export const addPostAC = () => {
     return {
         type: 'ADD-POST'
     } as const
 }
-export let updateNewPostTextAC = (newPost: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT', newPost
-    }as const
-}
-export const addMessageAC = () => {
-    return {
-        type: 'ADD-MESSAGE'
-    } as const
-}
 
-export const updateNewMessageTextAC = (newMessage: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-TEXT', newMessage
-    } as const
-}
+export type ActionType =
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addMessageAC>
+    | ReturnType<typeof updateNewMessageTextAC>
+

@@ -4,7 +4,7 @@ import s from './Post.module.css'
 export type PostPropsType={
     message:string
     likesCount:number
-    id?:number
+    id:number
 }
 
 export const Post:React.FC<PostPropsType> = ({likesCount,message}) => {

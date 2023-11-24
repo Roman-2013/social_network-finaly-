@@ -2,7 +2,8 @@ import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {ProfilePropsType} from '../Profile';
-import {addPostAC, updateNewPostTextAC} from '../../../state/state';
+import { updateNewPostTextAC} from '../../../state/profileReducer';
+import {addPostAC} from '../../../state/state';
 
 
 
@@ -13,6 +14,7 @@ export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postDa
 
     const addPostHandler = () => {
         dispatch(addPostAC())
+        dispatch(updateNewPostTextAC(''))
 
     }
 
@@ -33,7 +35,8 @@ export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postDa
             </div>
 
             {postData.map(el => {
-                return <Post key={el.id} likesCount={el.likesCount} message={el.message}/>
+                return <Post id={el.id} key={el.id} likesCount={el.likesCount} message={el.message}/>
+
             })}
 
         </div>
