@@ -1,8 +1,8 @@
 import {StateType} from 'index';
-import {addMessageAC, DialogsReducer, updateNewMessageTextAC} from './dialogsReducer';
-import {ProfileReducer, updateNewPostTextAC} from './profileReducer';
+import {DialogsReducer} from './dialogsReducer';
+import {ProfileReducer} from './profileReducer';
 
-export const store = {
+const _store = {
     _state: {
         profilePage: {
             postData: [
@@ -54,7 +54,7 @@ export const store = {
     getState() {
         return this._state
     },
-    dispatch(action: ActionType) {
+    dispatch(action: any) {
         debugger
         this._state.profilePage = ProfileReducer(this._state.profilePage, action)
         this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
@@ -63,15 +63,5 @@ export const store = {
 }
 
 
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
 
-export type ActionType =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>
 

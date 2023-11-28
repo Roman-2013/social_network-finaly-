@@ -2,14 +2,14 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
-import {addMessageAC, updateNewMessageTextAC} from '../../state/dialogsReducer';
-import {ActionType} from '../../state/state';
+import {addMessageAC, DialogsActionType, updateNewMessageTextAC} from '../../state/dialogsReducer';
+import {ProfileActionType} from '../../state/profileReducer';
 
 export type DialogsPropsType = {
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
     messageText: string
-    dispatch:(action:ActionType )=>void
+    dispatch:(action:DialogsActionType | ProfileActionType )=>void
 }
 
 export const Dialogs: React.FC<DialogsPropsType> = ({

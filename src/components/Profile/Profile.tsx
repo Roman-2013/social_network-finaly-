@@ -2,12 +2,13 @@ import React from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 import {PostPropsType} from './MyPosts/Posts/Post';
-import {ActionType} from '../../state/state';
+import {DialogsActionType} from '../../state/dialogsReducer';
+import {ProfileActionType} from '../../state/profileReducer';
 
 export type ProfilePropsType={
     postData: PostPropsType[]
     newPostText:string
-    dispatch:(action:ActionType)=>void
+    dispatch:(action:DialogsActionType | ProfileActionType)=>void
 }
 
 export const Profile:React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {

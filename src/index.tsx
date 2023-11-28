@@ -1,4 +1,3 @@
-import {store} from './state/state';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './App';
@@ -7,6 +6,7 @@ import {PostPropsType} from './components/Profile/MyPosts/Posts/Post';
 import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from './components/Dialogs/Message/Message';
 import {NavBarPropsPage} from './components/Navbar/NavBar';
+import {AppRootStateType, store} from './state/reduxStore';
 
 
 export type StateType = {
@@ -15,12 +15,11 @@ export type StateType = {
     siteBar: NavBarPropsPage
 }
 
-export const rerenderEntireTree = (state: StateType) => {
+export const rerenderEntireTree = (state: AppRootStateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <App
-                dispatch={store.dispatch.bind(store)}
-                state={state}
+                state={state} dispatch={store.dispatch}
             />
         </BrowserRouter>,
         document.getElementById('root')
@@ -30,4 +29,6 @@ export const rerenderEntireTree = (state: StateType) => {
 
 rerenderEntireTree(store.getState())
 
-store.subscribe(rerenderEntireTree)
+store.subscribe(()=>{
+    rerenderEntireTree(store.getState())
+})

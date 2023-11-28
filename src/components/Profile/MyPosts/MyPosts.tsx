@@ -2,8 +2,7 @@ import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Posts/Post';
 import {ProfilePropsType} from '../Profile';
-import { updateNewPostTextAC} from '../../../state/profileReducer';
-import {addPostAC} from '../../../state/state';
+import {addPostAC, updateNewPostTextAC} from '../../../state/profileReducer';
 
 
 
