@@ -2,29 +2,28 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
-import {addMessageAC, DialogsActionType, updateNewMessageTextAC} from '../../state/dialogsReducer';
-import {ProfileActionType} from '../../state/profileReducer';
 
-export type DialogsPropsType = {
+type DialogsType = {
+    addMessage: () => void
+    updateNewMessageText: (newMessage: string) => void
+    messageText: string
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
-    messageText: string
-    dispatch:(action:DialogsActionType | ProfileActionType )=>void
 }
 
-export const Dialogs: React.FC<DialogsPropsType> = ({
-                                                        dispatch,
-                                                        messageText,
-                                                        dialogsData,
-                                                        messagesData
-                                                    }) => {
+export const Dialogs: React.FC<DialogsType> = ({
+                                                   addMessage,
+                                                   updateNewMessageText,
+                                                   messagesData,
+                                                   dialogsData,
+                                                   messageText
+                                               }) => {
 
     const sendMessage = () => {
-        dispatch(addMessageAC())
-        dispatch(updateNewMessageTextAC(''))
+        addMessage()
     }
-    const onChangeMessageHandler = (newMessage:string) => {
-        dispatch(updateNewMessageTextAC(newMessage))
+    const onChangeMessageHandler = (newMessage: string) => {
+        updateNewMessageText(newMessage)
     }
 
     return (
@@ -49,7 +48,7 @@ export const Dialogs: React.FC<DialogsPropsType> = ({
                 <div>
                     <textarea
                         value={messageText}
-                        onChange={(e)=>onChangeMessageHandler(e.currentTarget.value)}></textarea>
+                        onChange={(e) => onChangeMessageHandler(e.currentTarget.value)}></textarea>
                     <div>
                         <button onClick={sendMessage}>Send message</button>
                     </div>

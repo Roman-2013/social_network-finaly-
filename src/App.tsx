@@ -8,15 +8,16 @@ import {Route, Routes} from 'react-router-dom';
 import {AppRootStateType} from './state/reduxStore';
 import {DialogsActionType} from './state/dialogsReducer';
 import {ProfileActionType} from './state/profileReducer';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 
 export type StatePropsType = {
     state: AppRootStateType
-    dispatch:(action:DialogsActionType | ProfileActionType)=>void
+    dispatch: (action: DialogsActionType | ProfileActionType) => void
 }
 
 
-export const App: React.FC<StatePropsType> = ({state,dispatch}) => {
-    const {Dialog,SiteBar,ProfilePage}=state
+export const App: React.FC<StatePropsType> = ({state, dispatch}) => {
+    const {Dialog, SiteBar, ProfilePage} = state
     const {postData, newPostText} = ProfilePage
     const {dialogsData, messagesData, messageText} = Dialog
     const {friendsData} = SiteBar
@@ -28,7 +29,7 @@ export const App: React.FC<StatePropsType> = ({state,dispatch}) => {
                 <Routes>
                     <Route path={'/'}
                            element={<Profile newPostText={newPostText} dispatch={dispatch} postData={postData}/>}/>
-                    <Route path={'/message/*'} element={<Dialogs
+                    <Route path={'/message/*'} element={<DialogsContainer
                         messagesData={messagesData}
                         dialogsData={dialogsData}
                         messageText={messageText}

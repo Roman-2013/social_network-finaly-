@@ -1,25 +1,28 @@
 import React, {useRef} from 'react';
 import s from './MyPosts.module.css'
-import {Post} from './Posts/Post';
-import {ProfilePropsType} from '../Profile';
-import {addPostAC, updateNewPostTextAC} from '../../../state/profileReducer';
+import {Post, PostPropsType} from './Posts/Post';
 
+type MyPostsType={
+    updateNewPostText:(text:string)=>void
+    addPostAC:()=>void
+    postData:PostPropsType[]
+    newPostText:string
+}
 
-
-export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {
+export const MyPosts: React.FC<MyPostsType> = ({updateNewPostText,addPostAC,postData,newPostText}) => {
 
     let newPostElement = useRef<HTMLTextAreaElement>(null)
 
 
-    const addPostHandler = () => {
-        dispatch(addPostAC())
-        dispatch(updateNewPostTextAC(''))
-
+    const odnAddPost = () => {
+        debugger
+        addPostAC()
     }
 
     const onChangeHandler=()=>{
+        debugger
         if(newPostElement.current){
-            dispatch(updateNewPostTextAC(newPostElement.current.value))
+            updateNewPostText(newPostElement.current.value)
         }
     }
 
@@ -30,7 +33,7 @@ export const MyPosts: React.FC<ProfilePropsType> = ({dispatch,newPostText,postDa
                 <textarea onChange={onChangeHandler} value={newPostText} ref={newPostElement}/>
             </div>
             <div>
-                <button onClick={addPostHandler}>Add post</button>
+                <button onClick={odnAddPost}>Add post</button>
             </div>
 
             {postData.map(el => {

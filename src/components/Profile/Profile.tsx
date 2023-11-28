@@ -4,6 +4,7 @@ import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
 import {PostPropsType} from './MyPosts/Posts/Post';
 import {DialogsActionType} from '../../state/dialogsReducer';
 import {ProfileActionType} from '../../state/profileReducer';
+import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 
 export type ProfilePropsType={
     postData: PostPropsType[]
@@ -15,7 +16,7 @@ export const Profile:React.FC<ProfilePropsType> = ({dispatch,newPostText,postDat
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts dispatch={dispatch}  newPostText={newPostText}  postData={postData}/>
+            <MyPostsContainer dispatch={dispatch}  newPostText={newPostText}  postData={postData}/>
         </div>
     );
 };
