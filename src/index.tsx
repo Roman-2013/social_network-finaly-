@@ -7,7 +7,7 @@ import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from './components/Dialogs/Message/Message';
 import {NavBarPropsPage} from './components/Navbar/NavBar';
 import {AppRootStateType, store} from './state/reduxStore';
-import {Provider} from './StoreContext';
+import {Provider} from 'react-redux';
 
 
 export type StateType = {

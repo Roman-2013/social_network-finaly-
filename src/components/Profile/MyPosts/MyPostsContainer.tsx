@@ -1,39 +1,30 @@
 import React from 'react';
-import {addPostAC, updateNewPostTextAC} from '../../../state/profileReducer';
+import {addPostAC, ProfileActionType, updateNewPostTextAC} from '../../../state/profileReducer';
 import {MyPosts} from './MyPosts';
-import {AppStoreType} from '../../../state/reduxStore';
-import {StoreContext} from '../../../StoreContext';
+import {AppRootStateType, AppStoreType} from '../../../state/reduxStore';
+import {connect} from 'react-redux';
+import {DialogsActionType} from '../../../state/dialogsReducer';
 
 
-export const MyPostsContainer = () => {
+const   mapStateToProps=(state:AppRootStateType)=>{
+    return{
+        postData:state.ProfilePage.postData,
+        newPostText:state.ProfilePage.newPostText,
+    }
+}
 
-
-
-    return (
-        <StoreContext.Consumer>
-            {
-            (store: AppStoreType) => {
-
-                const addPostHandler = () => {
-                    store.dispatch(addPostAC())
-                    store.dispatch(updateNewPostTextAC(''))
-
-                }
-
-                const onChangeHandler = (text: string) => {
-                    store.dispatch(updateNewPostTextAC(text))
-                }
-
-                return <MyPosts
-                    postData={store.getState().ProfilePage.postData}
-                    newPostText={store.getState().ProfilePage.newPostText}
-                    addPostAC={addPostHandler}
-                    updateNewPostText={(text) => onChangeHandler(text)}/>
-            }
-
-
+const  mapDispatchToProps=(dispatch:(action:DialogsActionType | ProfileActionType)=>void)=>{
+    return{
+        addPostAC:()=>{
+            dispatch(addPostAC())
+            dispatch(updateNewPostTextAC(''))
+        } ,
+        updateNewPostText:(text: string)=>{
+            dispatch(updateNewPostTextAC(text))
         }
-        </StoreContext.Consumer>
-    );
-};
+    }
+}
 
+
+
+export const MyPostsContainer=connect(mapStateToProps,mapDispatchToProps)(MyPosts)
