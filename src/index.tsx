@@ -7,6 +7,7 @@ import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from './components/Dialogs/Message/Message';
 import {NavBarPropsPage} from './components/Navbar/NavBar';
 import {AppRootStateType, store} from './state/reduxStore';
+import {Provider} from './StoreContext';
 
 
 export type StateType = {
@@ -15,12 +16,15 @@ export type StateType = {
     siteBar: NavBarPropsPage
 }
 
+
+
 export const rerenderEntireTree = (state: AppRootStateType) => {
     ReactDOM.render(
         <BrowserRouter>
+            <Provider store={store}>
             <App
-                state={state} dispatch={store.dispatch}
             />
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

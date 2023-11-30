@@ -12,11 +12,11 @@ export type ProfilePropsType={
     dispatch:(action:DialogsActionType | ProfileActionType)=>void
 }
 
-export const Profile:React.FC<ProfilePropsType> = ({dispatch,newPostText,postData}) => {
+export const Profile = () => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer dispatch={dispatch}  newPostText={newPostText}  postData={postData}/>
+            <MyPostsContainer />
         </div>
     );
 };
