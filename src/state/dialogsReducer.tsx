@@ -1,6 +1,11 @@
 import {DialogsItemPropsType} from '../components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from '../components/Dialogs/Message/Message';
-import {addPostAC, updateNewPostTextAC} from './profileReducer';
+
+type DialogsReducer={
+    dialogsData: DialogsItemPropsType[],
+    messagesData: MessagePropsType[],
+    messageText: string
+}
 
 const initialState = {
     dialogsData: [
@@ -21,11 +26,7 @@ const initialState = {
 }
 
 
-export const DialogsReducer = (state: {
-    dialogsData: DialogsItemPropsType[],
-    messagesData: MessagePropsType[],
-    messageText: string
-} = initialState, action: DialogsActionType) => {
+export const DialogsReducer = (state: DialogsReducer = initialState, action: DialogsActionType):DialogsReducer => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-TEXT': {
             state.messageText = action.newMessage

@@ -1,5 +1,10 @@
 import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
 
+type ProfileReducer = {
+    postData: PostPropsType[],
+    newPostText: string
+}
+
 const initialState = {
     postData: [
         {id: 1, message: 'Hi, how are you', likesCount: 15},
@@ -11,18 +16,13 @@ const initialState = {
 }
 
 
-export const ProfileReducer = (state: {
-    postData: PostPropsType[],
-    newPostText: string
-} = initialState, action: ProfileActionType) => {
+export const ProfileReducer = (state: ProfileReducer = initialState, action: ProfileActionType):ProfileReducer => {
     switch (action.type) {
         case 'ADD-POST': {
-            state.postData.push({id: 5, message: state.newPostText, likesCount: 0})
-            return state
+            return {...state,postData:[...state.postData,{id: 5, message: state.newPostText, likesCount: 0}]}
         }
         case 'UPDATE-NEW-POST-TEXT': {
-            state.newPostText = action.newPost
-            return state
+            return {...state,newPostText:action.newPost}
         }
         default:
             return state

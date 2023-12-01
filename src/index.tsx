@@ -15,10 +15,6 @@ export type StateType = {
     dialogsPage: { dialogsData: DialogsItemPropsType[], messagesData: MessagePropsType[], messageText: string }
     siteBar: NavBarPropsPage
 }
-
-
-
-export const rerenderEntireTree = (state: AppRootStateType) => {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
@@ -28,11 +24,5 @@ export const rerenderEntireTree = (state: AppRootStateType) => {
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
 
 
-rerenderEntireTree(store.getState())
-
-store.subscribe(()=>{
-    rerenderEntireTree(store.getState())
-})
