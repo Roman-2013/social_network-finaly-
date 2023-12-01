@@ -1,7 +1,7 @@
 import {DialogsItemPropsType} from '../components/Dialogs/DialogItem/DialogItem';
 import {MessagePropsType} from '../components/Dialogs/Message/Message';
 
-type DialogsReducer={
+type DialogsReducer = {
     dialogsData: DialogsItemPropsType[],
     messagesData: MessagePropsType[],
     messageText: string
@@ -26,18 +26,16 @@ const initialState = {
 }
 
 
-export const DialogsReducer = (state: DialogsReducer = initialState, action: DialogsActionType):DialogsReducer => {
+export const DialogsReducer = (state: DialogsReducer = initialState, action: DialogsActionType): DialogsReducer => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-TEXT': {
-            state.messageText = action.newMessage
-            return state
+            return {...state, messageText: action.newMessage}
         }
         case 'ADD-MESSAGE': {
-            state.messagesData.push({
-                id: Math.ceil(Math.random() * 2),
-                message: state.messageText,
-            })
-            return state
+            return {
+                ...state,
+                messagesData: [...state.messagesData, {id: Math.ceil(Math.random() * 2), message: state.messageText}]
+            }
         }
         default:
             return state
