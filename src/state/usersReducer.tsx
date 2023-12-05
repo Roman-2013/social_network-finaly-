@@ -1,33 +1,52 @@
 
-export type RootObject = {
-	users: RootObjectUsers[];
+// export type RootObject = {
+// 	users: RootObjectUsers[];
+// }
+// export type RootObjectUsersLocation = {
+// 	city: string;
+// 	country: string;
+// }
+// export type RootObjectUsers = {
+// 	id: number;
+// 	photo: string;
+// 	followed: boolean;
+// 	fullName: string;
+// 	status: string;
+// 	location: RootObjectUsersLocation;
+// }
+
+
+
+
+export type userType={
+    name:string
+    id:number
+    uniqueUrlName:null|number
+    photos:{small:null|string,large:null|string}
+    status:null|string
+    followed:boolean
 }
-export type RootObjectUsersLocation = {
-	city: string;
-	country: string;
-}
-export type RootObjectUsers = {
-	id: number;
-	photo: string;
-	followed: boolean;
-	fullName: string;
-	status: string;
-	location: RootObjectUsersLocation;
+
+
+export type usersType={
+    items:userType[]
+    totalCount?: number,
+    error?: string|null
 }
 
 
 
 
-export const usersReducer = (state: RootObject= {} as RootObject , action: UsersActionType) => {
+export const usersReducer = (state: usersType= {items:[]}  , action: UsersActionType) => {
     switch (action.type) {
         case 'FOLLOW':{
-            return {...state,users:[...state.users.map(el=>el.id===action.userId ? {...el,followed:true}:el)]}
+            return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:true}:el)]}
         }
         case 'UN-FOLLOW':{
-            return {...state,users:[...state.users.map(el=>el.id===action.userId ? {...el,followed:false}:el)]}
+            return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:false}:el)]}
         }
         case 'SET-USERS':{
-                return {...state,users: action.users.users}
+                return {...state,items: action.items}
         }
         default:
             return state
@@ -46,9 +65,9 @@ export const unFollowAC=(userId:number)=>{
         type :'UN-FOLLOW',userId
     }as  const
 }
-export const setUsersAC=(users:RootObject)=>{
+export const setUsersAC=(items:userType[])=>{
     return {
-type :'SET-USERS',users
+type :'SET-USERS',items
     }as const
 }
 

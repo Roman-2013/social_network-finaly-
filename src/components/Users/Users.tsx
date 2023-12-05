@@ -1,60 +1,37 @@
 import React from 'react';
 import s from './Users.module.css'
-import {RootObject} from '../../state/usersReducer';
+import axios from 'axios';
+import {userType} from '../../state/usersReducer';
+import userPhoto from '../../img/anime-male-avatar_950633-914.avif'
 
 export type UsersPropsType = {
-    users: RootObject,
+    items: userType[],
     follow: (userId: number) => void
     unFollow: (userId: number) => void
-    setUsers: (users: RootObject) => void
+    setUsers: (users: userType[]) => void
 
 }
 
 
-export const Users: React.FC<UsersPropsType> = ({users, unFollow, follow, setUsers}) => {
+export const Users: React.FC<UsersPropsType> = ({items, unFollow, follow, setUsers}) => {
 
-    if(!users.users){
-        setUsers(
-            {
-                users: [
-                    {
-                        id: 1,
-                        photo: 'https://img.freepik.com/premium-photo/anime-male-avatar_950633-914.jpg',
-                        followed: false,
-                        fullName: 'Roman',
-                        status: 'dimych is bos',
-                        location: {city: 'minsk', country: 'Belarus'}
-                    },
-                    {
-                        id: 2,
-                        photo: 'https://img.freepik.com/premium-photo/anime-male-avatar_950633-914.jpg',
-                        followed: true,
-                        fullName: 'Sacha',
-                        status: 'dimych is bos',
-                        location: {city: 'Moscow', country: 'Russia'}
-                    },
-                    {
-                        id: 3,
-                        photo: 'https://img.freepik.com/premium-photo/anime-male-avatar_950633-914.jpg',
-                        followed: false,
-                        fullName: 'Ilya',
-                        status: 'dimych is bos',
-                        location: {city: 'Kiev', country: 'Ukraine'}
-                    },
-                ]
-            }
-        )
-    }
+        if (items.length === 0) {
+
+            axios.get('https://social-network.samuraijs.com/api/1.0/users?count=100')
+                .then(el=>{
+                    setUsers(el.data.items)
+                })
+        }
 
 
         return (
             <div>
                 {
-                    users.users?.map(el => {
+                    items?.map(el => {
                         return <div key={el.id}>
         <span>
             <div>
-                <img className={s.img} src={el.photo} alt=""/>
+                <img className={s.img} src={el.photos.small?el.photos.small:userPhoto} alt=""/>
             </div>
             <div>
                 {el.followed
@@ -66,12 +43,8 @@ export const Users: React.FC<UsersPropsType> = ({users, unFollow, follow, setUse
         </span>
                             <span>
             <span>
-                <div>{el.fullName}</div>
+                <div>{el.name}</div>
                 <div>{el.status}</div>
-            </span>
-            <span>
-                <div>{el.location.city}</div>
-                <div>{el.location.country}</div>
             </span>
         </span>
                         </div>
