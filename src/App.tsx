@@ -8,6 +8,7 @@ import {DialogsActionType} from './state/dialogsReducer';
 import {ProfileActionType} from './state/profileReducer';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
+import {UsersContainer} from './components/Users/UsersContainer';
 
 export type StatePropsType = {
     state: AppRootStateType
@@ -26,6 +27,7 @@ export const App = () => {
                     <Route path={'/'} element={<Profile/>}/>
                     <Route path={'/message/*'} element={<DialogsContainer/>}/>
                     <Route path={'/profile/*'} element={<Profile/>}/>
+                    <Route path={'/users/*'} element={<UsersContainer/>}/>
 
                 </Routes>
 
