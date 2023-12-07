@@ -30,14 +30,16 @@ export type userType={
 
 export type usersType={
     items:userType[]
-    totalCount?: number,
-    error?: string|null
+    totalCount: number,
+    error: string|null
+    currentPage:number
 }
+const initialState={currentPage:45}as usersType
 
 
 
 
-export const usersReducer = (state: usersType= {items:[]}  , action: UsersActionType) => {
+export const usersReducer = (state: usersType= initialState  , action: UsersActionType) => {
     switch (action.type) {
         case 'FOLLOW':{
             return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:true}:el)]}
@@ -46,13 +48,22 @@ export const usersReducer = (state: usersType= {items:[]}  , action: UsersAction
             return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:false}:el)]}
         }
         case 'SET-USERS':{
-                return {...state,items: action.items}
+                return {...state,... action.users}
+        }
+        case 'SET-CURRENT-PAGE':{
+            return {...state,currentPage:action.currentPage}
         }
         default:
             return state
     }
 }
 
+
+export const setCurrentPageAC=(currentPage:number)=>{
+    return{
+        type:'SET-CURRENT-PAGE',currentPage
+    }as const
+}
 
 export const followAC=(userId:number)=>{
     return {
@@ -65,13 +76,14 @@ export const unFollowAC=(userId:number)=>{
         type :'UN-FOLLOW',userId
     }as  const
 }
-export const setUsersAC=(items:userType[])=>{
+export const setUsersAC=(users:usersType)=>{
     return {
-type :'SET-USERS',items
+type :'SET-USERS',users
     }as const
 }
 
 export type UsersActionType=
     ReturnType<typeof followAC>|
     ReturnType<typeof unFollowAC>|
-    ReturnType<typeof setUsersAC>
+    ReturnType<typeof setUsersAC>|
+    ReturnType<typeof setCurrentPageAC>
