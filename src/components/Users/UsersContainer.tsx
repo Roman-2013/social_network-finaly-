@@ -1,4 +1,3 @@
-import {Users} from './Users';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
 import {
@@ -10,6 +9,9 @@ import {
     usersType,
     userType
 } from '../../state/usersReducer';
+import React from 'react';
+import axios from 'axios';
+import {Users} from './Users';
 
 type mapStateToProps={
     items:userType[]
@@ -25,6 +27,54 @@ type mapDispatchToPropsType={
     setCurrentPage:(currentPage:number)=>void
 }
 
+
+export type UsersPropsType = {
+    totalCount: number
+    error: string | null
+    items: userType[]
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
+    setUsers: (users: usersType) => void
+    setCurrentPage: (currentPage: number) => void
+    currentPage: number
+}
+
+
+export class UsersAPIContainer extends React.Component<UsersPropsType> {
+
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`)
+            .then(el => {
+                this.props.setUsers(el.data)
+            })
+    }
+
+    onPageChanged(currentPage: number) {
+        this.props.setCurrentPage(currentPage)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`)
+            .then(el => {
+                this.props.setUsers(el.data)
+            })
+
+    }
+
+    render() {
+        return <Users
+            totalCount={this.props.totalCount}
+            onPageChanged={this.onPageChanged.bind(this)}
+            currentPage={this.props.currentPage}
+            items={this.props.items}
+            unFollow={this.props.unFollow}
+            follow={this.props.follow}
+        />
+
+
+
+    }
+}
+
+
 const mapStateToProps = (state: AppRootStateType):mapStateToProps=> {
     return {
         items: state.Users.items,
@@ -38,6 +88,7 @@ const mapDispatchToProps = (dispatch: (action: UsersActionType) => void):mapDisp
 
     return {
         setCurrentPage:(currentPage:number)=>{
+            debugger
             dispatch(setCurrentPageAC(currentPage))
         },
         follow:(userId:number)=>{
@@ -53,4 +104,4 @@ const mapDispatchToProps = (dispatch: (action: UsersActionType) => void):mapDisp
 }
 
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users)
+export  const UsersContainer= connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer)
