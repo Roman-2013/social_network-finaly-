@@ -33,8 +33,9 @@ export type usersType={
     totalCount: number,
     error: string|null
     currentPage:number
+    isFetching:boolean
 }
-const initialState={currentPage:45}as usersType
+const initialState={currentPage:45,isFetching:false}as usersType
 
 
 
@@ -52,6 +53,9 @@ export const usersReducer = (state: usersType= initialState  , action: UsersActi
         }
         case 'SET-CURRENT-PAGE':{
             return {...state,currentPage:action.currentPage}
+        }
+        case 'CHANGE-IS-FETCHING':{
+            return {...state,isFetching:action.isFetching}
         }
         default:
             return state
@@ -81,9 +85,17 @@ export const setUsersAC=(users:usersType)=>{
 type :'SET-USERS',users
     }as const
 }
+export const changeIsFetchingAC=(isFetching:boolean)=>{
+    return {
+        type :'CHANGE-IS-FETCHING',isFetching
+    }as const
+}
+
 
 export type UsersActionType=
     ReturnType<typeof followAC>|
     ReturnType<typeof unFollowAC>|
     ReturnType<typeof setUsersAC>|
-    ReturnType<typeof setCurrentPageAC>
+    ReturnType<typeof setCurrentPageAC>|
+    ReturnType<typeof changeIsFetchingAC>
+
