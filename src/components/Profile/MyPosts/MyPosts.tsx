@@ -15,12 +15,10 @@ export const MyPosts: React.FC<MyPostsType> = ({updateNewPostText,addPostAC,post
 
 
     const odnAddPost = () => {
-        debugger
         addPostAC()
     }
 
     const onChangeHandler=()=>{
-        debugger
         if(newPostElement.current){
             updateNewPostText(newPostElement.current.value)
         }

@@ -15,11 +15,6 @@ const mapStateToProps=(state:AppRootStateType)=>{
         friendsData:state.SiteBar.friendsData
     }
 }
-const mapDispatchToProps=()=>{
-    return {
-
-    }
-}
 
 
-export const NavBarContainer=connect(mapStateToProps,mapDispatchToProps)(NavBar)
+export const NavBarContainer=connect(mapStateToProps, {})(NavBar)

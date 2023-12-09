@@ -14,16 +14,8 @@ let mapStateToProps = (state: AppRootStateType)=>{
         messagesData:state.Dialog.messagesData,
     }
 }
-let mapDispatchToProps=(dispatch:(action:DialogsActionType | ProfileActionType)=>void)=>{
-    return {
-        updateNewMessageText:(newMessage: string)=>{
-            dispatch(updateNewMessageTextAC(newMessage))
-        },
-        addMessage:()=>{
-            dispatch(addMessageAC())
-            dispatch(updateNewMessageTextAC(''))
-        }
-    }
-}
 
-export const DialogsContainer=connect(mapStateToProps,mapDispatchToProps)(Dialogs)
+export const DialogsContainer=connect(mapStateToProps, {
+    updateNewMessageText:updateNewMessageTextAC,
+    addMessage:addMessageAC
+})(Dialogs)

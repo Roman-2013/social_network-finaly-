@@ -36,13 +36,13 @@ export type UsersPropsType = {
     totalCount: number
     error: string | null
     items: userType[]
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (users: usersType) => void
-    setCurrentPage: (currentPage: number) => void
+    followAC: (userId: number) => void
+    unFollowAC: (userId: number) => void
+    setUsersAC: (users: usersType) => void
+    setCurrentPageAC: (currentPage: number) => void
     currentPage: number
     isFetching: boolean
-    changeIsFetching: (isFetching: boolean) => void
+    changeIsFetchingAC: (isFetching: boolean) => void
 }
 
 
@@ -50,21 +50,21 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 
 
     componentDidMount() {
-        this.props.changeIsFetching(true)
+        this.props.changeIsFetchingAC(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`)
             .then(el => {
-                this.props.setUsers(el.data)
-                this.props.changeIsFetching(false)
+                this.props.setUsersAC(el.data)
+                this.props.changeIsFetchingAC(false)
             })
     }
 
     onPageChanged = (currentPage: number) => {
-        this.props.setCurrentPage(currentPage)
-        this.props.changeIsFetching(true)
+        this.props.setCurrentPageAC(currentPage)
+        this.props.changeIsFetchingAC(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`)
             .then(el => {
-                this.props.setUsers(el.data)
-                this.props.changeIsFetching(false)
+                this.props.setUsersAC(el.data)
+                this.props.changeIsFetchingAC(false)
             })
 
     }
@@ -78,8 +78,8 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
                     onPageChanged={this.onPageChanged}
                     currentPage={this.props.currentPage}
                     items={this.props.items}
-                    unFollow={this.props.unFollow}
-                    follow={this.props.follow}
+                    unFollow={this.props.unFollowAC}
+                    follow={this.props.followAC}
                 />
             }
 
@@ -100,26 +100,11 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
     }
 }
 
-const mapDispatchToProps = (dispatch: (action: UsersActionType) => void): mapDispatchToPropsType => {
 
-    return {
-        setCurrentPage: (currentPage: number) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        follow: (userId: number) => {
-            dispatch(followAC(userId))
-        },
-        unFollow: (userId: number) => {
-            dispatch(unFollowAC(userId))
-        },
-        setUsers: (items: usersType) => {
-            dispatch(setUsersAC(items))
-        },
-        changeIsFetching: (isFetching: boolean) => {
-            dispatch(changeIsFetchingAC(isFetching))
-        }
-    }
-}
-
-
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIContainer)
+export const UsersContainer = connect(mapStateToProps, {
+    setCurrentPageAC,
+    followAC,
+    unFollowAC,
+    setUsersAC,
+    changeIsFetchingAC
+})(UsersAPIContainer)

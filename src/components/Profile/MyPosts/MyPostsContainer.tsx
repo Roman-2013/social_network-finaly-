@@ -13,18 +13,9 @@ const   mapStateToProps=(state:AppRootStateType)=>{
     }
 }
 
-const  mapDispatchToProps=(dispatch:(action:DialogsActionType | ProfileActionType)=>void)=>{
-    return{
-        addPostAC:()=>{
-            dispatch(addPostAC())
-            dispatch(updateNewPostTextAC(''))
-        } ,
-        updateNewPostText:(text: string)=>{
-            dispatch(updateNewPostTextAC(text))
-        }
-    }
-}
 
 
-
-export const MyPostsContainer=connect(mapStateToProps,mapDispatchToProps)(MyPosts)
+export const MyPostsContainer=connect(mapStateToProps, {
+    addPostAC:addPostAC,
+    updateNewPostText:updateNewPostTextAC
+})(MyPosts)

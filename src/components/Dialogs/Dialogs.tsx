@@ -21,6 +21,7 @@ export const Dialogs: React.FC<DialogsType> = ({
 
     const sendMessage = () => {
         addMessage()
+        updateNewMessageText('')
     }
     const onChangeMessageHandler = (newMessage: string) => {
         updateNewMessageText(newMessage)
