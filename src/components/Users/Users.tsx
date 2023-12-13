@@ -1,10 +1,10 @@
 import React from 'react';
 import s from './Users.module.css';
 import userPhoto from '../../img/anime-male-avatar_950633-914.avif';
-import {usersType, userType} from '../../state/usersReducer';
+import {userType} from '../../state/usersReducer';
+import {NavLink} from 'react-router-dom';
 
 
-// type UsersProps=Omit<UsersPropsType, 'setUsers'| 'setCurrentPage'| 'error'>
 
 type UsersProps={
     totalCount: number
@@ -45,7 +45,10 @@ export const Users:React.FC<UsersProps  > = ({onPageChanged,totalCount,unFollow,
                     return <div key={el.id}>
             <span>
                 <div>
-                    <img className={s.img} src={el.photos.small ? el.photos.small : userPhoto} alt=""/>
+                    <NavLink to={'/profile/'+el.id}>
+                           <img className={s.img} src={el.photos.small ? el.photos.small : userPhoto} alt=""/>
+                    </NavLink>
+
                 </div>
                 <div>
                 {el.followed

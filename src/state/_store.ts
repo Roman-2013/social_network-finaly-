@@ -11,7 +11,8 @@ const _store = {
                 {id: 3, message: 'COOL', likesCount: 21},
                 {id: 4, message: 'LUCKY MAN', likesCount: 50},
             ],
-            newPostText: ''
+            newPostText: '',
+            profile:null as any
         },
         dialogsPage: {
             dialogsData: [

@@ -1,22 +1,21 @@
 import React from 'react';
-import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './MyPosts/ProfileInfo/ProfileInfo';
-import {PostPropsType} from './MyPosts/Posts/Post';
-import {DialogsActionType} from '../../state/dialogsReducer';
-import {ProfileActionType} from '../../state/profileReducer';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import {ProfileAPI} from '../../state/profileReducer';
+import {Preloader} from '../../common/Preloader/Preloader';
 
-export type ProfilePropsType={
-    postData: PostPropsType[]
-    newPostText:string
-    dispatch:(action:DialogsActionType | ProfileActionType)=>void
-}
 
-export const Profile = () => {
+
+export const Profile:React.FC<{ profile:  null| ProfileAPI }> = ({profile}) => {
     return (
         <div>
-            <ProfileInfo/>
-            <MyPostsContainer />
+            {
+                !profile
+                    ? <Preloader/>
+                    :  <ProfileInfo profile={profile}/>
+            }
+
+            <MyPostsContainer/>
         </div>
     );
 };

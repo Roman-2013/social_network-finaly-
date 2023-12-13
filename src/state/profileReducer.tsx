@@ -1,8 +1,37 @@
 import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
 
+export type ProfileAPI = {
+	aboutMe: string;
+	contacts: ProfileAPIContacts;
+	lookingForAJob: boolean;
+	lookingForAJobDescription: string;
+	fullName: string;
+	userId: number;
+	photos: ProfileAPIPhotos;
+}
+export type ProfileAPIContacts = {
+	facebook: string;
+	website?: any;
+	vk: string;
+	twitter: string;
+	instagram: string;
+	youtube?: any;
+	github: string;
+	mainLink?: any;
+}
+export type ProfileAPIPhotos = {
+	small: string;
+	large: string;
+}
+
+
+
+
+
 type ProfileReducer = {
     postData: PostPropsType[],
     newPostText: string
+    profile:ProfileAPI |null
 }
 
 const initialState = {
@@ -12,11 +41,12 @@ const initialState = {
         {id: 3, message: 'COOL', likesCount: 21},
         {id: 4, message: 'LUCKY MAN', likesCount: 50},
     ],
-    newPostText: ''
+    newPostText: '',
+    profile:null
 }
 
 
-export const ProfileReducer = (state: ProfileReducer = initialState, action: ProfileActionType):ProfileReducer => {
+export const ProfileReducer = (state: ProfileReducer= initialState, action: ProfileActionType):ProfileReducer => {
     switch (action.type) {
         case 'ADD-POST': {
             return {...state,postData:[...state.postData,{id: 5, message: state.newPostText, likesCount: 0}]}
@@ -24,11 +54,19 @@ export const ProfileReducer = (state: ProfileReducer = initialState, action: Pro
         case 'UPDATE-NEW-POST-TEXT': {
             return {...state,newPostText:action.newPost}
         }
+        case 'SET-PROFILE': {
+            return {...state,profile:action.profile}
+        }
         default:
             return state
     }
 }
 
+export const setProfileAC=(profile:ProfileAPI)=>{
+    return {
+       type :'SET-PROFILE', profile
+    }as const
+}
 
 export const addPostAC = () => {
     return {
@@ -41,4 +79,7 @@ export let updateNewPostTextAC = (newPost: string) => {
     } as const
 }
 
-export  type ProfileActionType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>
+export  type ProfileActionType = ReturnType<typeof addPostAC> |
+    ReturnType<typeof updateNewPostTextAC>|
+    ReturnType<typeof setProfileAC>
+

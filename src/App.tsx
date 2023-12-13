@@ -1,7 +1,6 @@
 import React from 'react';
 import s from './App.module.css';
 import {Header} from './components/Header/Header';
-import {Profile} from './components/Profile/Profile';
 import {Route, Routes} from 'react-router-dom';
 import {AppRootStateType} from './state/reduxStore';
 import {DialogsActionType} from './state/dialogsReducer';
@@ -9,6 +8,7 @@ import {ProfileActionType} from './state/profileReducer';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
 import {UsersContainer} from './components/Users/UsersContainer';
+import {ProfileContainer} from './components/Profile/ProfileContainer';
 
 export type StatePropsType = {
     state: AppRootStateType
@@ -24,9 +24,9 @@ export const App = () => {
             <NavBarContainer />
             <div className={s.appWrapperContent}>
                 <Routes>
-                    <Route path={'/'} element={<Profile/>}/>
+                    <Route path={'/'} element={<ProfileContainer/>}/>
                     <Route path={'/message/*'} element={<DialogsContainer/>}/>
-                    <Route path={'/profile/*'} element={<Profile/>}/>
+                    <Route path={'/profile/*'} element={<ProfileContainer/>}/>
                     <Route path={'/users/*'} element={<UsersContainer/>}/>
 
                 </Routes>

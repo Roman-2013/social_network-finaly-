@@ -6,7 +6,6 @@ import {
     setCurrentPageAC,
     setUsersAC,
     unFollowAC,
-    UsersActionType,
     usersType,
     userType
 } from '../../state/usersReducer';
