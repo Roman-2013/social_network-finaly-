@@ -45,7 +45,7 @@ export const Users:React.FC<UsersProps  > = ({onPageChanged,totalCount,unFollow,
                     return <div key={el.id}>
             <span>
                 <div>
-                    <NavLink to={'/profile/'+el.id}>
+                    <NavLink to={`/profile/${el.id}`}>
                            <img className={s.img} src={el.photos.small ? el.photos.small : userPhoto} alt=""/>
                     </NavLink>
 

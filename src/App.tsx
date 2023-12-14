@@ -26,7 +26,7 @@ export const App = () => {
                 <Routes>
                     <Route path={'/'} element={<ProfileContainer/>}/>
                     <Route path={'/message/*'} element={<DialogsContainer/>}/>
-                    <Route path={'/profile/*'} element={<ProfileContainer/>}/>
+                    <Route path={'/profile/:id'} element={<ProfileContainer/>}/>
                     <Route path={'/users/*'} element={<UsersContainer/>}/>
 
                 </Routes>
