@@ -9,6 +9,7 @@ import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
 import {UsersContainer} from './components/Users/UsersContainer';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
+import {HeaderAPIContainer, HeaderContainer} from './components/Header/HeaderContainer';
 
 export type StatePropsType = {
     state: AppRootStateType
@@ -20,13 +21,13 @@ export const App = () => {
 
     return (
         <div className={s.appWrapper}>
-            <Header/>
+            <HeaderAPIContainer/>
             <NavBarContainer />
             <div className={s.appWrapperContent}>
                 <Routes>
                     <Route path={'/'} element={<ProfileContainer/>}/>
                     <Route path={'/message/*'} element={<DialogsContainer/>}/>
-                    <Route path={'/profile/:id'} element={<ProfileContainer/>}/>
+                    <Route path={'/profile/:id?'} element={<ProfileContainer/>}/>
                     <Route path={'/users/*'} element={<UsersContainer/>}/>
 
                 </Routes>
