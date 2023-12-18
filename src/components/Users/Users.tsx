@@ -3,6 +3,7 @@ import s from './Users.module.css';
 import userPhoto from '../../img/anime-male-avatar_950633-914.avif';
 import {userType} from '../../state/usersReducer';
 import {NavLink} from 'react-router-dom';
+import axios from 'axios';
 
 
 
@@ -52,8 +53,24 @@ export const Users:React.FC<UsersProps  > = ({onPageChanged,totalCount,unFollow,
                 </div>
                 <div>
                 {el.followed
-                    ? <button onClick={() => unFollow(el.id)}>Unfollow</button>
-                    : <button onClick={() => follow(el.id)}>Follow</button>}
+                    ? <button onClick={() => {
+                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`,{withCredentials:true})
+                            .then(res=>{
+                                if(res.data.resultCode===0){
+                                    unFollow(el.id)
+                                }
+                            })
+
+                    }
+                    }>Unfollow</button>
+                    : <button onClick={() => {
+                        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`,{userId:el.id},{withCredentials:true})
+                            .then(res=>{
+                                if(res.data.resultCode===0){
+                                    follow(el.id)
+                                }
+                            })
+                    }}>Follow</button>}
 
 
             </div>

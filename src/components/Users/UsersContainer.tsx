@@ -50,7 +50,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.changeIsFetchingAC(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`, {withCredentials:true})
             .then(el => {
                 this.props.setUsersAC(el.data)
                 this.props.changeIsFetchingAC(false)
@@ -60,7 +60,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPageAC(currentPage)
         this.props.changeIsFetchingAC(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`,{withCredentials:true})
             .then(el => {
                 this.props.setUsersAC(el.data)
                 this.props.changeIsFetchingAC(false)
