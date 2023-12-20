@@ -13,6 +13,7 @@ import React from 'react';
 import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
+import { userAPI} from '../../api/api';
 
 type mapStateToProps = {
     items: userType[]
@@ -50,9 +51,10 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.changeIsFetchingAC(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`, {withCredentials:true})
+        userAPI.getUsers(this.props.currentPage)
+       // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`, {withCredentials:true})
             .then(el => {
-                this.props.setUsersAC(el.data)
+                this.props.setUsersAC(el)
                 this.props.changeIsFetchingAC(false)
             })
     }
@@ -60,9 +62,10 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
     onPageChanged = (currentPage: number) => {
         this.props.setCurrentPageAC(currentPage)
         this.props.changeIsFetchingAC(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`,{withCredentials:true})
+        userAPI.getUsers(currentPage)
+       // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=100`,{withCredentials:true})
             .then(el => {
-                this.props.setUsersAC(el.data)
+                this.props.setUsersAC(el)
                 this.props.changeIsFetchingAC(false)
             })
 
