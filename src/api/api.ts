@@ -7,7 +7,6 @@ const instans = axios.create({
 
 export const userAPI={
      getUsers: (currentPage: number) => {
-         debugger
         return instans.get(`users?page=${currentPage}&count=100`, {withCredentials: true})
             .then(res => {
                 return res.data

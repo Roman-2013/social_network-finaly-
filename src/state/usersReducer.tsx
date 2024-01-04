@@ -34,8 +34,9 @@ export type usersType={
     error: string|null
     currentPage:number
     isFetching:boolean
+    followingInProgress:Array<number>
 }
-const initialState={currentPage:45,isFetching:false}as usersType
+const initialState={currentPage:45,isFetching:false,followingInProgress:[]as Array<number>}as usersType
 
 
 
@@ -57,11 +58,21 @@ export const usersReducer = (state: usersType= initialState  , action: UsersActi
         case 'CHANGE-IS-FETCHING':{
             return {...state,isFetching:action.isFetching}
         }
+        case 'FOLLOWING-IN-PROGRESS':{
+          return {
+              ...state,followingInProgress:action.inProgress?[...state.followingInProgress,action.id]:state.followingInProgress.filter(el=>el!=action.id)
+          }
+        }
         default:
             return state
     }
 }
 
+export const followingInProgressAC=(id:number,inProgress:boolean)=>{
+    return {
+      type: 'FOLLOWING-IN-PROGRESS', inProgress,id
+    }as const
+}
 
 export const setCurrentPageAC=(currentPage:number)=>{
     return{
@@ -97,5 +108,7 @@ export type UsersActionType=
     ReturnType<typeof unFollowAC>|
     ReturnType<typeof setUsersAC>|
     ReturnType<typeof setCurrentPageAC>|
-    ReturnType<typeof changeIsFetchingAC>
+    ReturnType<typeof changeIsFetchingAC>|
+    ReturnType<typeof followingInProgressAC>
+
 

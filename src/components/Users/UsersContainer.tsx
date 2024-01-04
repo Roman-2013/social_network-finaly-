@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
 import {
     changeIsFetchingAC,
-    followAC,
+    followAC, followingInProgressAC,
     setCurrentPageAC,
     setUsersAC,
     unFollowAC,
@@ -21,6 +21,7 @@ type mapStateToProps = {
     error: string | null
     currentPage: number
     isFetching: boolean
+    followingInProgress:number[]
 }
 
 type mapDispatchToPropsType = {
@@ -43,6 +44,8 @@ export type UsersPropsType = {
     currentPage: number
     isFetching: boolean
     changeIsFetchingAC: (isFetching: boolean) => void
+    followingInProgressAC:(id:number,inProgress:boolean)=>void
+    followingInProgress:number[]
 }
 
 
@@ -76,12 +79,14 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
             {this.props.isFetching
                 ? <Preloader/>
                 : <Users
+                    followingInProgress={this.props.followingInProgress}
                     totalCount={this.props.totalCount}
                     onPageChanged={this.onPageChanged}
                     currentPage={this.props.currentPage}
                     items={this.props.items}
                     unFollow={this.props.unFollowAC}
                     follow={this.props.followAC}
+                    followingInProgressAC={this.props.followingInProgressAC}
                 />
             }
 
@@ -98,7 +103,8 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
         totalCount: state.Users.totalCount,
         error: state.Users.error,
         currentPage: state.Users.currentPage,
-        isFetching: state.Users.isFetching
+        isFetching: state.Users.isFetching,
+        followingInProgress:state.Users.followingInProgress
     }
 }
 
@@ -108,5 +114,6 @@ export const UsersContainer = connect(mapStateToProps, {
     followAC,
     unFollowAC,
     setUsersAC,
-    changeIsFetchingAC
+    changeIsFetchingAC,
+    followingInProgressAC
 })(UsersAPIContainer)
