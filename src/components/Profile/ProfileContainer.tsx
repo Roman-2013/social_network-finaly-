@@ -1,7 +1,6 @@
 import React from 'react';
-import {ProfileAPI, setProfileAC} from '../../state/profileReducer';
+import {ProfileAPI, setProfileTC} from '../../state/profileReducer';
 import {Profile} from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
 import {Params, useParams} from 'react-router-dom'
@@ -18,7 +17,7 @@ function withRouter(Component: any) {
 }
 
 type ProfileAPIContainerType = {
-    setProfileAC: (profile: ProfileAPI) => void
+    setProfileTC: (profileId: string) => void
     profile: null | ProfileAPI
     params?: Params | undefined
 }
@@ -33,10 +32,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
             ? profileId = '29614'
             : profileId = this.props.params.id
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${profileId}`)
-            .then(res => {
-                this.props.setProfileAC(res.data)
-            })
+      this.props.setProfileTC(profileId)
     }
 
     render() {
@@ -55,7 +51,7 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 export const ProfileContainer = connect(mapStateToProps, {
-    setProfileAC
+    setProfileTC
 })(withRouter(ProfileAPIContainer))
 
 

@@ -1,4 +1,6 @@
 import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
+import {Dispatch} from 'redux';
+import {profileAPI} from '../api/api';
 
 export type ProfileAPI = {
 	aboutMe: string;
@@ -73,10 +75,19 @@ export const addPostAC = () => {
         type: 'ADD-POST'
     } as const
 }
-export let updateNewPostTextAC = (newPost: string) => {
+export const updateNewPostTextAC = (newPost: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT', newPost
     } as const
+}
+
+
+//TC
+export const setProfileTC=(profileId:string)=>(dispatch:Dispatch)=>{
+    profileAPI.setProfile(profileId)
+        .then(res => {
+          dispatch(setProfileAC(res.data))
+        })
 }
 
 export  type ProfileActionType = ReturnType<typeof addPostAC> |

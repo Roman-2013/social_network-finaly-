@@ -1,22 +1,5 @@
-
-// export type RootObject = {
-// 	users: RootObjectUsers[];
-// }
-// export type RootObjectUsersLocation = {
-// 	city: string;
-// 	country: string;
-// }
-// export type RootObjectUsers = {
-// 	id: number;
-// 	photo: string;
-// 	followed: boolean;
-// 	fullName: string;
-// 	status: string;
-// 	location: RootObjectUsersLocation;
-// }
-
-
-
+import {userAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 export type userType={
     name:string
@@ -36,7 +19,7 @@ export type usersType={
     isFetching:boolean
     followingInProgress:Array<number>
 }
-const initialState={currentPage:45,isFetching:false,followingInProgress:[]as Array<number>}as usersType
+const initialState={currentPage:1,isFetching:false,followingInProgress:[]as Array<number>}as usersType
 
 
 
@@ -101,8 +84,44 @@ export const changeIsFetchingAC=(isFetching:boolean)=>{
         type :'CHANGE-IS-FETCHING',isFetching
     }as const
 }
+//TC
+export const getUsersTC=(currentPage:number)=>(dispatch:Dispatch)=>{
+    currentPage !==1
+        ?dispatch(setCurrentPageAC(currentPage))
+        :dispatch(setCurrentPageAC(1))
+        dispatch(changeIsFetchingAC(true))
+        userAPI.getUsers(currentPage)
+            // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`, {withCredentials:true})
+            .then(el => {
+                dispatch(setUsersAC(el))
+                dispatch(changeIsFetchingAC(false))
+            })
+}
+
+export const unfollowTC=(userID:number)=>(dispatch:Dispatch)=>{
+    dispatch(followingInProgressAC(userID,true))
+    userAPI.unFollow(userID)
+        .then(res=>{
+            if(res.data.resultCode===0){
+                dispatch(unFollowAC(userID))
+            }
+           dispatch(followingInProgressAC(userID,false))
+        })
+}
+
+export const followTC=(userID:number)=>(dispatch:Dispatch)=>{
+    dispatch(followingInProgressAC(userID,true))
+    userAPI.follow(userID)
+        .then(res=>{
+            if(res.data.resultCode===0){
+                dispatch(followAC(userID))
+            }
+            dispatch(followingInProgressAC(userID,false))
+        })
+}
 
 
+//Type
 export type UsersActionType=
     ReturnType<typeof followAC>|
     ReturnType<typeof unFollowAC>|
