@@ -35,7 +35,7 @@ export const authReducer = (state: DataType=initialState, action: AuthActionType
             return state
     }
 }
-
+//AC
 export const setUserDataAC=(data:DataType)=>{
     return {
         type:'SET-USER-DATA',data

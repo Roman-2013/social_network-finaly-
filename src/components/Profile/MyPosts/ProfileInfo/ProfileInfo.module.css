@@ -1,6 +1,11 @@
 .description{
     padding: 10px;
 }
+.description img{
+    width: 200px;
+    height: 200px;
+    border-radius: 30px;
+}
 .blockPicture img{
     width: 100%;
 }

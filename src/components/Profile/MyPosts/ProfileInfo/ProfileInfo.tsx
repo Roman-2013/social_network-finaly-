@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
 import {ProfileAPI} from '../../../../state/profileReducer';
+import userPhoto from './../../../../img/anime-male-avatar_950633-914.avif'
 
 
 export const ProfileInfo:React.FC<{profile:  ProfileAPI}> = ({profile}) => {
@@ -13,9 +14,11 @@ export const ProfileInfo:React.FC<{profile:  ProfileAPI}> = ({profile}) => {
 
             </div >
             <div className={s.description}>
-                {profile.aboutMe}
-                {profile.fullName}
-                <img src={profile.photos.small}/>
+                <div>{profile.aboutMe}</div>
+               <div>{profile.fullName}</div>
+              <div>
+                  <img src={profile.photos.small===null?userPhoto:profile.photos.small}/>
+              </div>
             </div>
         </>
     );
