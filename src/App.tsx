@@ -10,6 +10,7 @@ import {NavBarContainer} from './components/Navbar/NavBarContainer';
 import {UsersContainer} from './components/Users/UsersContainer';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {HeaderAPIContainer, HeaderContainer} from './components/Header/HeaderContainer';
+import {Login} from './components/Login/login';
 
 export type StatePropsType = {
     state: AppRootStateType
@@ -29,6 +30,8 @@ export const App = () => {
                     <Route path={'/message/*'} element={<DialogsContainer/>}/>
                     <Route path={'/profile/:id?'} element={<ProfileContainer/>}/>
                     <Route path={'/users/*'} element={<UsersContainer/>}/>
+
+                    <Route path={'/login'} element={<Login/>}/>
 
                 </Routes>
 

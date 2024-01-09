@@ -12,6 +12,7 @@ let mapStateToProps = (state: AppRootStateType)=>{
         dialogsData:state.Dialog.dialogsData,
         messageText:state.Dialog.messageText,
         messagesData:state.Dialog.messagesData,
+        isFetching:state.Auth.isFetching,
     }
 }
 
