@@ -4,6 +4,7 @@ import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
 import {Navigate, Params, useParams} from 'react-router-dom'
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 
 
 function withRouter(Component: any) {
@@ -20,7 +21,6 @@ type ProfileAPIContainerType = {
     setProfileTC: (profileId: string) => void
     profile: null | ProfileAPI
     params?: Params | undefined
-    isFetching:boolean
 }
 
 
@@ -37,9 +37,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
     }
 
     render() {
-        if(!this.props.isFetching){
-            return <Navigate to={'/login'}/>
-        }
+
 
         return <div>
             <Profile profile={this.props.profile}/>
@@ -49,15 +47,17 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
 }
 
 
+
+const  AuthRedirectComponent=WithAuthRedirect(ProfileAPIContainer)
+
 const mapStateToProps = (state: AppRootStateType) => {
     return {
         profile: state.ProfilePage.profile,
-        isFetching:state.Auth.isFetching
     }
 }
 
 export const ProfileContainer = connect(mapStateToProps, {
     setProfileTC
-})(withRouter(ProfileAPIContainer))
+})(withRouter(AuthRedirectComponent))
 
 

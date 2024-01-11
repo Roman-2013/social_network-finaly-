@@ -4,6 +4,7 @@ import {followTC, getUsersTC, setCurrentPageAC, unfollowTC, usersType, userType}
 import React from 'react';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type mapStateToProps = {
     items: userType[]
@@ -80,10 +81,10 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
         followingInProgress:state.Users.followingInProgress
     }
 }
-
+const AuthRedirectComponent=WithAuthRedirect(UsersAPIContainer)
 
 export const UsersContainer = connect(mapStateToProps, {
     getUsersTC,
     followTC,
     unfollowTC,
-})(UsersAPIContainer)
+})(AuthRedirectComponent)

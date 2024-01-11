@@ -1,10 +1,8 @@
-import {addMessageAC, DialogsActionType, updateNewMessageTextAC} from '../../state/dialogsReducer';
+import {addMessageAC, updateNewMessageTextAC} from '../../state/dialogsReducer';
 import {Dialogs} from './Dialogs';
-import {AppRootStateType, AppStoreType} from '../../state/reduxStore';
+import {AppRootStateType} from '../../state/reduxStore';
 import {connect} from 'react-redux';
-import {ProfileActionType} from '../../state/profileReducer';
-
-
+import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 
 
 let mapStateToProps = (state: AppRootStateType)=>{
@@ -12,11 +10,13 @@ let mapStateToProps = (state: AppRootStateType)=>{
         dialogsData:state.Dialog.dialogsData,
         messageText:state.Dialog.messageText,
         messagesData:state.Dialog.messagesData,
-        isFetching:state.Auth.isFetching,
     }
 }
+
+const  AuthRedirectComponent=WithAuthRedirect(Dialogs)
+
 
 export const DialogsContainer=connect(mapStateToProps, {
     updateNewMessageText:updateNewMessageTextAC,
     addMessage:addMessageAC
-})(Dialogs)
+})(AuthRedirectComponent)

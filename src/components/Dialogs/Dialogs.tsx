@@ -2,15 +2,13 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem, DialogsItemPropsType} from './DialogItem/DialogItem';
 import {Message, MessagePropsType} from './Message/Message';
-import { Navigate } from 'react-router-dom';
 
-type DialogsType = {
+export type DialogsType = {
     addMessage: () => void
     updateNewMessageText: (newMessage: string) => void
     messageText: string
     messagesData: MessagePropsType[]
     dialogsData: DialogsItemPropsType[]
-    isFetching:boolean
 }
 
 export const Dialogs: React.FC<DialogsType> = ({
@@ -19,7 +17,6 @@ export const Dialogs: React.FC<DialogsType> = ({
                                                    messagesData,
                                                    dialogsData,
                                                    messageText,
-                                                   isFetching
                                                }) => {
 
     const sendMessage = () => {
@@ -30,10 +27,6 @@ export const Dialogs: React.FC<DialogsType> = ({
         updateNewMessageText(newMessage)
     }
 
-
-if(!isFetching){
-    return <Navigate to={'/login'}/>
-}
 
 
 

@@ -33,7 +33,6 @@ export const Users: React.FC<UsersProps> = ({
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-
     return (
 
         <div>
