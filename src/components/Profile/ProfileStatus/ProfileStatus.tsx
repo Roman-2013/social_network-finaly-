@@ -1,30 +1,50 @@
-import React, {ChangeEvent} from 'react';
-import {logDOM} from '@testing-library/react';
+import React, {ChangeEvent, FocusEvent} from 'react';
+import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../../state/reduxStore';
 
-export class ProfileStatus extends React.Component<any> {
+type ProfileStatusType = {
+    status: string
+    updateProfileStatusTC: (status: string) => void
+}
+
+
+export class ProfileStatus extends React.Component<ProfileStatusType> {
+
     state = {
         editMode: true,
-        title: 'title'
+        status: this.props.status
     }
 
-    activateEditMode() {
+    activateEditMode = () => {
         this.setState({editMode: false})
     }
 
-    diActivateEditMode() {
+    diActivateEditMode = () => {
+        this.props.updateProfileStatusTC(this.state.status)
         this.setState({editMode: true})
+
     }
 
     onchangeStatus(e: ChangeEvent<HTMLInputElement>) {
-        this.setState({title:e.currentTarget.value})
+        this.setState({status: e.currentTarget.value})
     }
 
     render() {
         return (
             this.state.editMode
-                ? <div><span onDoubleClick={this.activateEditMode.bind(this)}>{this.state.title}</span></div>
-                : <div><input onChange={(e) => this.onchangeStatus(e)} onBlur={this.diActivateEditMode.bind(this)}
-                              type="text" value={this.state.title} autoFocus/></div>
+                ? <div>
+                    <span
+                        onDoubleClick={this.activateEditMode}>
+                    {this.props.status || 'No status'}
+                </span>
+                </div>
+                : <div><input
+                    onChange={(e) => this.onchangeStatus(e)}
+                    onBlur={this.diActivateEditMode}
+                    type="text"
+                    value={this.state.status}
+                    autoFocus/>
+                </div>
         );
     };
 }

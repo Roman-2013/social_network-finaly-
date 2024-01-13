@@ -5,7 +5,7 @@ import userPhoto from './../../../../img/anime-male-avatar_950633-914.avif'
 import {ProfileStatus} from '../../ProfileStatus/ProfileStatus';
 
 
-export const ProfileInfo:React.FC<{profile:  ProfileAPI}> = ({profile}) => {
+export const ProfileInfo:React.FC<{updateProfileStatusTC:(status:string)=>void,status:string,profile:  ProfileAPI}> = ({profile,status,updateProfileStatusTC}) => {
     return (
         <>
             <div className={s.blockPicture}>
@@ -19,7 +19,7 @@ export const ProfileInfo:React.FC<{profile:  ProfileAPI}> = ({profile}) => {
                <div>{profile.fullName}</div>
               <div>
                   <img src={profile.photos.small===null?userPhoto:profile.photos.small}/>
-                  <ProfileStatus/>
+                  <ProfileStatus updateProfileStatusTC={updateProfileStatusTC} status={status}/>
               </div>
             </div>
         </>

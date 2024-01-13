@@ -3,37 +3,35 @@ import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 
 export type ProfileAPI = {
-	aboutMe: string;
-	contacts: ProfileAPIContacts;
-	lookingForAJob: boolean;
-	lookingForAJobDescription: string;
-	fullName: string;
-	userId: number;
-	photos: ProfileAPIPhotos;
+    aboutMe: string;
+    contacts: ProfileAPIContacts;
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string;
+    fullName: string;
+    userId: number;
+    photos: ProfileAPIPhotos;
 }
 export type ProfileAPIContacts = {
-	facebook: string;
-	website?: any;
-	vk: string;
-	twitter: string;
-	instagram: string;
-	youtube?: any;
-	github: string;
-	mainLink?: any;
+    facebook: string;
+    website?: any;
+    vk: string;
+    twitter: string;
+    instagram: string;
+    youtube?: any;
+    github: string;
+    mainLink?: any;
 }
 export type ProfileAPIPhotos = {
-	small: string;
-	large: string;
+    small: string;
+    large: string;
 }
-
-
-
 
 
 type ProfileReducer = {
     postData: PostPropsType[],
     newPostText: string
-    profile:ProfileAPI |null
+    profile: ProfileAPI | null,
+    status: string
 }
 
 const initialState = {
@@ -44,30 +42,40 @@ const initialState = {
         {id: 4, message: 'LUCKY MAN', likesCount: 50},
     ],
     newPostText: '',
-    profile:null
+    profile: null,
+    status: ''
+
 }
 
 
-export const ProfileReducer = (state: ProfileReducer= initialState, action: ProfileActionType):ProfileReducer => {
+export const ProfileReducer = (state: ProfileReducer = initialState, action: ProfileActionType): ProfileReducer => {
     switch (action.type) {
         case 'ADD-POST': {
-            return {...state,postData:[...state.postData,{id: 5, message: state.newPostText, likesCount: 0}]}
+            return {...state, postData: [...state.postData, {id: 5, message: state.newPostText, likesCount: 0}]}
         }
         case 'UPDATE-NEW-POST-TEXT': {
-            return {...state,newPostText:action.newPost}
+            return {...state, newPostText: action.newPost}
         }
         case 'SET-PROFILE': {
-            return {...state,profile:action.profile}
+            return {...state, profile: action.profile}
+        }
+        case 'SET-STATUS': {
+            return {...state, status: action.status}
         }
         default:
             return state
     }
 }
 
-export const setProfileAC=(profile:ProfileAPI)=>{
+export const setStatusAC = (status: string) => {
     return {
-       type :'SET-PROFILE', profile
-    }as const
+        type: 'SET-STATUS', status
+    } as const
+}
+export const setProfileAC = (profile: ProfileAPI) => {
+    return {
+        type: 'SET-PROFILE', profile
+    } as const
 }
 
 export const addPostAC = () => {
@@ -83,14 +91,34 @@ export const updateNewPostTextAC = (newPost: string) => {
 
 
 //TC
-export const setProfileTC=(profileId:string)=>(dispatch:Dispatch)=>{
+export const setProfileTC = (profileId: string) => (dispatch: Dispatch) => {
     profileAPI.setProfile(profileId)
         .then(res => {
-          dispatch(setProfileAC(res.data))
+            dispatch(setProfileAC(res.data))
         })
 }
 
+export const getProfileStatusTC=(userId:string)=>(dispatch:Dispatch)=>{
+    profileAPI.getStatus(userId)
+        .then(res=>{
+            dispatch(setStatusAC(res.data))
+        })
+}
+export const updateProfileStatusTC=(status:string)=>(dispatch:Dispatch)=>{
+    profileAPI.updateProfileStatusTC(status)
+        .then(res=>{
+            if(res.data.resultCode===0){
+               dispatch(setStatusAC(status))
+            }
+
+        })
+}
+
+
+
+
 export  type ProfileActionType = ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateNewPostTextAC>|
-    ReturnType<typeof setProfileAC>
+    ReturnType<typeof updateNewPostTextAC> |
+    ReturnType<typeof setProfileAC> |
+    ReturnType<typeof setStatusAC>
 

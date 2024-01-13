@@ -29,6 +29,12 @@ export const authAPI = {
 export const profileAPI={
     setProfile:(profileId:string)=>{
         return instans.get(`/profile/${profileId}`)
+    },
+    getStatus:(userId:string)=>{
+        return instans.get(`/profile/status/${userId}`)
+    },
+    updateProfileStatusTC:(status:string)=>{
+        return instans.put('/profile/status', {status})
     }
 }
 
