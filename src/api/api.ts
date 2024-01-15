@@ -23,20 +23,31 @@ export const userAPI = {
 export const authAPI = {
     setUserData: () => {
         return instans.get(`/auth/me`)
+    },
+    login: (email:string,password:string,rememberMe:boolean) => {
+        return instans.post(`/auth/login`,{email,password,rememberMe})
+    },
+    loginOut: () => {
+        return instans.delete(`/auth/login`,)
     }
 }
 
-export const profileAPI={
-    setProfile:(profileId:string)=>{
+export const profileAPI= {
+    setProfile: (profileId: string) => {
         return instans.get(`/profile/${profileId}`)
     },
-    getStatus:(userId:string)=>{
+    getStatus: (userId: string) => {
         return instans.get(`/profile/status/${userId}`)
     },
-    updateProfileStatusTC:(status:string)=>{
+    updateProfileStatusTC: (status: string) => {
         return instans.put('/profile/status', {status})
     }
 }
+
+
+
+
+
 
 
 
