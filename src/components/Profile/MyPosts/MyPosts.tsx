@@ -1,38 +1,32 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import {Post, PostPropsType} from './Posts/Post';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
-type MyPostsType={
-    updateNewPostText:(text:string)=>void
-    addPostAC:()=>void
-    postData:PostPropsType[]
-    newPostText:string
+
+type ReduxProfileTextAreaFormProps={
+    profileText:string
 }
 
-export const MyPosts: React.FC<MyPostsType> = ({updateNewPostText,addPostAC,postData,newPostText}) => {
+type MyPostsType = {
+    addPostAC: (profileText:string) => void
+    postData: PostPropsType[]
+}
 
-    let newPostElement = useRef<HTMLTextAreaElement>(null)
+export const MyPosts: React.FC<MyPostsType> = ({ addPostAC, postData}) => {
 
-
-    const odnAddPost = () => {
-        addPostAC()
-    }
-
-    const onChangeHandler=()=>{
-        if(newPostElement.current){
-            updateNewPostText(newPostElement.current.value)
-        }
+    const onProfileTextSubmit = (formData: ReduxProfileTextAreaFormProps) => {
+        addPostAC(formData.profileText)
+        formData.profileText=''
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My post</h3>
             <div>
-                <textarea onChange={onChangeHandler} value={newPostText} ref={newPostElement}/>
+                <ReduxProfileTextAreaForm onSubmit={onProfileTextSubmit}/>
             </div>
-            <div>
-                <button onClick={odnAddPost}>Add post</button>
-            </div>
+
 
             {postData.map(el => {
                 return <Post id={el.id} key={el.id} likesCount={el.likesCount} message={el.message}/>
@@ -43,3 +37,15 @@ export const MyPosts: React.FC<MyPostsType> = ({updateNewPostText,addPostAC,post
     );
 };
 
+const ProfileTextAreaForm:React.FC<InjectedFormProps<ReduxProfileTextAreaFormProps>> = ({handleSubmit}) => {
+    return (
+        <form onSubmit={handleSubmit}>
+            <Field component={'textarea'} name={'profileText'} placeholder={'Enter your message'}></Field>
+            <div>
+                <button>Add post</button>
+            </div>
+        </form>
+    )
+}
+
+const ReduxProfileTextAreaForm = reduxForm<ReduxProfileTextAreaFormProps>({form: 'profileMessage'})(ProfileTextAreaForm)

@@ -4,7 +4,6 @@ import {MessagePropsType} from '../components/Dialogs/Message/Message';
 type DialogsReducer = {
     dialogsData: DialogsItemPropsType[],
     messagesData: MessagePropsType[],
-    messageText: string
 }
 
 const initialState = {
@@ -21,20 +20,16 @@ const initialState = {
         {id: 5, message: 'You are coll man'},
         {id: 6, message: 'You are coll man'},
     ],
-    messageText: ''
-
 }
 
 
 export const DialogsReducer = (state: DialogsReducer = initialState, action: DialogsActionType): DialogsReducer => {
     switch (action.type) {
-        case 'UPDATE-NEW-MESSAGE-TEXT': {
-            return {...state, messageText: action.newMessage}
-        }
+
         case 'ADD-MESSAGE': {
             return {
                 ...state,
-                messagesData: [...state.messagesData, {id: Math.ceil(Math.random() * 2), message: state.messageText}]
+                messagesData: [...state.messagesData, {id: Math.random() *2 , message: action.newMessageText}]
             }
         }
         default:
@@ -44,19 +39,12 @@ export const DialogsReducer = (state: DialogsReducer = initialState, action: Dia
 }
 
 
-export const addMessageAC = () => {
+export const addMessageAC = (newMessageText:string) => {
     return {
-        type: 'ADD-MESSAGE'
-    } as const
-}
-
-export const updateNewMessageTextAC = (newMessage: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-TEXT', newMessage
+        type: 'ADD-MESSAGE',newMessageText
     } as const
 }
 
 export type DialogsActionType =
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof updateNewMessageTextAC>
+    ReturnType<typeof addMessageAC>
 

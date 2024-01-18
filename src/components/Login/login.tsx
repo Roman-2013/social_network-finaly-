@@ -7,11 +7,12 @@ type FormDataType = {
     password: string
     rememberMe: boolean
 }
-// {login:string,password:string,rememberMe:boolean }
 
 export const Login = () => {
 
+
     const onSubmit = (formData: FormDataType) => {
+        console.log(formData)
         authAPI.login(formData.login, formData.password, formData.rememberMe)
             .then(res => {
 
@@ -38,8 +39,8 @@ export const Login = () => {
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     const {handleSubmit} = props
-    return (
 
+    return (
         <form onSubmit={handleSubmit}>
             <div>
                 <Field name={'login'} component={'input'} placeholder={'login'}/>

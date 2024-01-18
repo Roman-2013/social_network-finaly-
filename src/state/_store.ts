@@ -11,7 +11,6 @@ const _store = {
                 {id: 3, message: 'COOL', likesCount: 21},
                 {id: 4, message: 'LUCKY MAN', likesCount: 50},
             ],
-            newPostText: '',
             profile:null as any
         },
         dialogsPage: {
@@ -57,8 +56,8 @@ const _store = {
     },
     dispatch(action: any) {
        // this._state.profilePage = ProfileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
-        this._callSubscriber(this._state)
+       //  this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
+       //  this._callSubscriber(this._state)
     }
 }
 

@@ -29,7 +29,6 @@ export type ProfileAPIPhotos = {
 
 type ProfileReducer = {
     postData: PostPropsType[],
-    newPostText: string
     profile: ProfileAPI | null,
     status: string
 }
@@ -41,7 +40,6 @@ const initialState = {
         {id: 3, message: 'COOL', likesCount: 21},
         {id: 4, message: 'LUCKY MAN', likesCount: 50},
     ],
-    newPostText: '',
     profile: null,
     status: ''
 
@@ -51,10 +49,7 @@ const initialState = {
 export const ProfileReducer = (state: ProfileReducer = initialState, action: ProfileActionType): ProfileReducer => {
     switch (action.type) {
         case 'ADD-POST': {
-            return {...state, postData: [...state.postData, {id: 5, message: state.newPostText, likesCount: 0}]}
-        }
-        case 'UPDATE-NEW-POST-TEXT': {
-            return {...state, newPostText: action.newPost}
+            return {...state, postData: [...state.postData, {id: Math.random(), message: action.profileText, likesCount: 0}]}
         }
         case 'SET-PROFILE': {
             return {...state, profile: action.profile}
@@ -78,17 +73,11 @@ export const setProfileAC = (profile: ProfileAPI) => {
     } as const
 }
 
-export const addPostAC = () => {
+export const addPostAC = (profileText:string) => {
     return {
-        type: 'ADD-POST'
+        type: 'ADD-POST',profileText
     } as const
 }
-export const updateNewPostTextAC = (newPost: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT', newPost
-    } as const
-}
-
 
 //TC
 export const setProfileTC = (profileId: string) => (dispatch: Dispatch) => {
@@ -118,7 +107,6 @@ export const updateProfileStatusTC=(status:string)=>(dispatch:Dispatch)=>{
 
 
 export  type ProfileActionType = ReturnType<typeof addPostAC> |
-    ReturnType<typeof updateNewPostTextAC> |
     ReturnType<typeof setProfileAC> |
     ReturnType<typeof setStatusAC>
 
