@@ -2,12 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Header} from './Header';
 import {AppRootStateType} from '../../state/reduxStore';
-import {setUserDataTC} from '../../state/authReducer';
+import {logoutTC, setUserDataTC} from '../../state/authReducer';
 
 type HeaderContainerType = {
     isFetching: boolean
     setUserDataTC: () => void
     login: string | null
+    logoutTC:()=>void
 }
 
 export class HeaderContainer extends React.Component<HeaderContainerType> {
@@ -15,8 +16,10 @@ export class HeaderContainer extends React.Component<HeaderContainerType> {
         this.props.setUserDataTC()
     }
 
+
+
     render() {
-        return <Header login={this.props.login} isFetching={this.props.isFetching}/>;
+        return <Header logoutTC={this.props.logoutTC} login={this.props.login} isFetching={this.props.isFetching}/>;
     }
 }
 
@@ -29,4 +32,4 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export const HeaderAPIContainer = connect(mapStateToProps, {setUserDataTC})(HeaderContainer)
+export const HeaderAPIContainer = connect(mapStateToProps, {setUserDataTC,logoutTC})(HeaderContainer)

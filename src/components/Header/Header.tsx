@@ -5,6 +5,7 @@ import {NavLink} from 'react-router-dom';
 type HeaderPropsType={
     isFetching:boolean
     login:string|null
+    logoutTC:()=>void
 }
 
 export const Header = (props:HeaderPropsType) => {
@@ -13,7 +14,7 @@ export const Header = (props:HeaderPropsType) => {
             <img alt='logo' src="https://pm1.aminoapps.com/7741/5d2386f9f374a5b82ca80394c712b4f027f0d8der1-720-699v2_00.jpg"/>
        <div className={s.loginBlock}>
            {props.isFetching
-               ?<div>{props.login}</div>
+               ?<div>{props.login} <button onClick={()=>props.logoutTC()}>Logout</button></div>
                : <NavLink to={'/login'}>Login</NavLink>
            }
 

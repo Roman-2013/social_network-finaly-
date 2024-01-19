@@ -1,8 +1,7 @@
 import {Navigate} from 'react-router-dom';
 import React, {ComponentType} from 'react';
-import {AppRootStateType, useAppDispatch} from '../state/reduxStore';
+import {AppRootStateType} from '../state/reduxStore';
 import {connect} from 'react-redux';
-import {setUserDataTC} from '../state/authReducer';
 
 type WithAuthRedirectType = {
     isFetching: boolean

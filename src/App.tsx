@@ -1,17 +1,15 @@
 import React from 'react';
 import s from './App.module.css';
-import {Header} from './components/Header/Header';
 import {Route, Routes} from 'react-router-dom';
-import {AppRootStateType, useAppDispatch} from './state/reduxStore';
+import {AppRootStateType} from './state/reduxStore';
 import {DialogsActionType} from './state/dialogsReducer';
 import {ProfileActionType} from './state/profileReducer';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
 import {UsersContainer} from './components/Users/UsersContainer';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
-import {HeaderAPIContainer, HeaderContainer} from './components/Header/HeaderContainer';
-import {Login} from './components/Login/login';
-import {setUserDataTC} from './state/authReducer';
+import {HeaderAPIContainer} from './components/Header/HeaderContainer';
+import Login from './components/Login/login';
 
 export type StatePropsType = {
     state: AppRootStateType

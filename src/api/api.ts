@@ -27,7 +27,7 @@ export const authAPI = {
     login: (email:string,password:string,rememberMe:boolean) => {
         return instans.post(`/auth/login`,{email,password,rememberMe})
     },
-    loginOut: () => {
+    logout: () => {
         return instans.delete(`/auth/login`,)
     }
 }

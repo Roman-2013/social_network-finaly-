@@ -1,43 +1,48 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {authAPI} from '../../api/api';
-import { Input} from '../../common/FormsControls/FormsControls';
+import {Input} from '../../common/FormsControls/FormsControls';
 import {maxLengthCreator, required} from '../../utils/validators/validators';
+import {loginTC, logoutTC} from '../../state/authReducer';
+import {connect, useDispatch} from 'react-redux';
+import {AppRootStateType} from '../../state/reduxStore';
+import {Navigate, NavLink} from 'react-router-dom';
 
-type FormDataType = {
+export type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
 }
 
-export const Login = () => {
+type LoginPropsType = {
+    logoutTC: () => void
+    loginTC: (formData: FormDataType) => void
+    isFetching: boolean
+}
 
+const Login: React.FC<LoginPropsType> = ({isFetching, loginTC, logoutTC}) => {
 
     const onSubmit = (formData: FormDataType) => {
-        authAPI.login(formData.login, formData.password, formData.rememberMe)
-            .then(res => {
-
-            })
+        loginTC(formData)
 
     }
     const onSubmitDelete = () => {
-        authAPI.loginOut()
-            .then(res => {
-                console.log(res.data)
-
-            })
+        logoutTC()
     }
 
     return (
-        <div>
-            <h1>LOGIN</h1>
-            <ReduxLogin onSubmit={onSubmit}/>
-            <button onClick={() => onSubmitDelete()}>delete</button>
-        </div>
+        isFetching
+            ?<Navigate to={'/profile'}/>
+            :  <div>
+                <h1>LOGIN</h1>
+                <ReduxLogin onSubmit={onSubmit}/>
+                <button onClick={onSubmitDelete}>delete</button>
+            </div>
+
     );
 };
 
-const maxLengthCreator50 = maxLengthCreator(10)
+const maxLengthCreator50 = maxLengthCreator(50)
 
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     const {handleSubmit} = props
@@ -58,6 +63,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                     component={Input}
                     placeholder={'password'}
                     validate={[required, maxLengthCreator50]}
+                    type={'password'}
                 /></div>
             <div>
                 <Field
@@ -75,3 +81,14 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
 };
 
 const ReduxLogin = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+
+const mapStateToProps = (state: AppRootStateType) => {
+    return {
+        isFetching: state.Auth.isFetching
+    }
+}
+
+
+export default connect(mapStateToProps, {
+    loginTC, logoutTC
+})(Login)
