@@ -33,10 +33,10 @@ export const authAPI = {
 }
 
 export const profileAPI= {
-    setProfile: (profileId: string) => {
+    setProfile: (profileId: number) => {
         return instans.get(`/profile/${profileId}`)
     },
-    getStatus: (userId: string) => {
+    getStatus: (userId: number) => {
         return instans.get(`/profile/status/${userId}`)
     },
     updateProfileStatusTC: (status: string) => {

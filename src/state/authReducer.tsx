@@ -2,6 +2,7 @@ import {AnyAction, Dispatch} from 'redux';
 import {authAPI} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {FormDataType} from '../components/Login/login';
+import { stopSubmit } from 'redux-form';
 
 export type DataType={
     id: number|null
@@ -66,6 +67,10 @@ export const loginTC=(formData:FormDataType)=>(dispatch:ThunkDispatch<DataType, 
         .then(res=>{
             if(res.data.resultCode===0){
                 dispatch(setUserDataTC())
+            }else{
+                if(res.data.messages.length){
+                    dispatch(stopSubmit('login',{_error:res.data.messages}))
+                }
             }
         })
 }

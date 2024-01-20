@@ -19,12 +19,14 @@ function withRouter(Component: ElementType) {
 }
 
 type ProfileAPIContainerType = {
-    setProfileTC: (profileId: string) => void
+    setProfileTC: (profileId: number) => void
     profile: null | ProfileAPI
     params?: Params | undefined
-    getProfileStatusTC: (userId: string) => void
+    getProfileStatusTC: (userId: number) => void
     updateProfileStatusTC: (status: string) => void
     status: string
+    authorizedUserId: number
+    isFetching: boolean
 }
 
 
@@ -32,16 +34,17 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
 
 
     componentDidMount() {
+
         let profileId;
         this.props.params?.id === undefined
-            ? profileId = '29614'
-            : profileId = this.props.params.id
+            ? profileId = this.props.authorizedUserId
+            : profileId = +this.props.params.id
+
 
         this.props.setProfileTC(profileId)
         this.props.getProfileStatusTC(profileId)
 
     }
-
 
 
     render() {
@@ -56,14 +59,14 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
 }
 
 
-
 const mapStateToProps = (state: AppRootStateType) => {
     return {
         profile: state.ProfilePage.profile,
-        status: state.ProfilePage.status
+        status: state.ProfilePage.status,
+        authorizedUserId: state.Auth.id,
+        isFetching: state.Auth.isFetching
     }
 }
-
 
 
 export const ProfileContainer = compose<ElementType>(

@@ -80,14 +80,14 @@ export const addPostAC = (profileText:string) => {
 }
 
 //TC
-export const setProfileTC = (profileId: string) => (dispatch: Dispatch) => {
+export const setProfileTC = (profileId: number) => (dispatch: Dispatch) => {
     profileAPI.setProfile(profileId)
         .then(res => {
             dispatch(setProfileAC(res.data))
         })
 }
 
-export const getProfileStatusTC=(userId:string)=>(dispatch:Dispatch)=>{
+export const getProfileStatusTC=(userId:number)=>(dispatch:Dispatch)=>{
     profileAPI.getStatus(userId)
         .then(res=>{
             dispatch(setStatusAC(res.data))
