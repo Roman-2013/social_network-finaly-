@@ -6,6 +6,14 @@ import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {
+    getCurrentPage,
+    getError,
+    getFollowingInProgress,
+    getIsFetching,
+    getItems,
+    getTotalCount
+} from '../../utils/selectors/usersSelectors';
 
 type mapStateToProps = {
     items: userType[]
@@ -72,14 +80,24 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 }
 
 
+// const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
+//     return {
+//         items: state.Users.items,
+//         totalCount: state.Users.totalCount,
+//         error: state.Users.error,
+//         currentPage: state.Users.currentPage,
+//         isFetching: state.Users.isFetching,
+//         followingInProgress:state.Users.followingInProgress
+//     }
+// }
 const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
     return {
-        items: state.Users.items,
-        totalCount: state.Users.totalCount,
-        error: state.Users.error,
-        currentPage: state.Users.currentPage,
-        isFetching: state.Users.isFetching,
-        followingInProgress:state.Users.followingInProgress
+        items: getItems(state),
+        totalCount: getTotalCount(state),
+        error: getError(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress:getFollowingInProgress(state)
     }
 }
 
