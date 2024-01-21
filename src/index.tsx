@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App} from './App';
+import {App, AppContainer} from './App';
 import {BrowserRouter} from 'react-router-dom';
 import {PostPropsType} from './components/Profile/MyPosts/Posts/Post';
 import {DialogsItemPropsType} from './components/Dialogs/DialogItem/DialogItem';
@@ -18,8 +18,7 @@ export type StateType = {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
-            <App
-            />
+            <AppContainer/>
             </Provider>
         </BrowserRouter>,
         document.getElementById('root')

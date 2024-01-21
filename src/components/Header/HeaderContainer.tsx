@@ -6,15 +6,12 @@ import {logoutTC, setUserDataTC} from '../../state/authReducer';
 
 type HeaderContainerType = {
     isFetching: boolean
-    setUserDataTC: () => void
+
     login: string | null
     logoutTC:()=>void
 }
 
 export class HeaderContainer extends React.Component<HeaderContainerType> {
-    componentDidMount() {
-        this.props.setUserDataTC()
-    }
 
 
 
@@ -32,4 +29,4 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export const HeaderAPIContainer = connect(mapStateToProps, {setUserDataTC,logoutTC})(HeaderContainer)
+export const HeaderAPIContainer = connect(mapStateToProps, {logoutTC})(HeaderContainer)

@@ -7,6 +7,7 @@ import {authReducer} from './authReducer';
 import thunkMiddleware,{ThunkDispatch} from 'redux-thunk';
 import {useDispatch} from 'react-redux';
 import {reducer as formReducer} from 'redux-form';
+import {appReducer} from './appReducer';
 
 const rootReducer=combineReducers({
     Dialog:DialogsReducer,
@@ -14,7 +15,8 @@ const rootReducer=combineReducers({
     SiteBar:SiteBarReducer,
     Users:usersReducer,
     Auth:authReducer,
-    form:formReducer
+    form:formReducer,
+    App:appReducer
 })
 
 export const store =createStore(rootReducer,applyMiddleware(thunkMiddleware))

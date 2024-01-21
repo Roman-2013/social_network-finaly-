@@ -1,9 +1,9 @@
 import React, {ElementType} from 'react';
-import {ProfileAPI, getProfileStatusTC, setProfileTC, updateProfileStatusTC} from '../../state/profileReducer';
+import {getProfileStatusTC, ProfileAPI, setProfileTC, updateProfileStatusTC} from '../../state/profileReducer';
 import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
-import {Navigate, Params, useParams} from 'react-router-dom'
+import {Params, useParams} from 'react-router-dom'
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 

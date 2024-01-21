@@ -54,12 +54,13 @@ export const logoutAC=( isFetching:boolean)=>{
 
 //TC
 export const setUserDataTC=()=>(dispatch:Dispatch)=>{
-    authAPI.setUserData()
+   return  authAPI.setUserData()
         .then(res=>{
             if(res.data.resultCode===0){
                 dispatch(setUserDataAC(res.data.data))
             }
         })
+
 }
 
 export const loginTC=(formData:FormDataType)=>(dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
