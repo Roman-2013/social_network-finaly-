@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css'
 import {ProfileAPI} from '../../../../state/profileReducer';
 import userPhoto from './../../../../img/anime-male-avatar_950633-914.avif'
 import {ProfileStatus} from '../../ProfileStatus/ProfileStatus';
+import {ProfileStatusWithHooks} from '../../ProfileStatus/ProfileStatusWithHooks';
 
 
 export const ProfileInfo:React.FC<{updateProfileStatusTC:(status:string)=>void,status:string,profile:  ProfileAPI}> = ({profile,status,updateProfileStatusTC}) => {
@@ -19,7 +20,7 @@ export const ProfileInfo:React.FC<{updateProfileStatusTC:(status:string)=>void,s
                <div>{profile.fullName}</div>
               <div>
                   <img src={profile.photos.small===null?userPhoto:profile.photos.small}/>
-                  <ProfileStatus updateProfileStatusTC={updateProfileStatusTC} status={status}/>
+                  <ProfileStatusWithHooks updateProfileStatusTC={updateProfileStatusTC} status={status}/>
               </div>
             </div>
         </>

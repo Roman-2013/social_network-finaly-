@@ -11,7 +11,7 @@ import {
     getError,
     getFollowingInProgress,
     getIsFetching,
-    getItems,
+     getItemsSelector,
     getTotalCount
 } from '../../utils/selectors/usersSelectors';
 
@@ -79,20 +79,9 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
     }
 }
 
-
-// const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
-//     return {
-//         items: state.Users.items,
-//         totalCount: state.Users.totalCount,
-//         error: state.Users.error,
-//         currentPage: state.Users.currentPage,
-//         isFetching: state.Users.isFetching,
-//         followingInProgress:state.Users.followingInProgress
-//     }
-// }
 const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
     return {
-        items: getItems(state),
+        items: getItemsSelector(state),
         totalCount: getTotalCount(state),
         error: getError(state),
         currentPage: getCurrentPage(state),

@@ -1,9 +1,10 @@
 import {AppRootStateType} from '../../state/reduxStore';
+import {createSelector} from 'reselect';
 
-export const getItems=(state:AppRootStateType)=>{
+ const getItems=(state:AppRootStateType)=>{
     return state.Users.items
 }
-export const getTotalCount=(state:AppRootStateType)=>{
+export const getTotalCount=(state:AppRootStateType)=> {
     return state.Users.totalCount
 }
 
@@ -20,3 +21,6 @@ export const getFollowingInProgress=(state:AppRootStateType)=>{
     return state.Users.followingInProgress
 }
 
+export const getItemsSelector=createSelector(getItems,(item)=>{
+    return item
+})
