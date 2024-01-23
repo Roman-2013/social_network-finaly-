@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FocusEvent, useState} from 'react';
+import React, {ChangeEvent, FocusEvent, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAppDispatch} from '../../../state/reduxStore';
 
@@ -12,6 +12,11 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({updateProfi
 
     const [editMode, setEditMode] = useState(true)
     const [statusLocal, setStatus] = useState(status)
+
+
+    useEffect(() => {
+        setStatus(status)
+    }, [status]);
 
     const activateEditMode = () => {
         setEditMode(false)

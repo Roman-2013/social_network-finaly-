@@ -2,7 +2,6 @@ import React from 'react';
 import s from './ProfileInfo.module.css'
 import {ProfileAPI} from '../../../../state/profileReducer';
 import userPhoto from './../../../../img/anime-male-avatar_950633-914.avif'
-import {ProfileStatus} from '../../ProfileStatus/ProfileStatus';
 import {ProfileStatusWithHooks} from '../../ProfileStatus/ProfileStatusWithHooks';
 
 
