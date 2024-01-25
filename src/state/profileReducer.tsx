@@ -29,8 +29,8 @@ export type ProfileAPIPhotos = {
 
 type ProfileReducer = {
     postData: PostPropsType[],
-    profile: ProfileAPI | null,
-    status: string
+    profile?: ProfileAPI | null,
+    status?: string
 }
 
 const initialState = {
@@ -57,6 +57,9 @@ export const ProfileReducer = (state: ProfileReducer = initialState, action: Pro
         case 'SET-STATUS': {
             return {...state, status: action.status}
         }
+        case 'DELETE-POST': {
+            return {...state, postData:state.postData.filter(el=>el.id!==action.postID)}
+        }
         default:
             return state
     }
@@ -76,6 +79,12 @@ export const setProfileAC = (profile: ProfileAPI) => {
 export const addPostAC = (profileText:string) => {
     return {
         type: 'ADD-POST',profileText
+    } as const
+}
+
+export const deletedPostAC = (postID:number) => {
+    return {
+        type: 'DELETE-POST',postID
     } as const
 }
 
@@ -108,5 +117,6 @@ export const updateProfileStatusTC=(status:string)=>(dispatch:Dispatch)=>{
 
 export  type ProfileActionType = ReturnType<typeof addPostAC> |
     ReturnType<typeof setProfileAC> |
-    ReturnType<typeof setStatusAC>
+    ReturnType<typeof setStatusAC>|
+    ReturnType<typeof deletedPostAC>
 
