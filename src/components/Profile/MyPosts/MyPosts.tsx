@@ -3,7 +3,7 @@ import s from './MyPosts.module.css'
 import {Post, PostPropsType} from './Posts/Post';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLengthCreator, required} from '../../../utils/validators/validators';
-import { Textarea} from '../../../common/FormsControls/FormsControls';
+import {Textarea} from '../../../common/FormsControls/FormsControls';
 
 
 type ReduxProfileTextAreaFormProps = {
@@ -15,7 +15,9 @@ type MyPostsType = {
     postData: PostPropsType[]
 }
 
-export const MyPosts: React.FC<MyPostsType> = ({addPostAC, postData}) => {
+export const MyPosts = React.memo((props: MyPostsType) => {
+    console.log('render myPost')
+    let {addPostAC, postData} = props;
 
     const onProfileTextSubmit = (formData: ReduxProfileTextAreaFormProps) => {
         addPostAC(formData.profileText)
@@ -37,7 +39,7 @@ export const MyPosts: React.FC<MyPostsType> = ({addPostAC, postData}) => {
 
         </div>
     );
-};
+})
 
 const maxLengthValidator = maxLengthCreator(10)
 
