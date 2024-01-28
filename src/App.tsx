@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, ElementType} from 'react';
 import s from './App.module.css';
 import {Route, Routes} from 'react-router-dom';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
@@ -8,15 +8,10 @@ import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {HeaderAPIContainer} from './components/Header/HeaderContainer';
 import Login from './components/Login/login';
 import {connect} from 'react-redux';
-import {setUserDataTC} from './state/authReducer';
 import {initializeAppTC} from './state/appReducer';
 import {AppRootStateType} from './state/reduxStore';
 import {Preloader} from './common/Preloader/Preloader';
-
-// export type StatePropsType = {
-//     state: AppRootStateType
-//     dispatch: (action: DialogsActionType | ProfileActionType) => void
-// }
+import {compose} from 'redux';
 
 
 type AppPropsType = {
@@ -65,4 +60,6 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export const AppContainer = connect(mapStateToProps, {initializeAppTC})(App)
+ export const AppContainer = compose<ElementType>(
+    connect(mapStateToProps, {initializeAppTC}),
+)(App)

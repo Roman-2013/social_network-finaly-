@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
-import {followTC, getUsersTC, setCurrentPageAC, unfollowTC, usersType, userType} from '../../state/usersReducer';
+import {followUnfollowTC, getUsersTC, usersType, userType} from '../../state/usersReducer';
 import React, {ElementType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
@@ -11,7 +11,7 @@ import {
     getError,
     getFollowingInProgress,
     getIsFetching,
-     getItemsSelector,
+    getItemsSelector,
     getTotalCount
 } from '../../utils/selectors/usersSelectors';
 
@@ -23,26 +23,15 @@ type mapStateToProps = {
     isFetching: boolean
     followingInProgress:number[]
 }
-
-type mapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (users: usersType) => void
-    setCurrentPage: (currentPage: number) => void
-    changeIsFetching: (isFetching: boolean) => void
-}
-
-
 export type UsersPropsType = {
     totalCount: number
     error: string | null
     items: userType[]
-    followTC: (userId: number) => void
     currentPage: number
     isFetching: boolean
     followingInProgress:number[]
     getUsersTC:(currentPage:number)=>void
-    unfollowTC:(userID:number)=>void
+    followUnfollowTC:(userID:number,status:boolean)=>void
 }
 
 
@@ -50,12 +39,13 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 
 
     componentDidMount() {
-
-        this.props.getUsersTC(this.props.currentPage)
+const {currentPage,getUsersTC}=this.props
+        getUsersTC(currentPage)
     }
 
     onPageChanged = (currentPage: number) => {
-        this.props.getUsersTC(currentPage)
+        const {getUsersTC}=this.props
+        getUsersTC(currentPage)
     }
 
     render() {
@@ -68,8 +58,7 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
                     onPageChanged={this.onPageChanged}
                     currentPage={this.props.currentPage}
                     items={this.props.items}
-                    unfollowTC={this.props.unfollowTC}
-                    followTC={this.props.followTC}
+                    followUnfollowTC={this.props.followUnfollowTC}
                 />
             }
 
@@ -94,8 +83,7 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
 export const UsersContainer=compose<ElementType>(
     connect(mapStateToProps, {
         getUsersTC,
-        followTC,
-        unfollowTC,
+        followUnfollowTC,
     }),
     WithAuthRedirect
 )(UsersAPIContainer)

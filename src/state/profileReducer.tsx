@@ -89,27 +89,20 @@ export const deletedPostAC = (postID:number) => {
 }
 
 //TC
-export const setProfileTC = (profileId: number) => (dispatch: Dispatch) => {
-    profileAPI.setProfile(profileId)
-        .then(res => {
+export const setProfileTC = (profileId: number) => async (dispatch: Dispatch) => {
+    const res=await profileAPI.setProfile(profileId)
             dispatch(setProfileAC(res.data))
-        })
 }
 
-export const getProfileStatusTC=(userId:number)=>(dispatch:Dispatch)=>{
-    profileAPI.getStatus(userId)
-        .then(res=>{
+export const getProfileStatusTC=(userId:number)=>async (dispatch:Dispatch)=>{
+   const res=await profileAPI.getStatus(userId)
             dispatch(setStatusAC(res.data))
-        })
 }
-export const updateProfileStatusTC=(status:string)=>(dispatch:Dispatch)=>{
-    profileAPI.updateProfileStatusTC(status)
-        .then(res=>{
+export const updateProfileStatusTC=(status:string)=>async (dispatch:Dispatch)=>{
+   const res= await profileAPI.updateProfileStatusTC(status)
             if(res.data.resultCode===0){
                dispatch(setStatusAC(status))
             }
-
-        })
 }
 
 

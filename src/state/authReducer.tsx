@@ -53,19 +53,15 @@ export const logoutAC=( isFetching:boolean)=>{
 }
 
 //TC
-export const setUserDataTC=()=>(dispatch:Dispatch)=>{
-   return  authAPI.setUserData()
-        .then(res=>{
+export const setUserDataTC=()=>async (dispatch:Dispatch)=>{
+  const res= await  authAPI.setUserData()
             if(res.data.resultCode===0){
                 dispatch(setUserDataAC(res.data.data))
             }
-        })
-
 }
 
-export const loginTC=(formData:FormDataType)=>(dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
-    authAPI.login(formData.login, formData.password, formData.rememberMe)
-        .then(res=>{
+export const loginTC=(formData:FormDataType)=>async (dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
+   const res=await authAPI.login(formData.login, formData.password, formData.rememberMe)
             if(res.data.resultCode===0){
                 dispatch(setUserDataTC())
             }else{
@@ -73,16 +69,13 @@ export const loginTC=(formData:FormDataType)=>(dispatch:ThunkDispatch<DataType, 
                     dispatch(stopSubmit('login',{_error:res.data.messages}))
                 }
             }
-        })
 }
 
-export const logoutTC=()=>(dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
-    authAPI.logout()
-        .then(res=>{
+export const logoutTC=()=>async (dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
+   const res= await authAPI.logout()
             if(res.data.resultCode===0){
                 dispatch(logoutAC(false))
             }
-        })
 }
 
 

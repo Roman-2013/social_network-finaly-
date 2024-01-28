@@ -18,7 +18,7 @@ export const ProfileInfo:React.FC<{updateProfileStatusTC:(status:string)=>void,s
                 <div>{profile.aboutMe}</div>
                <div>{profile.fullName}</div>
               <div>
-                  <img src={profile.photos.small===null?userPhoto:profile.photos.small}/>
+                  <img alt={'image'} src={profile.photos.small===null?userPhoto:profile.photos.small}/>
                   <ProfileStatusWithHooks updateProfileStatusTC={updateProfileStatusTC} status={status}/>
               </div>
             </div>
