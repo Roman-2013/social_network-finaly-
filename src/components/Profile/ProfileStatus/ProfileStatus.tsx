@@ -8,7 +8,7 @@ type ProfileStatusType = {
 }
 
 
- class ProfileStatus extends React.Component<ProfileStatusType> {
+ export class ProfileStatus extends React.Component<ProfileStatusType> {
 
     state = {
         editMode: true,
