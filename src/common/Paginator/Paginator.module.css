@@ -1,4 +1,10 @@
-
+.current{
+    display:inline;
+    height: 300px;
+    background-color: azure;
+    padding: 3px;
+    border: 1px solid grey;
+}
 .selected{
     font-weight: bolder;
 }

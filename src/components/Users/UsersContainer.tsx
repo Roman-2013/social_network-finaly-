@@ -12,7 +12,7 @@ import {
     getFollowingInProgress,
     getIsFetching,
     getItemsSelector,
-    getTotalCount
+    getTotalCount, getUsersOnThePage
 } from '../../utils/selectors/usersSelectors';
 
 type mapStateToProps = {
@@ -22,6 +22,7 @@ type mapStateToProps = {
     currentPage: number
     isFetching: boolean
     followingInProgress:number[]
+    usersOnThePage:number
 }
 export type UsersPropsType = {
     totalCount: number
@@ -30,8 +31,9 @@ export type UsersPropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress:number[]
-    getUsersTC:(currentPage:number)=>void
+    getUsersTC:(currentPage:number,usersOnThePage:number)=>void
     followUnfollowTC:(userID:number,status:boolean)=>void
+    usersOnThePage:number
 }
 
 
@@ -40,12 +42,12 @@ export class UsersAPIContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
 const {currentPage,getUsersTC}=this.props
-        getUsersTC(currentPage)
+        getUsersTC(currentPage,this.props.usersOnThePage)
     }
 
-    onPageChanged = (currentPage: number) => {
+    onPageChanged = (currentPage: number,usersOnThePage:number) => {
         const {getUsersTC}=this.props
-        getUsersTC(currentPage)
+        getUsersTC(currentPage,usersOnThePage)
     }
 
     render() {
@@ -53,6 +55,7 @@ const {currentPage,getUsersTC}=this.props
             {this.props.isFetching
                 ? <Preloader/>
                 : <Users
+                    usersOnThePage={this.props.usersOnThePage}
                     followingInProgress={this.props.followingInProgress}
                     totalCount={this.props.totalCount}
                     onPageChanged={this.onPageChanged}
@@ -75,7 +78,8 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
         error: getError(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress:getFollowingInProgress(state)
+        followingInProgress:getFollowingInProgress(state),
+        usersOnThePage:getUsersOnThePage(state)
     }
 }
 

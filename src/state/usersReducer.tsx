@@ -18,18 +18,13 @@ export type usersType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
+    usersOnThePage:number
 }
-const initialState = {currentPage: 1, isFetching: false, followingInProgress: [] as Array<number>} as usersType
+const initialState = {usersOnThePage:11,currentPage: 1, isFetching: false, followingInProgress: [] as Array<number>} as usersType
 
 
 export const usersReducer = (state: usersType = initialState, action: UsersActionType) => {
     switch (action.type) {
-        // case 'FOLLOW':{
-        //     return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:true}:el)]}
-        // }
-        // case 'UN-FOLLOW':{
-        //     return {...state,items:[...state.items.map(el=>el.id===action.userId ? {...el,followed:false}:el)]}
-        // }
         case 'UNIVERSAL-FOLLOW': {
             return {
                 ...state,
@@ -68,19 +63,6 @@ export const setCurrentPageAC = (currentPage: number) => {
         type: 'SET-CURRENT-PAGE', currentPage
     } as const
 }
-
-// export const followAC=(userId:number)=>{
-//     return {
-//         type :'FOLLOW',userId
-//     }as  const
-// }
-//
-// export const unFollowAC=(userId:number)=>{
-//     return {
-//         type :'UN-FOLLOW',userId
-//     }as  const
-// }
-
 export const followUniversalAC = (userId: number, status: boolean) => {
     debugger
     return {
@@ -99,38 +81,16 @@ export const changeIsFetchingAC = (isFetching: boolean) => {
     } as const
 }
 //TC
-export const getUsersTC = (currentPage: number) => async (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, usersOnThePage:number) => async (dispatch: Dispatch) => {
     currentPage !== 1
         ? dispatch(setCurrentPageAC(currentPage))
         : dispatch(setCurrentPageAC(1))
     dispatch(changeIsFetchingAC(true))
-    const res = await userAPI.getUsers(currentPage)
-    // axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=100`, {withCredentials:true}
+    const res = await userAPI.getUsers(currentPage,usersOnThePage)
     dispatch(setUsersAC(res))
     dispatch(changeIsFetchingAC(false))
 }
-
-// export const unfollowTC=(userID:number,status:boolean)=>async (dispatch:Dispatch)=>{
-//     dispatch(followingInProgressAC(userID,true))
-//     const res = await userAPI.unFollow(userID)
-//             if(res.data.resultCode===0){
-//                 dispatch(followUniversalAC(userID,status))
-//             }
-//            dispatch(followingInProgressAC(userID,false))
-// }
-//
-// export const followTC=(userID:number,status:boolean)=>async (dispatch:Dispatch)=>{
-//     dispatch(followingInProgressAC(userID,true))
-//     const res= await userAPI.follow(userID)
-//             if(res.data.resultCode===0){
-//                 dispatch(followUniversalAC(userID,status))
-//             }
-//             dispatch(followingInProgressAC(userID,false))
-// }
-
-
 export const followUnfollowTC = (userID: number, status: boolean) => async (dispatch: Dispatch) => {
-    debugger
     dispatch(followingInProgressAC(userID, true))
     let res;
     if (status) {
@@ -146,8 +106,6 @@ export const followUnfollowTC = (userID: number, status: boolean) => async (disp
 
 //Type
 export type UsersActionType =
-// ReturnType<typeof followAC>|
-// ReturnType<typeof unFollowAC>|
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> |
     ReturnType<typeof changeIsFetchingAC> |

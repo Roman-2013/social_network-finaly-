@@ -8,9 +8,10 @@ type UsersProps = {
     totalCount: number
     items: userType[]
     currentPage: number
-    onPageChanged: (currentPage: number) => void
+    onPageChanged: (currentPage: number,usersOnThePage:number) => void
     followingInProgress: number[]
     followUnfollowTC: (userID: number, status: boolean) => void
+    usersOnThePage:number
 }
 
 
@@ -20,17 +21,13 @@ export const Users: React.FC<UsersProps> = ({
                                                 onPageChanged,
                                                 totalCount,
                                                 items,
-                                                currentPage
+                                                currentPage,
+                                                usersOnThePage
                                             }) => {
 
-    const pagesCount = Math.ceil(totalCount / 100)
-    let pages = []
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i)
-    }
     return (
         <div>
-            <Paginator onPageChanged={onPageChanged} currentPage={currentPage} totalCount={totalCount}/>
+            <Paginator usersOnThePage={usersOnThePage} onPageChanged={onPageChanged} currentPage={currentPage} totalCount={totalCount}/>
             {
                 items?.map(el => {
                     return <User
@@ -42,6 +39,7 @@ export const Users: React.FC<UsersProps> = ({
                         followingInProgress={followingInProgress}
                         followUnfollowTC={followUnfollowTC}
                         photoSmall={el.photos.small}
+
                     />
 
                 })

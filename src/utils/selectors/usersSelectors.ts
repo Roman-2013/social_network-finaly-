@@ -7,6 +7,9 @@ import {createSelector} from 'reselect';
 export const getTotalCount=(state:AppRootStateType)=> {
     return state.Users.totalCount
 }
+export const getUsersOnThePage=(state:AppRootStateType)=> {
+    return state.Users.usersOnThePage
+}
 
 export const getError=(state:AppRootStateType)=>{
     return state.Users.error

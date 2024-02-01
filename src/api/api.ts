@@ -6,8 +6,9 @@ const instans = axios.create({
 })
 
 export const userAPI = {
-    getUsers: (currentPage: number) => {
-        return instans.get(`users?page=${currentPage}&count=100`,)
+
+    getUsers: (currentPage: number, usersOnThePage: number) => {
+        return instans.get(`users?page=${currentPage}&count=${usersOnThePage}`,)
             .then(res => {
                 return res.data
             })
@@ -24,15 +25,15 @@ export const authAPI = {
     setUserData: () => {
         return instans.get(`/auth/me`)
     },
-    login: (email:string,password:string,rememberMe:boolean) => {
-        return instans.post(`/auth/login`,{email,password,rememberMe})
+    login: (email: string, password: string, rememberMe: boolean) => {
+        return instans.post(`/auth/login`, {email, password, rememberMe})
     },
     logout: () => {
         return instans.delete(`/auth/login`,)
     }
 }
 
-export const profileAPI= {
+export const profileAPI = {
     setProfile: (profileId: number) => {
         return instans.get(`/profile/${profileId}`)
     },

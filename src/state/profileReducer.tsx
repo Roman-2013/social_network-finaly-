@@ -42,7 +42,6 @@ const initialState = {
     ],
     profile: null,
     status: ''
-
 }
 
 
