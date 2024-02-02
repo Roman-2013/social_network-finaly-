@@ -4,7 +4,7 @@ import {AppRootStateType} from '../../state/reduxStore';
 import {connect} from 'react-redux';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
-import {ElementType} from 'react';
+import {ComponentType, ElementType} from 'react';
 
 
 let mapStateToProps = (state: AppRootStateType)=>{
@@ -15,10 +15,12 @@ let mapStateToProps = (state: AppRootStateType)=>{
 }
 
 
-export const DialogsContainer= compose<ElementType>(
+  const DialogsContainer= compose<ComponentType>(
 
     connect(mapStateToProps, {
         addMessage:addMessageAC
     }),
     WithAuthRedirect
 )(Dialogs)
+
+export default DialogsContainer

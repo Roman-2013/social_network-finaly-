@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
 import {followUnfollowTC, getUsersTC, usersType, userType} from '../../state/usersReducer';
-import React, {ElementType} from 'react';
+import React, {ComponentType, ElementType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
@@ -84,7 +84,7 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
 }
 
 
-export const UsersContainer=compose<ElementType>(
+const UsersContainer=compose<ComponentType>(
     connect(mapStateToProps, {
         getUsersTC,
         followUnfollowTC,
@@ -92,3 +92,4 @@ export const UsersContainer=compose<ElementType>(
     WithAuthRedirect
 )(UsersAPIContainer)
 
+export default UsersContainer

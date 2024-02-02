@@ -1,4 +1,4 @@
-import React, {ElementType} from 'react';
+import React, {ComponentType, ElementType} from 'react';
 import {getProfileStatusTC, ProfileAPI, setProfileTC, updateProfileStatusTC} from '../../state/profileReducer';
 import {Profile} from './Profile';
 import {connect} from 'react-redux';
@@ -69,7 +69,7 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export const ProfileContainer = compose<ElementType>(
+  const ProfileContainer = compose<ComponentType>(
     connect(mapStateToProps, {
         setProfileTC,
         getProfileStatusTC,
@@ -78,3 +78,5 @@ export const ProfileContainer = compose<ElementType>(
     withRouter,
     WithAuthRedirect,
 )(ProfileAPIContainer)
+
+export default ProfileContainer

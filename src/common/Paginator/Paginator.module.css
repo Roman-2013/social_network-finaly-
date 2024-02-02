@@ -8,3 +8,7 @@
 .selected{
     font-weight: bolder;
 }
+.input{
+    margin-left: 100px;
+    width: 30px;
+}

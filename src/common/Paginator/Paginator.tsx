@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {LegacyRef, MutableRefObject, RefObject, useRef, useState} from 'react';
 import s from './Paginator.module.css'
 
 
@@ -15,8 +15,13 @@ export const Paginator: React.FC<PropsType> = ({
                                                    totalCount,
                                                    currentPage,
                                                    usersOnThePage,
-                                                   portionSize=20
                                                }) => {
+
+    const [number,setNumber]=useState(10)
+    const [inputValue,setInputValue]=useState(number)
+    const [error,setError]=useState<string|null>(null)
+
+
 
     const pagesCount = Math.ceil(totalCount / usersOnThePage)
     let pages = []
@@ -25,10 +30,19 @@ export const Paginator: React.FC<PropsType> = ({
     }
 
 
-    const portionCount = Math.ceil(pagesCount / portionSize)
+    const portionCount = Math.ceil(pagesCount / number)
     const [portionNumber,setPortionNumber]=useState(1)
-    const left=(portionNumber-1)*portionSize+1
-    const right=portionNumber*portionSize
+    const left=(portionNumber-1)*number+1
+    const right=portionNumber*number
+
+const onChangeInputHandler=()=>{
+        if(!(inputValue>20)){
+            setNumber(inputValue)
+            setError(null)
+        }else{
+            setError("max columns 20 things")
+        }
+}
 
 
     return <div>
@@ -50,5 +64,10 @@ export const Paginator: React.FC<PropsType> = ({
 
         {portionCount>portionNumber &&
             <button onClick={()=>setPortionNumber(portionNumber+1)}>Next</button>}
+
+        <input onChange={(e)=>setInputValue(+e.currentTarget.value)} value={inputValue} className={s.input} />
+        <button onClick={()=>onChangeInputHandler()}>change the number of columns</button>
+        <div>{error}</div>
     </div>
 }
+
