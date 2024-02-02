@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/social_network-finaly-/static/css/main.ef242f40.css",
+    "main.js": "/social_network-finaly-/static/js/main.adab3e3e.js",
+    "static/css/3.45fe73a3.chunk.css": "/social_network-finaly-/static/css/3.45fe73a3.chunk.css",
+    "static/js/3.28a1640a.chunk.js": "/social_network-finaly-/static/js/3.28a1640a.chunk.js",
+    "static/css/682.30d2ec7a.chunk.css": "/social_network-finaly-/static/css/682.30d2ec7a.chunk.css",
+    "static/js/682.f4696853.chunk.js": "/social_network-finaly-/static/js/682.f4696853.chunk.js",
+    "static/css/963.e769a5f6.chunk.css": "/social_network-finaly-/static/css/963.e769a5f6.chunk.css",
+    "static/js/963.25d3e60a.chunk.js": "/social_network-finaly-/static/js/963.25d3e60a.chunk.js",
+    "static/media/anime-male-avatar_950633-914.avif": "/social_network-finaly-/static/media/anime-male-avatar_950633-914.d5429f97ec06f2405eae.avif",
+    "index.html": "/social_network-finaly-/index.html",
+    "main.ef242f40.css.map": "/social_network-finaly-/static/css/main.ef242f40.css.map",
+    "main.adab3e3e.js.map": "/social_network-finaly-/static/js/main.adab3e3e.js.map",
+    "3.45fe73a3.chunk.css.map": "/social_network-finaly-/static/css/3.45fe73a3.chunk.css.map",
+    "3.28a1640a.chunk.js.map": "/social_network-finaly-/static/js/3.28a1640a.chunk.js.map",
+    "682.30d2ec7a.chunk.css.map": "/social_network-finaly-/static/css/682.30d2ec7a.chunk.css.map",
+    "682.f4696853.chunk.js.map": "/social_network-finaly-/static/js/682.f4696853.chunk.js.map",
+    "963.e769a5f6.chunk.css.map": "/social_network-finaly-/static/css/963.e769a5f6.chunk.css.map",
+    "963.25d3e60a.chunk.js.map": "/social_network-finaly-/static/js/963.25d3e60a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ef242f40.css",
+    "static/js/main.adab3e3e.js"
+  ]
+}
