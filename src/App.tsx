@@ -1,10 +1,7 @@
 import React, {Component, ElementType, lazy, Suspense} from 'react';
 import s from './App.module.css';
 import {Route, Routes} from 'react-router-dom';
-
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
-
-
 import {HeaderAPIContainer} from './components/Header/HeaderContainer';
 import Login from './components/Login/login';
 import {connect} from 'react-redux';
@@ -13,9 +10,6 @@ import {AppRootStateType} from './state/reduxStore';
 import {Preloader} from './common/Preloader/Preloader';
 import {compose} from 'redux';
 
-// import DialogsContainer from './components/Dialogs/DialogsContainer';
-// import ProfileContainer from './components/Profile/ProfileContainer';
-// import UsersContainer from './components/Users/UsersContainer';
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
@@ -31,7 +25,6 @@ export class App extends Component <AppPropsType> {
     componentDidMount() {
         this.props.initializeAppTC()
     }
-
 
     render() {
         if (!this.props.initialized) {
