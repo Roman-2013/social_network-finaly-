@@ -1,4 +1,5 @@
 import axios from 'axios';
+import login from '../components/Login/login';
 
 const instans = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -42,7 +43,18 @@ export const profileAPI = {
     },
     updateProfileStatusTC: (status: string) => {
         return instans.put('/profile/status', {status})
+    },
+    setPhoto: (photo: any) => {
+        const formData = new FormData()
+        formData.append('image', photo)
+
+        return instans.put('/profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
     }
+
 }
 
 

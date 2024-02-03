@@ -7,15 +7,21 @@ import {useAppDispatch} from '../../state/reduxStore';
 import {useDispatch} from 'react-redux';
 
 
-
-export const Profile:React.FC<{updateProfileStatusTC:(status:string)=>void, status:string,profile:  null| ProfileAPI }> = ({profile,status,updateProfileStatusTC}) => {
+export const Profile: React.FC<{
+    isOwner:boolean,
+    updateProfileStatusTC: (status: string) => void,
+    status: string,
+    profile: null | ProfileAPI,
+    savePhotoTC:(photo:any)=>void,
+    photos:string
+}> = ({profile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
 
     return (
         <div>
             {
                 !profile
                     ? <Preloader/>
-                    :  <ProfileInfo updateProfileStatusTC={updateProfileStatusTC} status={status} profile={profile}/>
+                    : <ProfileInfo photos={photos} savePhotoTC={savePhotoTC} isOwner={isOwner} updateProfileStatusTC={updateProfileStatusTC} status={status} profile={profile}/>
             }
 
             <MyPostsContainer/>

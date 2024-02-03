@@ -3,7 +3,7 @@ import {Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 
 export type ProfileAPI = {
-    aboutMe: string;
+    aboutMe: string |null;
     contacts: ProfileAPIContacts;
     lookingForAJob: boolean;
     lookingForAJobDescription: string;
@@ -29,8 +29,8 @@ export type ProfileAPIPhotos = {
 
 type ProfileReducer = {
     postData: PostPropsType[],
-    profile?: ProfileAPI | null,
-    status?: string
+    profile: ProfileAPI ,
+    status: string
 }
 
 const initialState = {
@@ -40,7 +40,7 @@ const initialState = {
         {id: 3, message: 'COOL', likesCount: 21},
         {id: 4, message: 'LUCKY MAN', likesCount: 50},
     ],
-    profile: null,
+    profile: {} as ProfileAPI,
     status: ''
 }
 
@@ -58,6 +58,9 @@ export const ProfileReducer = (state: ProfileReducer = initialState, action: Pro
         }
         case 'DELETE-POST': {
             return {...state, postData:state.postData.filter(el=>el.id!==action.postID)}
+        }
+        case 'SET-PHOTO': {
+            return {...state, profile:{...state.profile,photos:{...state.profile.photos,large:action.photo}}}
         }
         default:
             return state
@@ -87,6 +90,12 @@ export const deletedPostAC = (postID:number) => {
     } as const
 }
 
+export const setPhotoAC = (photo:string) => {
+    return {
+        type: 'SET-PHOTO',photo
+    } as const
+}
+
 //TC
 export const setProfileTC = (profileId: number) => async (dispatch: Dispatch) => {
     const res=await profileAPI.setProfile(profileId)
@@ -104,11 +113,21 @@ export const updateProfileStatusTC=(status:string)=>async (dispatch:Dispatch)=>{
             }
 }
 
+export const savePhotoTC=(photo:any)=>async (dispatch:Dispatch)=>{
+    const res= await profileAPI.setPhoto(photo)
+    if(res.data.resultCode===0){
+        console.log(res)
+        dispatch(setPhotoAC(res.data.data.photos.large))
+    }
+}
+
+
 
 
 
 export  type ProfileActionType = ReturnType<typeof addPostAC> |
     ReturnType<typeof setProfileAC> |
     ReturnType<typeof setStatusAC>|
-    ReturnType<typeof deletedPostAC>
+    ReturnType<typeof deletedPostAC>|
+    ReturnType<typeof setPhotoAC>
 

@@ -3,7 +3,8 @@ import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
 
 type ProfileReducer = {
     postData: PostPropsType[],
-
+    profile:  ProfileAPI,
+    status: string
 }
 
 let initialState:ProfileReducer;
@@ -15,7 +16,9 @@ beforeEach(()=>{
             {id: 2, message: 'It\'s my first post', likesCount: 20},
             {id: 3, message: 'COOL', likesCount: 21},
             {id: 4, message: 'LUCKY MAN', likesCount: 50},
-        ]
+        ],
+        profile: {} as ProfileAPI,
+        status: ''
     }
 })
 
