@@ -13,15 +13,16 @@ export const Profile: React.FC<{
     status: string,
     profile: null | ProfileAPI,
     savePhotoTC:(photo:any)=>void,
-    photos:string
-}> = ({profile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
+    photos:string,
+    saveProfile:any
+}> = ({profile,saveProfile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
 
     return (
         <div>
             {
                 !profile
                     ? <Preloader/>
-                    : <ProfileInfo photos={photos} savePhotoTC={savePhotoTC} isOwner={isOwner} updateProfileStatusTC={updateProfileStatusTC} status={status} profile={profile}/>
+                    : <ProfileInfo saveProfile={saveProfile} photos={photos} savePhotoTC={savePhotoTC} isOwner={isOwner} updateProfileStatusTC={updateProfileStatusTC} status={status} profile={profile}/>
             }
 
             <MyPostsContainer/>

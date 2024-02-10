@@ -2,7 +2,7 @@ import React, {ComponentType, ElementType} from 'react';
 import {
     getProfileStatusTC,
     ProfileAPI,
-    savePhotoTC,
+    savePhotoTC, saveProfileTC,
     setProfileTC,
     updateProfileStatusTC
 } from '../../state/profileReducer';
@@ -36,6 +36,7 @@ type ProfileAPIContainerType = {
     isFetching: boolean
     savePhotoTC:(photo:any)=>void
     photo:string| undefined
+    saveProfileTC:(profile:ProfileAPI)=>void
 }
 
 
@@ -66,6 +67,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
     render() {
         return <div>
             <Profile
+                saveProfile={this.props.saveProfileTC}
                 photos={this.props.photo?this.props.photo:userPhoto}
                 isOwner={!!this.props.params?.id}
                 updateProfileStatusTC={this.props.updateProfileStatusTC}
@@ -95,7 +97,8 @@ const ProfileContainer = compose<ComponentType>(
         setProfileTC,
         getProfileStatusTC,
         updateProfileStatusTC,
-        savePhotoTC
+        savePhotoTC,
+        saveProfileTC
     }),
     withRouter,
     WithAuthRedirect,
