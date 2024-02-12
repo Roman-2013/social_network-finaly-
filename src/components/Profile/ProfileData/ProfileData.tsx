@@ -43,7 +43,7 @@ export const ProfileData: React.FC<ProfileDataPropsType & { activateEditMode: (v
             <div><b>Contact</b> : {profile.contacts ? Object.keys(profile.contacts).map(el => {
                 return <div className={s.contacts}><b>{el}</b> : {(profile.contacts as {
                     [key: string]: string
-                })[el] || 'no content'}</div>
+                })[el] || '-'}</div>
             }) : ''}</div>
 
             <div>

@@ -1,8 +1,9 @@
 import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
-import {Dispatch} from 'redux';
+import {AnyAction, Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {AppRootStateType} from './reduxStore';
+import {stopSubmit} from 'redux-form';
 
 export type ProfileAPI = {
     aboutMe: string;
@@ -125,12 +126,21 @@ export const savePhotoTC = (photo: any) => async (dispatch: Dispatch) => {
     }
 }
 
-export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, ProfileActionType>,getState:()=>AppRootStateType) => {
+export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>,getState:()=>AppRootStateType) => {
 
    const userId=getState().Auth.id as number
     const res = await profileAPI.saveProfile(profile)
     if (res.data.resultCode === 0) {
         dispatch(setProfileTC(userId))
+    }else{
+        if(res.data.resultCode===1){
+            const index=(res.data.messages[0] as string).split('').findIndex((e)=>e ==='>')
+            const message=res.data.messages[0].split('').slice(index+1,res.data.messages[0].length-1).join('').toLowerCase()
+            console.log(message)
+          // dispatch(stopSubmit('profile',{_error:res.data.messages[0]}))
+           dispatch(stopSubmit('profile',{'contacts':{[message]:res.data.messages[0]}}))
+            return Promise.reject(res.data.messages[0])
+        }
     }
 }
 

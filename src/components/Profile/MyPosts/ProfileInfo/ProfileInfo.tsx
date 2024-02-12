@@ -28,9 +28,10 @@ export const ProfileInfo: React.FC<{
 
     const onSubmit = (value: FormProfileDataType) => {
         saveProfile(value)
-        setEditMode(false)
+            .then(() => {
+                setEditMode(false)
+            })
     }
-
 
 
     return (
@@ -41,7 +42,7 @@ export const ProfileInfo: React.FC<{
                     alt="image"/>
             </div>
             {editMode
-                ? <ProfileDataForm profile={profile}  initialValues={profile} onSubmit={onSubmit} />
+                ? <ProfileDataForm profile={profile} initialValues={profile} onSubmit={onSubmit}/>
                 : <ProfileData activateEditMode={activateEditMoode} status={status} isOwner={isOwner}
                                onMainPhoto={onMainPhoto} profile={profile}
                                photos={photos} updateProfileStatusTC={updateProfileStatusTC}/>
