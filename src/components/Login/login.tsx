@@ -12,15 +12,17 @@ export type FormDataType = {
     login: string
     password: string
     rememberMe: boolean
+    captchaUrl:string
 }
 
 type LoginPropsType = {
     logoutTC: () => void
     loginTC: (formData: FormDataType) => void
     isFetching: boolean
+    captchaUrl: string | null
 }
 
-const Login: React.FC<LoginPropsType> = ({isFetching, loginTC, logoutTC}) => {
+const Login: React.FC<LoginPropsType> = ({isFetching, loginTC, logoutTC, captchaUrl}) => {
 
     const onSubmit = (formData: FormDataType) => {
         loginTC(formData)
@@ -32,7 +34,8 @@ const Login: React.FC<LoginPropsType> = ({isFetching, loginTC, logoutTC}) => {
             ? <Navigate to={'/profile'}/>
             : <div>
                 <h1>LOGIN</h1>
-                <ReduxLogin onSubmit={onSubmit}/>
+                <ReduxLogin onSubmit={onSubmit} captchaUrl={captchaUrl}/>
+
             </div>
 
     );
@@ -40,8 +43,9 @@ const Login: React.FC<LoginPropsType> = ({isFetching, loginTC, logoutTC}) => {
 
 const maxLengthCreator50 = maxLengthCreator(50)
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-    const {handleSubmit, error} = props
+const LoginForm: React.FC<InjectedFormProps<FormDataType, { captchaUrl: string | null }>&{captchaUrl: string | null}> = (props) => {
+    const {handleSubmit, error,captchaUrl} = props
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -54,17 +58,21 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                          restProps={{type: 'checkbox'}}>
                 Remember Me</CreateField>
             <div>
+                { captchaUrl && <div><img src={captchaUrl as string} alt=""/></div>}
+                { captchaUrl && <CreateField name={'captchaUrl'} component={Input} validate={[required]} placeholder={'Anti-bot symbols'}/>}
                 <button>Login</button>
+
             </div>
         </form>
     )
 };
 
-const ReduxLogin = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+const ReduxLogin = reduxForm<FormDataType, { captchaUrl: string | null }>({form: 'login'})(LoginForm)
 
 const mapStateToProps = (state: AppRootStateType) => {
     return {
-        isFetching: state.Auth.isFetching
+        isFetching: state.Auth.isFetching,
+        captchaUrl: state.Auth.captchaUrl,
     }
 }
 

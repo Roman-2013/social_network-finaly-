@@ -30,7 +30,7 @@ export const ProfileData: React.FC<ProfileDataPropsType & { activateEditMode: (v
             </div>}
             <img alt={'image'} src={photos}/>
             {isOwner || <input onChange={(e) => onMainPhoto(e.target.files ? e.target.files[0] : '')} type="file"/>}
-            <ProfileStatusWithHooks updateProfileStatusTC={updateProfileStatusTC} status={status}/>
+            <ProfileStatusWithHooks isOwner={isOwner} updateProfileStatusTC={updateProfileStatusTC} status={status}/>
             <div><b>Name:</b> {profile.fullName}</div>
             <div><b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}</div>
             {profile.lookingForAJob &&
@@ -41,7 +41,7 @@ export const ProfileData: React.FC<ProfileDataPropsType & { activateEditMode: (v
             }
             <div><b>About me:</b> {profile.aboutMe ? profile.aboutMe : 'no content'}</div>
             <div><b>Contact</b> : {profile.contacts ? Object.keys(profile.contacts).map(el => {
-                return <div className={s.contacts}><b>{el}</b> : {(profile.contacts as {
+                return <div key={el} className={s.contacts}><b>{el}</b> : {(profile.contacts as {
                     [key: string]: string
                 })[el] || '-'}</div>
             }) : ''}</div>

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import login from '../components/Login/login';
 import {ProfileAPI} from '../state/profileReducer';
 
 const instans = axios.create({
@@ -27,8 +26,8 @@ export const authAPI = {
     setUserData: () => {
         return instans.get(`/auth/me`)
     },
-    login: (email: string, password: string, rememberMe: boolean) => {
-        return instans.post(`/auth/login`, {email, password, rememberMe})
+    login: (email: string, password: string, rememberMe: boolean,captcha:string|null) => {
+        return instans.post(`/auth/login`, {email, password, rememberMe,captcha})
     },
     logout: () => {
         return instans.delete(`/auth/login`,)
@@ -56,14 +55,18 @@ export const profileAPI = {
         })
     },
     saveProfile:(profile:ProfileAPI)=>{
-        return instans.put('/profile',profile)
+        return instans.put('/profile', profile)
     }
 
 }
 
 
 
-
+export const securityAPI={
+    getCaptchaURL:()=>{
+        return instans .get('security/get-captcha-url')
+    }
+}
 
 
 

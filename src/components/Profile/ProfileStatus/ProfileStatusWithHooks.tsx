@@ -5,10 +5,11 @@ import {useAppDispatch} from '../../../state/reduxStore';
 type ProfileStatusType = {
     status: string
     updateProfileStatusTC: (status: string) => void
+    isOwner:boolean
 }
 
 
-export const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({updateProfileStatusTC, status}) => {
+export const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({updateProfileStatusTC, status,isOwner}) => {
 
     const [editMode, setEditMode] = useState(true)
     const [statusLocal, setStatus] = useState(status)
@@ -19,7 +20,9 @@ export const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({updateProfi
     }, [status]);
 
     const activateEditMode = () => {
-        setEditMode(false)
+        if(!isOwner){
+            setEditMode(false)
+        }
     }
     const diActivateEditMode = () => {
         updateProfileStatusTC(statusLocal)

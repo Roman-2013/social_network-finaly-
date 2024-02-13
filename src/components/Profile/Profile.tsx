@@ -5,6 +5,7 @@ import {ProfileAPI} from '../../state/profileReducer';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {useAppDispatch} from '../../state/reduxStore';
 import {useDispatch} from 'react-redux';
+import {FormProfileDataType} from './ProfileDataForm/ProfileDataForm';
 
 
 export const Profile: React.FC<{
@@ -14,7 +15,7 @@ export const Profile: React.FC<{
     profile: null | ProfileAPI,
     savePhotoTC:(photo:any)=>void,
     photos:string,
-    saveProfile:any
+    saveProfile:(profile:FormProfileDataType)=>Promise<any>
 }> = ({profile,saveProfile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
 
     return (

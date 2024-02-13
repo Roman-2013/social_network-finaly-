@@ -1,83 +1,95 @@
 import {AnyAction, Dispatch} from 'redux';
-import {authAPI} from '../api/api';
+import {authAPI, securityAPI} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {FormDataType} from '../components/Login/login';
-import { stopSubmit } from 'redux-form';
+import {stopSubmit} from 'redux-form';
 
-export type DataType={
-    id: number|null
-    email: string|null
-    login: string|null
-    isFetching:boolean
+export type DataType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isFetching: boolean,
+    captchaUrl: string | null
 }
-
-
-type AuthType = {
-    resultCode: number
-    messages: string[]
-    fieldsErrors:string[]
-    data: DataType
-}
-
-
-const initialState={
+const initialState = {
     id: null,
     email: null,
     login: null,
-    isFetching:false
-
+    isFetching: false,
+    captchaUrl: null
 }
 
-export const authReducer = (state: DataType=initialState, action: AuthActionType) => {
+export const authReducer = (state: DataType = initialState, action: AuthActionType) => {
     switch (action.type) {
-        case 'SET-USER-DATA':{
-            return {...state,...action.data,isFetching:true}
+        case 'SET-USER-DATA': {
+            return {...state, ...action.data, isFetching: true}
         }
-        case 'LOGOUT':{
-            return {...state,id:null,login:null,email:null,isFetching:action.isFetching}
+        case 'LOGOUT': {
+            return {...state, id: null, login: null, email: null, isFetching: action.isFetching}
+        }
+        case 'GET-CAPTCHA-SUCCESS': {
+            return {...state, captchaUrl: action.url}
         }
         default:
             return state
     }
 }
 //AC
-export const setUserDataAC=(data:DataType)=>{
+export const setUserDataAC = (data: DataType) => {
     return {
-        type:'SET-USER-DATA',data
-    }as const
+        type: 'SET-USER-DATA', data
+    } as const
 }
-export const logoutAC=( isFetching:boolean)=>{
+export const getCaptchaUrlAC = (url: string) => {
     return {
-        type:'LOGOUT',isFetching
-    }as const
+        type: 'GET-CAPTCHA-SUCCESS', url
+    } as const
+}
+export const logoutAC = (isFetching: boolean) => {
+    return {
+        type: 'LOGOUT', isFetching
+    } as const
 }
 
 //TC
-export const setUserDataTC=()=>async (dispatch:Dispatch)=>{
-  const res= await  authAPI.setUserData()
-            if(res.data.resultCode===0){
-                dispatch(setUserDataAC(res.data.data))
-            }
+export const setUserDataTC = () => async (dispatch: Dispatch) => {
+    const res = await authAPI.setUserData()
+    if (res.data.resultCode === 0) {
+        dispatch(setUserDataAC(res.data.data))
+    }
 }
 
-export const loginTC=(formData:FormDataType)=>async (dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
-   const res=await authAPI.login(formData.login, formData.password, formData.rememberMe)
-            if(res.data.resultCode===0){
-                dispatch(setUserDataTC())
-            }else{
-                if(res.data.messages.length){
-                    dispatch(stopSubmit('login',{_error:res.data.messages}))
-                }
+export const loginTC = (formData: FormDataType) => async (dispatch: ThunkDispatch<DataType, any, AnyAction>) => {
+    const res = await authAPI.login(formData.login, formData.password, formData.rememberMe, formData.captchaUrl)
+    if (res.data.resultCode === 0) {
+        await dispatch(setUserDataTC())
+    } else {
+        if (res.data.messages.length) {
+            if (res.data.resultCode === 10) {
+               await dispatch(getCaptchaTC())
             }
+            dispatch(stopSubmit('login', {_error: res.data.messages}))
+        }
+    }
 }
 
-export const logoutTC=()=>async (dispatch:ThunkDispatch<DataType, any, AnyAction>)=>{
-   const res= await authAPI.logout()
-            if(res.data.resultCode===0){
-                dispatch(logoutAC(false))
-            }
+export const getCaptchaTC = () => async (dispatch: Dispatch) => {
+    const res = await securityAPI.getCaptchaURL()
+    const captchaUrl = res.data.url
+    dispatch(getCaptchaUrlAC(captchaUrl))
 }
 
 
-export type AuthActionType = ReturnType<typeof setUserDataAC>|ReturnType<typeof logoutAC>
+export const logoutTC = () => async (dispatch: ThunkDispatch<DataType, any, AnyAction>) => {
+    const res = await authAPI.logout()
+    if (res.data.resultCode === 0) {
+        dispatch(logoutAC(false))
+    }
+}
+
+
+export type AuthActionType =
+    ReturnType<typeof setUserDataAC>
+    | ReturnType<typeof logoutAC>
+    | ReturnType<typeof getCaptchaUrlAC>
 

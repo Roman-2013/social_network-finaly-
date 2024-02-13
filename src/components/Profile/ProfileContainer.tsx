@@ -13,6 +13,7 @@ import {Params, useParams} from 'react-router-dom'
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import  userPhoto from '../../img/anime-male-avatar_950633-914.avif'
+import {FormProfileDataType} from './ProfileDataForm/ProfileDataForm';
 
 
 function withRouter(Component: ElementType) {
@@ -36,7 +37,7 @@ type ProfileAPIContainerType = {
     isFetching: boolean
     savePhotoTC:(photo:any)=>void
     photo:string| undefined
-    saveProfileTC:(profile:ProfileAPI)=>void
+    saveProfileTC:(profile:FormProfileDataType)=>Promise<any>
 }
 
 

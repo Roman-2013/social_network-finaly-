@@ -136,8 +136,6 @@ export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDisp
         if(res.data.resultCode===1){
             const index=(res.data.messages[0] as string).split('').findIndex((e)=>e ==='>')
             const message=res.data.messages[0].split('').slice(index+1,res.data.messages[0].length-1).join('').toLowerCase()
-            console.log(message)
-          // dispatch(stopSubmit('profile',{_error:res.data.messages[0]}))
            dispatch(stopSubmit('profile',{'contacts':{[message]:res.data.messages[0]}}))
             return Promise.reject(res.data.messages[0])
         }

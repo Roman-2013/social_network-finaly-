@@ -9,7 +9,7 @@ import {ProfileData} from '../../ProfileData/ProfileData';
 export const ProfileInfo: React.FC<{
     updateProfileStatusTC: (status: string) => void,
     status: string,
-    saveProfile: any,
+    saveProfile: (profile:FormProfileDataType)=>Promise<any>,
     profile: ProfileAPI,
     isOwner: boolean,
     savePhotoTC: (photo: any) => void,
