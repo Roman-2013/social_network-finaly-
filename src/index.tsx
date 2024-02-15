@@ -16,11 +16,11 @@ export type StateType = {
     siteBar: NavBarPropsPage
 }
     ReactDOM.render(
-        <HashRouter>
+        <BrowserRouter>
             <Provider store={store}>
             <AppContainer/>
             </Provider>
-        </HashRouter>,
+        </BrowserRouter>,
         document.getElementById('root')
     );
 

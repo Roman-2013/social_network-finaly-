@@ -1,6 +1,6 @@
 import React, {Component, ElementType, lazy, Suspense} from 'react';
 import s from './App.module.css';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {NavBarContainer} from './components/Navbar/NavBarContainer';
 import {HeaderAPIContainer} from './components/Header/HeaderContainer';
 import Login from './components/Login/login';
@@ -22,8 +22,18 @@ type AppPropsType = {
 
 export class App extends Component <AppPropsType> {
 
-    componentDidMount() {
+    catchAllUnhandledError=(promiseRejectionEvent:any)=>{
+        alert(promiseRejectionEvent)
+    }
+
+    componentDidMount(){
         this.props.initializeAppTC()
+    window.addEventListener('unhandledrejection',this.catchAllUnhandledError)
+    }
+
+
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection',this.catchAllUnhandledError)
     }
 
     render() {
@@ -39,12 +49,16 @@ export class App extends Component <AppPropsType> {
                 <div className={s.appWrapperContent}>
                     <Suspense fallback={<Preloader/>}>
                         <Routes>
-                            <Route path={'/'} element={<DialogsContainer/>}/>
+                            <Route  path={'/'} element={<Navigate to={'/profile'}/>}/>
+                            <Route  path={'*'} element={<div>404 Page not Found</div>}/>
                             <Route path={'/message/*'} element={<DialogsContainer/>}/>
                             <Route path={'/profile/:id?'} element={<ProfileContainer/>}/>
                             <Route path={'/users/*'} element={<UsersContainer/>}/>
 
                             <Route path={'/login'} element={<Login/>}/>
+
+
+
 
                         </Routes>
                     </Suspense>

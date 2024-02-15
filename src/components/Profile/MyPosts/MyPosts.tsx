@@ -16,7 +16,6 @@ type MyPostsType = {
 }
 
 export const MyPosts = React.memo((props: MyPostsType) => {
-    console.log('render myPost')
     let {addPostAC, postData} = props;
 
     const onProfileTextSubmit = (formData: ReduxProfileTextAreaFormProps) => {

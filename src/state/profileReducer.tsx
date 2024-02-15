@@ -113,9 +113,13 @@ export const getProfileStatusTC = (userId: number) => async (dispatch: Dispatch)
     dispatch(setStatusAC(res.data))
 }
 export const updateProfileStatusTC = (status: string) => async (dispatch: Dispatch) => {
-    const res = await profileAPI.updateProfileStatusTC(status)
-    if (res.data.resultCode === 0) {
-        dispatch(setStatusAC(status))
+    try {
+        const res = await profileAPI.updateProfileStatusTC(status)
+        if (res.data.resultCode === 0) {
+            dispatch(setStatusAC(status))
+        }
+    } catch (error: any) {
+
     }
 }
 
@@ -126,17 +130,17 @@ export const savePhotoTC = (photo: any) => async (dispatch: Dispatch) => {
     }
 }
 
-export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>,getState:()=>AppRootStateType) => {
+export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>, getState: () => AppRootStateType) => {
 
-   const userId=getState().Auth.id as number
+    const userId = getState().Auth.id as number
     const res = await profileAPI.saveProfile(profile)
     if (res.data.resultCode === 0) {
         dispatch(setProfileTC(userId))
-    }else{
-        if(res.data.resultCode===1){
-            const index=(res.data.messages[0] as string).split('').findIndex((e)=>e ==='>')
-            const message=res.data.messages[0].split('').slice(index+1,res.data.messages[0].length-1).join('').toLowerCase()
-           dispatch(stopSubmit('profile',{'contacts':{[message]:res.data.messages[0]}}))
+    } else {
+        if (res.data.resultCode === 1) {
+            const index = (res.data.messages[0] as string).split('').findIndex((e) => e === '>')
+            const message = res.data.messages[0].split('').slice(index + 1, res.data.messages[0].length - 1).join('').toLowerCase()
+            dispatch(stopSubmit('profile', {'contacts': {[message]: res.data.messages[0]}}))
             return Promise.reject(res.data.messages[0])
         }
     }
