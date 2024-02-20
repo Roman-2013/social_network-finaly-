@@ -1,8 +1,5 @@
-import {AnyAction, Dispatch} from 'redux';
-import {authAPI} from '../api/api';
+import {AnyAction} from 'redux';
 import {ThunkDispatch} from 'redux-thunk';
-import {FormDataType} from '../components/Login/login';
-import {stopSubmit} from 'redux-form';
 import {setUserDataTC} from './authReducer';
 
 
@@ -39,4 +36,3 @@ export const initializeAppTC=()=>(dispatch:ThunkDispatch<appReducerType, any, An
 }
 
 export type AuthActionType = ReturnType<typeof setInitializedAC>
-

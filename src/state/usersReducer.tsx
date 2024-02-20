@@ -20,10 +20,10 @@ export type usersType = {
     followingInProgress: Array<number>
     usersOnThePage:number
 }
-const initialState = {usersOnThePage:11,currentPage: 1, isFetching: false, followingInProgress: [] as Array<number>} as usersType
+const initialState = {usersOnThePage:10,currentPage: 1, isFetching: false, followingInProgress: [] as Array<number>} as usersType
 
 
-export const usersReducer = (state: usersType = initialState, action: UsersActionType) => {
+export const usersReducer = (state: usersType = initialState, action: UsersActionType):usersType => {
     switch (action.type) {
         case 'UNIVERSAL-FOLLOW': {
             return {
@@ -39,6 +39,9 @@ export const usersReducer = (state: usersType = initialState, action: UsersActio
         }
         case 'CHANGE-IS-FETCHING': {
             return {...state, isFetching: action.isFetching}
+        }
+        case'CHANGE-USERS-ON-THE-PAGE': {
+            return {...state, usersOnThePage:action.usersOnThePage}
         }
         case 'FOLLOWING-IN-PROGRESS': {
             return {
@@ -56,8 +59,11 @@ export const followingInProgressAC = (id: number, inProgress: boolean) => {
         type: 'FOLLOWING-IN-PROGRESS', inProgress, id
     } as const
 }
-
-
+export const changeUsersOnThePageAC = (usersOnThePage:number) => {
+    return {
+        type: 'CHANGE-USERS-ON-THE-PAGE', usersOnThePage
+    } as const
+}
 export const setCurrentPageAC = (currentPage: number) => {
     return {
         type: 'SET-CURRENT-PAGE', currentPage
@@ -80,6 +86,7 @@ export const changeIsFetchingAC = (isFetching: boolean) => {
         type: 'CHANGE-IS-FETCHING', isFetching
     } as const
 }
+
 //TC
 export const getUsersTC = (currentPage: number, usersOnThePage:number) => async (dispatch: Dispatch) => {
     currentPage !== 1
@@ -110,6 +117,7 @@ export type UsersActionType =
     ReturnType<typeof setCurrentPageAC> |
     ReturnType<typeof changeIsFetchingAC> |
     ReturnType<typeof followingInProgressAC> |
-    ReturnType<typeof followUniversalAC>
+    ReturnType<typeof followUniversalAC>|
+    ReturnType<typeof changeUsersOnThePageAC>
 
 

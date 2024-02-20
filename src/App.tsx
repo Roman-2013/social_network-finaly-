@@ -15,12 +15,14 @@ const ProfileContainer = lazy(() => import('./components/Profile/ProfileContaine
 const UsersContainer = lazy(() => import('./components/Users/UsersContainer'));
 
 
-type AppPropsType = {
-    initializeAppTC: () => void
+type mapStateToProps={
     initialized: boolean
 }
+type mapDispatchToProps={
+    initializeAppTC: () => void
+}
 
-export class App extends Component <AppPropsType> {
+export class App extends Component <mapStateToProps & mapDispatchToProps> {
 
     catchAllUnhandledError=(promiseRejectionEvent:any)=>{
         alert(promiseRejectionEvent)
@@ -70,7 +72,7 @@ export class App extends Component <AppPropsType> {
 
 }
 
-const mapStateToProps = (state: AppRootStateType) => {
+const mapStateToProps = (state: AppRootStateType):mapStateToProps => {
     return {
         initialized: state.App.initialized
     }
@@ -78,5 +80,5 @@ const mapStateToProps = (state: AppRootStateType) => {
 
 
 export const AppContainer = compose<ElementType>(
-    connect(mapStateToProps, {initializeAppTC}),
+    connect<mapStateToProps,mapDispatchToProps,unknown,AppRootStateType>(mapStateToProps, {initializeAppTC}),
 )(App)

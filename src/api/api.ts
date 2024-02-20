@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {ProfileAPI} from '../state/profileReducer';
+import {FormProfileDataType} from '../components/Profile/ProfileDataForm/ProfileDataForm';
 
 const instans = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -54,7 +55,7 @@ export const profileAPI = {
             }
         })
     },
-    saveProfile:(profile:ProfileAPI)=>{
+    saveProfile:(profile:FormProfileDataType)=>{
         return instans.put('/profile', profile)
     }
 

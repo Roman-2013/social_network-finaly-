@@ -1,6 +1,4 @@
 import React, {ChangeEvent, FocusEvent, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {useAppDispatch} from '../../../state/reduxStore';
 
 type ProfileStatusType = {
     status: string

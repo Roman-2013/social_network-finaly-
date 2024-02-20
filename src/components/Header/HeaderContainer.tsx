@@ -4,14 +4,16 @@ import {Header} from './Header';
 import {AppRootStateType} from '../../state/reduxStore';
 import {logoutTC, setUserDataTC} from '../../state/authReducer';
 
-type HeaderContainerType = {
-    isFetching: boolean
 
+type mapStateToProps={
+    isFetching: boolean
     login: string | null
+}
+type mapDispatchToProps={
     logoutTC:()=>void
 }
 
-export class HeaderContainer extends React.Component<HeaderContainerType> {
+export class HeaderContainer extends React.Component<mapStateToProps & mapDispatchToProps> {
 
 
 
@@ -21,7 +23,7 @@ export class HeaderContainer extends React.Component<HeaderContainerType> {
 }
 
 
-const mapStateToProps = (state: AppRootStateType) => {
+const mapStateToProps = (state: AppRootStateType):mapStateToProps => {
     return {
         isFetching: state.Auth.isFetching,
         login: state.Auth.login
@@ -29,4 +31,4 @@ const mapStateToProps = (state: AppRootStateType) => {
 }
 
 
-export const HeaderAPIContainer = connect(mapStateToProps, {logoutTC})(HeaderContainer)
+export const HeaderAPIContainer = connect<mapStateToProps,mapDispatchToProps,unknown,AppRootStateType>(mapStateToProps, {logoutTC})(HeaderContainer)

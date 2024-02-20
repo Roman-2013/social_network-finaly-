@@ -12,6 +12,7 @@ type UsersProps = {
     followingInProgress: number[]
     followUnfollowTC: (userID: number, status: boolean) => void
     usersOnThePage:number
+    changeUsersOnThePage:(userPage:number)=>void
 }
 
 
@@ -22,12 +23,13 @@ export const Users: React.FC<UsersProps> = ({
                                                 totalCount,
                                                 items,
                                                 currentPage,
-                                                usersOnThePage
+                                                usersOnThePage,
+                                                changeUsersOnThePage
                                             }) => {
 
     return (
         <div>
-            <Paginator usersOnThePage={usersOnThePage} onPageChanged={onPageChanged} currentPage={currentPage} totalCount={totalCount}/>
+            <Paginator changeUsersOnThePage={changeUsersOnThePage} usersOnThePage={usersOnThePage} onPageChanged={onPageChanged} currentPage={currentPage} totalCount={totalCount}/>
             {
                 items?.map(el => {
                     return <User

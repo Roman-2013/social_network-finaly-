@@ -12,14 +12,15 @@ export const ProfileInfo: React.FC<{
     saveProfile: (profile:FormProfileDataType)=>Promise<any>,
     profile: ProfileAPI,
     isOwner: boolean,
-    savePhotoTC: (photo: any) => void,
+    savePhotoTC: (photo: File | null) => void,
     photos: string
 }> = ({saveProfile, profile, status, updateProfileStatusTC, isOwner, savePhotoTC, photos}) => {
 
     const [editMode, setEditMode] = useState(false)
 
 
-    const onMainPhoto = (value: any | null) => {
+    const onMainPhoto = (value: File | null) => {
+
         savePhotoTC(value)
     }
     const activateEditMoode = (value: boolean) => {
@@ -28,7 +29,7 @@ export const ProfileInfo: React.FC<{
 
     const onSubmit = (value: FormProfileDataType) => {
         saveProfile(value)
-            .then(() => {
+            .then((res) => {
                 setEditMode(false)
             })
     }

@@ -4,6 +4,19 @@ import {profileAPI} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {AppRootStateType} from './reduxStore';
 import {stopSubmit} from 'redux-form';
+import {FormProfileDataType} from '../components/Profile/ProfileDataForm/ProfileDataForm';
+
+//
+// export type PhotoValue={
+//     lastModified: number
+//     lastModifiedDate: {}
+// name:string
+// size:number
+// type:string
+// webkitRelativePath:string
+// }
+
+
 
 export type ProfileAPI = {
     aboutMe: string;
@@ -15,14 +28,14 @@ export type ProfileAPI = {
     photos: ProfileAPIPhotos;
 }
 export type ProfileAPIContacts = {
-    ' facebook': string
-    ' website': string
-    ' vk': string
-    ' twitter': string
-    ' instagram': string
-    ' youtube': string
-    ' github': string
-    'mainLink': string
+    facebook: string
+     website: string
+     vk: string
+     twitter: string
+     instagram: string
+     youtube: string
+     github: string
+    mainLink: string
 }
 export type ProfileAPIPhotos = {
     small: string;
@@ -118,19 +131,19 @@ export const updateProfileStatusTC = (status: string) => async (dispatch: Dispat
         if (res.data.resultCode === 0) {
             dispatch(setStatusAC(status))
         }
-    } catch (error: any) {
+    } catch (e) {}
 
-    }
 }
 
-export const savePhotoTC = (photo: any) => async (dispatch: Dispatch) => {
+export const savePhotoTC = (photo: File | null) => async (dispatch: Dispatch) => {
+    console.log(photo)
     const res = await profileAPI.setPhoto(photo)
     if (res.data.resultCode === 0) {
         dispatch(setPhotoAC(res.data.data.photos.large))
     }
 }
 
-export const saveProfileTC = (profile: ProfileAPI) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>, getState: () => AppRootStateType) => {
+export const saveProfileTC = (profile: FormProfileDataType) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>, getState: () => AppRootStateType) => {
 
     const userId = getState().Auth.id as number
     const res = await profileAPI.saveProfile(profile)

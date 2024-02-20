@@ -4,10 +4,22 @@ import {AppRootStateType} from '../../state/reduxStore';
 import {connect} from 'react-redux';
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
-import {ComponentType, ElementType} from 'react';
+import {ComponentType} from 'react';
+import {DialogsItemPropsType} from './DialogItem/DialogItem';
+import {MessagePropsType} from './Message/Message';
 
 
-let mapStateToProps = (state: AppRootStateType)=>{
+type mapStateToProps={
+    dialogsData:DialogsItemPropsType[]
+        messagesData: MessagePropsType[]
+}
+type mapDispatchToProps={
+    addMessage:(newMessageText:string) => void
+}
+
+
+
+let mapStateToProps = (state: AppRootStateType):mapStateToProps=>{
     return {
         dialogsData:state.Dialog.dialogsData,
         messagesData:state.Dialog.messagesData,
@@ -17,8 +29,9 @@ let mapStateToProps = (state: AppRootStateType)=>{
 
   const DialogsContainer= compose<ComponentType>(
 
-    connect(mapStateToProps, {
+    connect<mapStateToProps,mapDispatchToProps,unknown,AppRootStateType>(mapStateToProps, {
         addMessage:addMessageAC
+
     }),
     WithAuthRedirect
 )(Dialogs)

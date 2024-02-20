@@ -12,42 +12,48 @@ import {AppRootStateType} from '../../state/reduxStore';
 import {Params, useParams} from 'react-router-dom'
 import {WithAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
-import  userPhoto from '../../img/anime-male-avatar_950633-914.avif'
+import userPhoto from '../../img/anime-male-avatar_950633-914.avif'
 import {FormProfileDataType} from './ProfileDataForm/ProfileDataForm';
 
 
 function withRouter(Component: ElementType) {
-    function ComponentWithRouterProp(props: ProfileAPIContainerType) {
+    function ComponentWithRouterProp(props: mapDispatchToProps & mapStateToProps) {
         let params = useParams();
         return <Component{...props} params={params}/>
-
     }
 
     return ComponentWithRouterProp;
 }
 
-type ProfileAPIContainerType = {
-    setProfileTC: (profileId: number) => void
-    profile: null | ProfileAPI
+type ownProps = {
     params?: Params | undefined
-    getProfileStatusTC: (userId: number) => void
-    updateProfileStatusTC: (status: string) => void
-    status: string
-    authorizedUserId: number
-    isFetching: boolean
-    savePhotoTC:(photo:any)=>void
-    photo:string| undefined
-    saveProfileTC:(profile:FormProfileDataType)=>Promise<any>
 }
 
+type mapStateToProps = {
+    profile: null | ProfileAPI
+    status: string
+    authorizedUserId: number | null
+    isFetching: boolean
+    photo: string
+}
 
-export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType> {
+type mapDispatchToProps = {
+    setProfileTC: (profileId: number) => void
+    getProfileStatusTC: (userId: number) => void
+    updateProfileStatusTC: (status: string) => void
+    savePhotoTC: (photo: File | null) => void
+    saveProfileTC: (profile: FormProfileDataType) => any
+}
+
+export class ProfileAPIContainer extends React.Component<mapDispatchToProps & mapStateToProps & ownProps> {
 
 
     refreshProfile() {
-        let profileId: number = Number(this.props.params?.id)
+        let profileId = Number(this.props.params?.id)
         if (!profileId) {
-            profileId = this.props.authorizedUserId
+            if (this.props.authorizedUserId !== null) {
+                profileId = this.props.authorizedUserId
+            }
         }
         this.props.setProfileTC(profileId)
         this.props.getProfileStatusTC(profileId)
@@ -58,7 +64,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps: Readonly<ProfileAPIContainerType>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<mapDispatchToProps & mapStateToProps & ownProps>, prevState: Readonly<{}>, snapshot?: any) {
         if (this.props.params?.id != prevProps.params?.id) {
             this.refreshProfile()
         }
@@ -69,7 +75,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
         return <div>
             <Profile
                 saveProfile={this.props.saveProfileTC}
-                photos={this.props.photo?this.props.photo:userPhoto}
+                photos={this.props.photo ? this.props.photo : userPhoto}
                 isOwner={!!this.props.params?.id}
                 updateProfileStatusTC={this.props.updateProfileStatusTC}
                 status={this.props.status}
@@ -82,19 +88,21 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerType
 }
 
 
-const mapStateToProps = (state: AppRootStateType) => {
+const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
     return {
         profile: state.ProfilePage.profile,
         status: state.ProfilePage.status,
         authorizedUserId: state.Auth.id,
         isFetching: state.Auth.isFetching,
-        photo:state.ProfilePage.profile.photos?.large
+        photo: state.ProfilePage.profile.photos?.large
     }
 }
 
 
+
+
 const ProfileContainer = compose<ComponentType>(
-    connect(mapStateToProps, {
+    connect<mapStateToProps, mapDispatchToProps, unknown, AppRootStateType>(mapStateToProps, {
         setProfileTC,
         getProfileStatusTC,
         updateProfileStatusTC,

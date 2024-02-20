@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {AppRootStateType} from '../../state/reduxStore';
-import {followUnfollowTC, getUsersTC, usersType, userType} from '../../state/usersReducer';
+import {changeUsersOnThePageAC, followUnfollowTC, getUsersTC, usersType, userType} from '../../state/usersReducer';
 import React, {ComponentType, ElementType} from 'react';
 import {Users} from './Users';
 import {Preloader} from '../../common/Preloader/Preloader';
@@ -21,40 +21,43 @@ type mapStateToProps = {
     error: string | null
     currentPage: number
     isFetching: boolean
-    followingInProgress:number[]
-    usersOnThePage:number
+    followingInProgress: number[]
+    usersOnThePage: number
 }
-export type UsersPropsType = {
-    totalCount: number
-    error: string | null
-    items: userType[]
-    currentPage: number
-    isFetching: boolean
-    followingInProgress:number[]
-    getUsersTC:(currentPage:number,usersOnThePage:number)=>void
-    followUnfollowTC:(userID:number,status:boolean)=>void
-    usersOnThePage:number
+
+type mapDispatchToProps = {
+    getUsersTC: (currentPage: number, usersOnThePage: number) => void
+    followUnfollowTC: (userID: number, status: boolean) => void
+    changeUsersOnThePageAC: (userPage: number) => void
 }
 
 
-export class UsersAPIContainer extends React.Component<UsersPropsType> {
+export class UsersAPIContainer extends React.Component<mapDispatchToProps & mapStateToProps> {
 
 
     componentDidMount() {
-const {currentPage,getUsersTC}=this.props
-        getUsersTC(currentPage,this.props.usersOnThePage)
+        const {currentPage, getUsersTC} = this.props
+        getUsersTC(currentPage, this.props.usersOnThePage)
     }
 
-    onPageChanged = (currentPage: number,usersOnThePage:number) => {
-        const {getUsersTC}=this.props
-        getUsersTC(currentPage,usersOnThePage)
+    onPageChanged = (currentPage: number, usersOnThePage: number) => {
+        const {getUsersTC} = this.props
+        getUsersTC(currentPage, usersOnThePage)
     }
+
+    changeUsersOnThePage = (userInPage: number) => {
+        const {changeUsersOnThePageAC, getUsersTC} = this.props
+        changeUsersOnThePageAC(userInPage)
+        getUsersTC(this.props.currentPage, userInPage)
+    }
+
 
     render() {
         return <>
             {this.props.isFetching
                 ? <Preloader/>
                 : <Users
+                    changeUsersOnThePage={this.changeUsersOnThePage}
                     usersOnThePage={this.props.usersOnThePage}
                     followingInProgress={this.props.followingInProgress}
                     totalCount={this.props.totalCount}
@@ -78,16 +81,17 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
         error: getError(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress:getFollowingInProgress(state),
-        usersOnThePage:getUsersOnThePage(state)
+        followingInProgress: getFollowingInProgress(state),
+        usersOnThePage: getUsersOnThePage(state)
     }
 }
 
 
-const UsersContainer=compose<ComponentType>(
-    connect(mapStateToProps, {
+const UsersContainer = compose<ComponentType>(
+    connect<mapStateToProps,mapDispatchToProps,unknown,AppRootStateType>(mapStateToProps, {
         getUsersTC,
         followUnfollowTC,
+        changeUsersOnThePageAC
     }),
     WithAuthRedirect
 )(UsersAPIContainer)

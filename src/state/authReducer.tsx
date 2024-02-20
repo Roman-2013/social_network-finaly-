@@ -3,23 +3,31 @@ import {authAPI, securityAPI} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {FormDataType} from '../components/Login/login';
 import {stopSubmit} from 'redux-form';
+import {AxiosResponse} from 'axios';
 
+type AxiosDataType={
+    resultCode: number
+    messages: string[]
+    data: DataType
+}
 export type DataType = {
-    id: number | null
-    email: string | null
-    login: string | null
-    isFetching: boolean,
     captchaUrl: string | null
+    email: string | null
+    id: number | null
+    isFetching: boolean,
+    login: string | null
 }
 const initialState = {
-    id: null,
+    id: null ,
     email: null,
     login: null,
     isFetching: false,
     captchaUrl: null
 }
 
-export const authReducer = (state: DataType = initialState, action: AuthActionType) => {
+
+
+export const authReducer = (state: DataType = initialState, action: AuthActionType):DataType => {
     switch (action.type) {
         case 'SET-USER-DATA': {
             return {...state, ...action.data, isFetching: true}
@@ -53,7 +61,7 @@ export const logoutAC = (isFetching: boolean) => {
 
 //TC
 export const setUserDataTC = () => async (dispatch: Dispatch) => {
-    const res = await authAPI.setUserData()
+    const res:AxiosResponse<AxiosDataType,any> = await authAPI.setUserData()
     if (res.data.resultCode === 0) {
         dispatch(setUserDataAC(res.data.data))
     }
@@ -70,7 +78,7 @@ export const loginTC = (formData: FormDataType) => async (dispatch: ThunkDispatc
             }
             dispatch(stopSubmit('login', {_error: res.data.messages}))
         }
-    }
+    } 
 }
 
 export const getCaptchaTC = () => async (dispatch: Dispatch) => {
