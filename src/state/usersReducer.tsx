@@ -1,5 +1,7 @@
 import {userAPI} from '../api/api';
-import {Dispatch} from 'redux';
+import {AnyAction, Dispatch} from 'redux';
+import {ThunkAction} from 'redux-thunk';
+import {AppRootStateType} from './reduxStore';
 
 export type userType = {
     name: string
@@ -88,7 +90,7 @@ export const changeIsFetchingAC = (isFetching: boolean) => {
 }
 
 //TC
-export const getUsersTC = (currentPage: number, usersOnThePage:number) => async (dispatch: Dispatch) => {
+export const getUsersTC = (currentPage: number, usersOnThePage:number) :ThunkAction<void, AppRootStateType, unknown, AnyAction> => async (dispatch) => {
     currentPage !== 1
         ? dispatch(setCurrentPageAC(currentPage))
         : dispatch(setCurrentPageAC(1))
@@ -97,6 +99,8 @@ export const getUsersTC = (currentPage: number, usersOnThePage:number) => async 
     dispatch(setUsersAC(res))
     dispatch(changeIsFetchingAC(false))
 }
+
+
 export const followUnfollowTC = (userID: number, status: boolean) => async (dispatch: Dispatch) => {
     dispatch(followingInProgressAC(userID, true))
     let res;
@@ -112,7 +116,7 @@ export const followUnfollowTC = (userID: number, status: boolean) => async (disp
 }
 
 //Type
-export type UsersActionType =
+ type UsersActionType =
     ReturnType<typeof setUsersAC> |
     ReturnType<typeof setCurrentPageAC> |
     ReturnType<typeof changeIsFetchingAC> |

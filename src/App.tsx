@@ -24,18 +24,8 @@ type mapDispatchToProps={
 
 export class App extends Component <mapStateToProps & mapDispatchToProps> {
 
-    catchAllUnhandledError=(promiseRejectionEvent:any)=>{
-        alert(promiseRejectionEvent)
-    }
-
     componentDidMount(){
         this.props.initializeAppTC()
-    window.addEventListener('unhandledrejection',this.catchAllUnhandledError)
-    }
-
-
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection',this.catchAllUnhandledError)
     }
 
     render() {

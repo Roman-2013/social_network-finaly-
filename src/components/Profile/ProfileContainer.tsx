@@ -2,7 +2,8 @@ import React, {ComponentType, ElementType} from 'react';
 import {
     getProfileStatusTC,
     ProfileAPI,
-    savePhotoTC, saveProfileTC,
+    savePhotoTC,
+    saveProfileTC,
     setProfileTC,
     updateProfileStatusTC
 } from '../../state/profileReducer';
@@ -42,7 +43,7 @@ type mapDispatchToProps = {
     getProfileStatusTC: (userId: number) => void
     updateProfileStatusTC: (status: string) => void
     savePhotoTC: (photo: File | null) => void
-    saveProfileTC: (profile: FormProfileDataType) => any
+    saveProfileTC:(profile: FormProfileDataType) =>  void
 }
 
 export class ProfileAPIContainer extends React.Component<mapDispatchToProps & mapStateToProps & ownProps> {
@@ -101,13 +102,14 @@ const mapStateToProps = (state: AppRootStateType): mapStateToProps => {
 
 
 
+
 const ProfileContainer = compose<ComponentType>(
     connect<mapStateToProps, mapDispatchToProps, unknown, AppRootStateType>(mapStateToProps, {
-        setProfileTC,
         getProfileStatusTC,
-        updateProfileStatusTC,
         savePhotoTC,
-        saveProfileTC
+        saveProfileTC,
+        setProfileTC,
+        updateProfileStatusTC
     }),
     withRouter,
     WithAuthRedirect,

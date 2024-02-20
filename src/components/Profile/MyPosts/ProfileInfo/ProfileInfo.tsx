@@ -4,12 +4,15 @@ import {ProfileAPI} from '../../../../state/profileReducer';
 import {ProfileStatusWithHooks} from '../../ProfileStatus/ProfileStatusWithHooks';
 import {FormProfileDataType, ProfileDataForm} from '../../ProfileDataForm/ProfileDataForm';
 import {ProfileData} from '../../ProfileData/ProfileData';
+import {ThunkAction} from 'redux-thunk';
+import {AppRootStateType} from '../../../../state/reduxStore';
+import {AnyAction} from 'redux';
 
 
 export const ProfileInfo: React.FC<{
     updateProfileStatusTC: (status: string) => void,
     status: string,
-    saveProfile: (profile:FormProfileDataType)=>Promise<any>,
+    saveProfile: (profile: FormProfileDataType) => void
     profile: ProfileAPI,
     isOwner: boolean,
     savePhotoTC: (photo: File | null) => void,
@@ -29,9 +32,8 @@ export const ProfileInfo: React.FC<{
 
     const onSubmit = (value: FormProfileDataType) => {
         saveProfile(value)
-            .then((res) => {
-                setEditMode(false)
-            })
+        setEditMode(false)
+
     }
 
 

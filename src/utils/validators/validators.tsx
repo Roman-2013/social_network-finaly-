@@ -16,4 +16,13 @@ export const maxLengthCreator = (max: number) => (value: string) => {
     }
 }
 
-
+export const urlAddress = (value: string) => {
+    const Regex=/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/
+    if (Regex.test(value)) {
+        return undefined
+    } else if (value==='') {
+        return undefined
+    } else{
+        return  'Incorrect address'
+    }
+}

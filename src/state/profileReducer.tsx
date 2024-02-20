@@ -1,22 +1,10 @@
 import {PostPropsType} from '../components/Profile/MyPosts/Posts/Post';
 import {AnyAction, Dispatch} from 'redux';
 import {profileAPI} from '../api/api';
-import {ThunkDispatch} from 'redux-thunk';
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {AppRootStateType} from './reduxStore';
 import {stopSubmit} from 'redux-form';
 import {FormProfileDataType} from '../components/Profile/ProfileDataForm/ProfileDataForm';
-
-//
-// export type PhotoValue={
-//     lastModified: number
-//     lastModifiedDate: {}
-// name:string
-// size:number
-// type:string
-// webkitRelativePath:string
-// }
-
-
 
 export type ProfileAPI = {
     aboutMe: string;
@@ -143,7 +131,7 @@ export const savePhotoTC = (photo: File | null) => async (dispatch: Dispatch) =>
     }
 }
 
-export const saveProfileTC = (profile: FormProfileDataType) => async (dispatch: ThunkDispatch<ProfileReducer, unknown, AnyAction>, getState: () => AppRootStateType) => {
+export const saveProfileTC = (profile: FormProfileDataType):ThunkAction<Promise<void>, AppRootStateType, unknown, AnyAction> => async (dispatch, getState) => {
 
     const userId = getState().Auth.id as number
     const res = await profileAPI.saveProfile(profile)
@@ -151,10 +139,10 @@ export const saveProfileTC = (profile: FormProfileDataType) => async (dispatch: 
         dispatch(setProfileTC(userId))
     } else {
         if (res.data.resultCode === 1) {
-            const index = (res.data.messages[0] as string).split('').findIndex((e) => e === '>')
-            const message = res.data.messages[0].split('').slice(index + 1, res.data.messages[0].length - 1).join('').toLowerCase()
-            dispatch(stopSubmit('profile', {'contacts': {[message]: res.data.messages[0]}}))
-            return Promise.reject(res.data.messages[0])
+            // const index = (res.data.messages[0] as string).split('').findIndex((e) => e === '>')
+            // const message = res.data.messages[0].split('').slice(index + 1, res.data.messages[0].length - 1).join('').toLowerCase()
+            // dispatch(stopSubmit('profile', {'contacts': {[message]: res.data.messages[0]}}))
+            //return Promise.reject(res.data.messages[0])
         }
     }
 }

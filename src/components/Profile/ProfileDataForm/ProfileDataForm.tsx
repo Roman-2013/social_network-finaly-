@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import {CreateField, Input} from '../../../common/FormsControls/FormsControls';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 import {ProfileAPI} from '../../../state/profileReducer';
 import s from '../MyPosts/ProfileInfo/ProfileInfo.module.css';
-import {required} from '../../../utils/validators/validators';
+import {required, urlAddress} from '../../../utils/validators/validators';
 
 export type FormProfileDataType = {
     fullName: string
@@ -17,10 +17,14 @@ const ProfileForm: React.FC<InjectedFormProps<FormProfileDataType, { profile: Pr
 }> = ({handleSubmit, profile, error}) => {
 
 
-    return <form onSubmit={handleSubmit}>
-        <button onClick={() => {
-        }}>save
-        </button>
+    const handleFormSubmit=(value:FormEvent<HTMLFormElement>)=>{
+        if(!error){
+            handleSubmit(value )
+        }
+    }
+
+    return <form  onSubmit={handleFormSubmit }>
+        <button   onClick={()=>{}}>save</button>
         {error && <div className={s.error}>{error}</div>}
         <div>Full name:<CreateField name={'fullName'} placeholder={'full Name'} validate={[required]}
                                     component={Input}/></div>
@@ -34,7 +38,7 @@ const ProfileForm: React.FC<InjectedFormProps<FormProfileDataType, { profile: Pr
 
         <div><b>Contact</b> : {profile.contacts ? Object.keys(profile.contacts).map(el => {
             return <div key={el} className={s.contacts}>{el}:<CreateField name={'contacts.' + el} placeholder={'-'}
-                                                                          validate={[]} component={Input}/></div>
+                                                                          validate={[urlAddress]} component={Input}/></div>
         }) : ''}</div>
 
 

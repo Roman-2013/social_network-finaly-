@@ -4,6 +4,9 @@ import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {ProfileAPI} from '../../state/profileReducer';
 import {Preloader} from '../../common/Preloader/Preloader';
 import {FormProfileDataType} from './ProfileDataForm/ProfileDataForm';
+import {ThunkAction} from 'redux-thunk';
+import {AppRootStateType} from '../../state/reduxStore';
+import {AnyAction} from 'redux';
 
 
 export const Profile: React.FC<{
@@ -13,7 +16,7 @@ export const Profile: React.FC<{
     profile: null | ProfileAPI,
     savePhotoTC:(photo:File | null)=>void,
     photos:string,
-    saveProfile:(profile:FormProfileDataType)=>Promise<any>
+    saveProfile:(profile: FormProfileDataType) => void
 }> = ({profile,saveProfile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
 
     return (
