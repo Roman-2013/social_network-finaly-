@@ -12,19 +12,27 @@ export type FormProfileDataType = {
     aboutMe: string
 }
 
+
+
+export type profileNameType = keyof FormProfileDataType
+
 const ProfileForm: React.FC<InjectedFormProps<FormProfileDataType, { profile: ProfileAPI }> & {
     profile: ProfileAPI
 }> = ({handleSubmit, profile, error}) => {
 
 
-    const handleFormSubmit=(value:FormEvent<HTMLFormElement>)=>{
-        if(!error){
-            handleSubmit(value )
+    const handleFormSubmit = (value: FormEvent<HTMLFormElement>) => {
+        if (!error) {
+            handleSubmit(value)
         }
     }
 
-    return <form  onSubmit={handleFormSubmit }>
-        <button   onClick={()=>{}}>save</button>
+
+
+    return <form onSubmit={handleFormSubmit}>
+        <button onClick={() => {
+        }}>save
+        </button>
         {error && <div className={s.error}>{error}</div>}
         <div>Full name:<CreateField name={'fullName'} placeholder={'full Name'} validate={[required]}
                                     component={Input}/></div>
@@ -36,9 +44,11 @@ const ProfileForm: React.FC<InjectedFormProps<FormProfileDataType, { profile: Pr
         <div>About me : <CreateField name={'aboutMe'} placeholder={'About me'} validate={[required]} component={Input}/>
         </div>
 
-        <div><b>Contact</b> : {profile.contacts ? Object.keys(profile.contacts).map(el => {
-            return <div key={el} className={s.contacts}>{el}:<CreateField name={'contacts.' + el} placeholder={'-'}
-                                                                          validate={[urlAddress]} component={Input}/></div>
+        <div><b>Contact</b> : {profile.contacts ? Object.keys(profile.contacts) .map((el) => {
+debugger
+            return <div key={el} className={s.contacts}>{el}:<CreateField name={'contacts.'+el} placeholder={'-'}
+                                                                          validate={[urlAddress]} component={Input}/>
+            </div>
         }) : ''}</div>
 
 

@@ -23,7 +23,6 @@ export const ProfileInfo: React.FC<{
 
 
     const onMainPhoto = (value: File ) => {
-
         savePhotoTC(value)
     }
     const activateEditMoode = (value: boolean) => {

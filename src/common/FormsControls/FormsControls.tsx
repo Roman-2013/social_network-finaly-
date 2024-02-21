@@ -2,6 +2,8 @@ import {Validator, WrappedFieldProps} from 'redux-form/lib/Field'
 import s from './FormsControls.module.css'
 import React, {ComponentType} from 'react';
 import {Field} from 'redux-form';
+import {loginNameType} from '../../components/Login/login';
+import { profileNameType} from '../../components/Profile/ProfileDataForm/ProfileDataForm';
 
 
 export const Input = (props: WrappedFieldProps) => {
@@ -13,7 +15,6 @@ export const Textarea = (props: WrappedFieldProps) => {
 
 const FormControl: React.FC<WrappedFieldProps & { children: React.ReactNode }> = ({
                                                                                       children,
-                                                                                      input,
                                                                                       meta,
                                                                                       ...restProps
                                                                                   }) => {
@@ -27,8 +28,11 @@ const FormControl: React.FC<WrappedFieldProps & { children: React.ReactNode }> =
         </div>
     )
 }
+
+
+
 type PropsType = {
-    name: string,
+    name: loginNameType |profileNameType| string
     placeholder: string | null,
     validate: Validator[] | undefined,
     component: ComponentType<WrappedFieldProps> | 'input' | 'select' | 'textarea' | undefined,
