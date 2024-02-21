@@ -7,7 +7,7 @@ import {logoutTC, setUserDataTC} from '../../state/authReducer';
 
 type mapStateToProps={
     isFetching: boolean
-    login: string | null
+    login: string |null
 }
 type mapDispatchToProps={
     logoutTC:()=>void

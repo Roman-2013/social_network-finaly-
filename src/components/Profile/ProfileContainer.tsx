@@ -42,7 +42,7 @@ type mapDispatchToProps = {
     setProfileTC: (profileId: number) => void
     getProfileStatusTC: (userId: number) => void
     updateProfileStatusTC: (status: string) => void
-    savePhotoTC: (photo: File | null) => void
+    savePhotoTC: (photo: File ) => void
     saveProfileTC:(profile: FormProfileDataType) =>  void
 }
 

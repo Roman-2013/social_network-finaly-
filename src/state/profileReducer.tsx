@@ -123,7 +123,7 @@ export const updateProfileStatusTC = (status: string) => async (dispatch: Dispat
 
 }
 
-export const savePhotoTC = (photo: File | null) => async (dispatch: Dispatch) => {
+export const savePhotoTC = (photo: File ) => async (dispatch: Dispatch) => {
     console.log(photo)
     const res = await profileAPI.setPhoto(photo)
     if (res.data.resultCode === 0) {

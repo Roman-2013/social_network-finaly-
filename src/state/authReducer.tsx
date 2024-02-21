@@ -1,33 +1,19 @@
 import {AnyAction, Dispatch} from 'redux';
-import {authAPI, securityAPI} from '../api/api';
+import {authAPI, ResultCode, ResultCodeForCaptcha, securityAPI, UserData} from '../api/api';
 import {ThunkDispatch} from 'redux-thunk';
 import {FormDataType} from '../components/Login/login';
 import {stopSubmit} from 'redux-form';
-import {AxiosResponse} from 'axios';
 
-type AxiosDataType={
-    resultCode: number
-    messages: string[]
-    data: DataType
-}
-export type DataType = {
-    captchaUrl: string | null
-    email: string | null
-    id: number | null
-    isFetching: boolean,
-    login: string | null
-}
+
 const initialState = {
-    id: null ,
+    id:null ,
     email: null,
     login: null,
     isFetching: false,
     captchaUrl: null
 }
 
-
-
-export const authReducer = (state: DataType = initialState, action: AuthActionType):DataType => {
+export const authReducer = (state: UserData  = initialState, action: AuthActionType):UserData => {
     switch (action.type) {
         case 'SET-USER-DATA': {
             return {...state, ...action.data, isFetching: true}
@@ -43,7 +29,7 @@ export const authReducer = (state: DataType = initialState, action: AuthActionTy
     }
 }
 //AC
-export const setUserDataAC = (data: DataType) => {
+export const setUserDataAC = (data: UserData) => {
     return {
         type: 'SET-USER-DATA', data
     } as const
@@ -61,22 +47,23 @@ export const logoutAC = (isFetching: boolean) => {
 
 //TC
 export const setUserDataTC = () => async (dispatch: Dispatch) => {
-    const res:AxiosResponse<AxiosDataType,any> = await authAPI.setUserData()
-    if (res.data.resultCode === 0) {
-        dispatch(setUserDataAC(res.data.data))
+    const res = await authAPI.setUserData()
+    if (res.resultCode === ResultCode.success) {
+
+        dispatch(setUserDataAC(res.data))
     }
 }
 
-export const loginTC = (formData: FormDataType) => async (dispatch: ThunkDispatch<DataType, any, AnyAction>) => {
+export const loginTC = (formData: FormDataType) => async (dispatch: ThunkDispatch<UserData, any, AnyAction>) => {
     const res = await authAPI.login(formData.login, formData.password, formData.rememberMe, formData.captchaUrl)
-    if (res.data.resultCode === 0) {
+    if (res.resultCode === ResultCodeForCaptcha.success) {
         await dispatch(setUserDataTC())
     } else {
-        if (res.data.messages.length) {
-            if (res.data.resultCode === 10) {
+        if (res.messages.length) {
+            if (res.resultCode === ResultCodeForCaptcha.captcha) {
                await dispatch(getCaptchaTC())
             }
-            dispatch(stopSubmit('login', {_error: res.data.messages}))
+            dispatch(stopSubmit('login', {_error: res.messages}))
         }
     } 
 }
@@ -88,9 +75,9 @@ export const getCaptchaTC = () => async (dispatch: Dispatch) => {
 }
 
 
-export const logoutTC = () => async (dispatch: ThunkDispatch<DataType, any, AnyAction>) => {
+export const logoutTC = () => async (dispatch: ThunkDispatch<UserData, any, AnyAction>) => {
     const res = await authAPI.logout()
-    if (res.data.resultCode === 0) {
+    if (res.resultCode === ResultCode.success) {
         dispatch(logoutAC(false))
     }
 }

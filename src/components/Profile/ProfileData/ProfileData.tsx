@@ -5,7 +5,7 @@ import {ProfileAPI} from '../../../state/profileReducer';
 
 type ProfileDataPropsType = {
     isOwner: boolean
-    onMainPhoto: (value: any | null) => void
+    onMainPhoto: (value: File) => void
     updateProfileStatusTC: (status: string) => void,
     photos: string
     profile: ProfileAPI,
@@ -15,21 +15,22 @@ type ProfileDataPropsType = {
 
 
 export const ProfileData: React.FC<ProfileDataPropsType & { activateEditMode: (value: boolean) => void }> = ({
-                                                                                                                  isOwner,
-                                                                                                                  onMainPhoto,
-                                                                                                                  updateProfileStatusTC,
-                                                                                                                  photos,
-                                                                                                                  profile,
-                                                                                                                  status,
-                                                                                                                  activateEditMode
-                                                                                                              }) => {
+                                                                                                                 isOwner,
+                                                                                                                 onMainPhoto,
+                                                                                                                 updateProfileStatusTC,
+                                                                                                                 photos,
+                                                                                                                 profile,
+                                                                                                                 status,
+                                                                                                                 activateEditMode
+                                                                                                             }) => {
     return (
         <div className={s.description}>
             {isOwner || <div>
                 <button onClick={() => activateEditMode(true)}>edit</button>
             </div>}
             <img alt={'image'} src={photos}/>
-            {isOwner || <input onChange={(e) => onMainPhoto(e.target.files ? e.target.files[0] : '')} type="file"/>}
+            {/*{isOwner || <input onChange={(e) => onMainPhoto(e.target.files ? e.target.files[0] : '')} type="file"/>}*/}
+            {isOwner || <input onChange={(e) => e.target.files ? onMainPhoto(e.target.files[0]) : () => {}} type="file"/>}
             <ProfileStatusWithHooks isOwner={isOwner} updateProfileStatusTC={updateProfileStatusTC} status={status}/>
             <div><b>Name:</b> {profile.fullName}</div>
             <div><b>Looking for a job:</b> {profile.lookingForAJob ? 'yes' : 'no'}</div>

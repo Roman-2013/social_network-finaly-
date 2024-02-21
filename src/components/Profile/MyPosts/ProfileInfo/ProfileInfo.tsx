@@ -15,14 +15,14 @@ export const ProfileInfo: React.FC<{
     saveProfile: (profile: FormProfileDataType) => void
     profile: ProfileAPI,
     isOwner: boolean,
-    savePhotoTC: (photo: File | null) => void,
+    savePhotoTC: (photo: File ) => void,
     photos: string
 }> = ({saveProfile, profile, status, updateProfileStatusTC, isOwner, savePhotoTC, photos}) => {
 
     const [editMode, setEditMode] = useState(false)
 
 
-    const onMainPhoto = (value: File | null) => {
+    const onMainPhoto = (value: File ) => {
 
         savePhotoTC(value)
     }

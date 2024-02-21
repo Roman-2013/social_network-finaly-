@@ -14,7 +14,7 @@ export const Profile: React.FC<{
     updateProfileStatusTC: (status: string) => void,
     status: string,
     profile: null | ProfileAPI,
-    savePhotoTC:(photo:File | null)=>void,
+    savePhotoTC:(photo:File )=>void,
     photos:string,
     saveProfile:(profile: FormProfileDataType) => void
 }> = ({profile,saveProfile, status, updateProfileStatusTC,isOwner,savePhotoTC,photos}) => {
